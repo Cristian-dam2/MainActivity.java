@@ -16,16 +16,5 @@ public class LoginActivity extends AppCompatActivity {
 
     public void iniciarJuego(View view) {
     }
-
-
-
-
-
-
-
-
-
-    private void marica(){
-
-    }
+    
 }

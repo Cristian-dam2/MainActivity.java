@@ -6,9 +6,6 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
-
-    //me cuelo
-    //david marica
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -16,20 +13,5 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void hola() {
-        //hfuoeahgfueajfoajnvkmnhfviajvfioedanfvoaie
-        return;
-    }
 
-
-
-
-
-
-
-
-
-
-    private void marica2(){
-    }
 }
