@@ -1,0 +1,18 @@
+Index: app/src/main/java/com/example/wheeloffortune/LoginActivity.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.wheeloffortune;\r\n\r\nimport androidx.appcompat.app.AppCompatActivity;\r\n\r\nimport android.os.Bundle;\r\nimport android.view.View;\r\n\r\npublic class LoginActivity extends AppCompatActivity {\r\n    private String nombre;\r\n\r\n    @Override\r\n    protected void onCreate(Bundle savedInstanceState) {\r\n        super.onCreate(savedInstanceState);\r\n        setContentView(R.layout.login);\r\n    }\r\n\r\n    public void iniciarJuego(View view) {\r\n    }\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/app/src/main/java/com/example/wheeloffortune/LoginActivity.java b/app/src/main/java/com/example/wheeloffortune/LoginActivity.java
+--- a/app/src/main/java/com/example/wheeloffortune/LoginActivity.java	(revision 79a0c14a4e7959917396f75079b3e66d2bda3fb7)
++++ b/app/src/main/java/com/example/wheeloffortune/LoginActivity.java	(date 1667584928939)
+@@ -15,5 +15,6 @@
+     }
+ 
+     public void iniciarJuego(View view) {
++
+     }
+ }
+\ No newline at end of file
