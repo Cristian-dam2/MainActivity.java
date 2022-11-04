@@ -30,6 +30,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void marica2(){
-
+  //no lo es
     }
 }
