@@ -47,22 +47,24 @@
             android:scaleY="0.15"
             app:srcCompat="@drawable/pin" />
 
-        <Button
-            android:id="@+id/botongirar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_marginEnd="152dp"
-            android:layout_marginBottom="94dp"
-            android:backgroundTint="#DA5E5E"
-            android:fontFamily="sans-serif-black"
-            android:text="@string/girar"
-            android:textSize="20sp"
-            android:textStyle="bold" />
+
 
     </RelativeLayout>
 
+
+    <Button
+        android:id="@+id/botongirar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="152dp"
+        android:layout_marginBottom="94dp"
+        android:backgroundTint="#DA5E5E"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/girar"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <Button
         android:id="@+id/boton_nombre"
