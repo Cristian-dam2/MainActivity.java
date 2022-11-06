@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".LoginActivity">
 
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:background="#F44336"
+        android:fontFamily="sans-serif-condensed"
+        android:gravity="center"
+        android:text="@string/ruleta_de_la_suerte"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:textStyle="bold" />
     <TextView
         android:id="@+id/login_texto_instrucciones"
         android:layout_width="wrap_content"
@@ -16,6 +28,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
     <EditText
         android:id="@+id/login_campo_nombre"
         android:layout_width="wrap_content"
@@ -24,6 +37,7 @@
         android:ems="10"
         android:hint="@string/nombre"
         android:inputType="textPersonName"
+        android:onClick="enviar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,8 +48,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="276dp"
-        android:text="@string/empezar"
+        android:backgroundTint="#DA5E5E"
         android:onClick="iniciarJuego"
+        android:text="@string/empezar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
