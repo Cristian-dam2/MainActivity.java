@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private Button botongirar;
     private TextView score;
     private Button cartelnombre;
+    private Fichero fichero = new Fichero();
 
 
     @Override
