@@ -26,7 +26,7 @@ public class Datos extends RecyclerView.Adapter<Datos.ViewHolderDatos> {
 
     @Override
     public void onBindViewHolder(@NonNull Datos.ViewHolderDatos holder, int position) {
-
+        holder.asignarDatos(jugadores.get(position));
     }
 
     @Override
@@ -38,7 +38,11 @@ public class Datos extends RecyclerView.Adapter<Datos.ViewHolderDatos> {
         TextView datos;
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);
-            datos = itemView.findViewById(R.id.textViewPrueba);
+            datos = itemView.findViewById(R.id.textView);
+        }
+
+        public void asignarDatos(Jugador jugador) {
+            datos.setText(jugador.getNombre() + " ----------- " + jugador.getPuntuacion());
         }
     }
 }

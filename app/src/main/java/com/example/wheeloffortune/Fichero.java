@@ -1,18 +1,23 @@
 package com.example.wheeloffortune;
 
+import android.content.Context;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.Closeable;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
 public class Fichero {
     private File fichero;
+    private static final String nombrefichero = "Lista de puntuacion.txt";
     public static ArrayList<Jugador> jugadoresAntiguos = new ArrayList<>();
 
     public Fichero() {
@@ -20,17 +25,32 @@ public class Fichero {
         String nombreCarpeta = "Registro";
         String nombretxt = "Lista de puntuacion.txt";
         File carpeta = new File(rutaProyecto + File.separator + nombreCarpeta);
-
             carpeta.mkdir();
+        System.out.println("Carpeta CREADA");
             File archivo = new File(carpeta.getAbsolutePath() + File.separator + nombretxt);
+
+
             try {
                 archivo.createNewFile();
+
                 this.fichero = archivo;
             } catch (IOException ex) {
                 System.err.println("ERROR - NO SE CREO EL FICHERO");
             }
 
 
+    }
+
+
+    public Fichero(String e){
+        File prueba = new File(e);
+        try {
+            prueba.createNewFile();
+            System.out.println("FICHERO PRUEBA E");
+        } catch (IOException ex) {
+            System.out.println("FICHERO PRUEBA ERROR / NO ENCONTRO NADA");
+            ex.printStackTrace();
+        }
     }
 
 
@@ -50,6 +70,8 @@ public class Fichero {
         }
     }
 
+
+
     public File getFichero() {
         return fichero;
     }
@@ -64,7 +86,6 @@ public class Fichero {
         ArrayList<Jugador> jugadoresAntiguos = new ArrayList<>();
         Jugador jugador;
         String informacion;
-
         File buscarArchivo = new File(this.fichero.getAbsolutePath());
         BufferedReader br = null;
 
