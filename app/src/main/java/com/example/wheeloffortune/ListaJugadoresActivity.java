@@ -30,7 +30,7 @@ public class ListaJugadoresActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_jugadores);
         guardarPuntuacionJugador2();
-        pruebaText = (TextView) findViewById(R.id.textView);
+        pruebaText = (TextView) findViewById(R.id.textViewPrueba);
         recuperarInformacion();
 //        System.out.println(fichero.getFichero().exists());
 //        tablaNombre = (RecyclerView) findViewById(R.id.TablaNombre);

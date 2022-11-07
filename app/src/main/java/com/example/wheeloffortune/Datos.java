@@ -38,7 +38,7 @@ public class Datos extends RecyclerView.Adapter<Datos.ViewHolderDatos> {
         TextView datos;
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);
-            datos = itemView.findViewById(R.id.textView);
+            datos = itemView.findViewById(R.id.textViewPrueba);
         }
 
         public void asignarDatos(Jugador jugador) {
