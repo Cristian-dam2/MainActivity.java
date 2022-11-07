@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
@@ -25,13 +26,16 @@ public class ListaJugadoresActivity extends AppCompatActivity {
     private RecyclerView tablaNombre;
     private RecyclerView tablaPuntos;
     private TextView pruebaText;
+    private Button boton_xd;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_jugadores);
         guardarPuntuacionJugador2();
         pruebaText = (TextView) findViewById(R.id.textViewPrueba);
-        recuperarInformacion();
+        boton_xd = (Button) findViewById(R.id.boton_volver);
+        boton_xd.setText(recuperarInformacion());
+//        recuperarInformacion();
 //        System.out.println(fichero.getFichero().exists());
 //        tablaNombre = (RecyclerView) findViewById(R.id.TablaNombre);
 //        tablaNombre.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
@@ -45,7 +49,7 @@ public class ListaJugadoresActivity extends AppCompatActivity {
 
     private void guardarPuntuacionJugador2(){
         FileOutputStream fos = null;
-        String st1  = "hola";
+        String st1  = "nada12";
         try {
             fos = openFileOutput(nombrefichero,MODE_PRIVATE);
             fos.write(st1.getBytes());
@@ -68,28 +72,31 @@ public class ListaJugadoresActivity extends AppCompatActivity {
         }
     }
 
-    private void recuperarInformacion(){
+    public String  recuperarInformacion(){
         FileInputStream fos = null;
-
         try {
             fos = openFileInput(nombrefichero);
             InputStreamReader inputStreamReader = new InputStreamReader(fos);
             BufferedReader bw = new BufferedReader(inputStreamReader);
             String linea;
-            pruebaText.setText("MARICA");
+
             StringBuilder sB = new StringBuilder();
             while((linea = bw.readLine()) != null){
                 sB.append(linea).append("\n");
 
             }
 
-            pruebaText.setText(linea);
+            return sB.toString();
+
+
 
         } catch (IOException e) {
             e.printStackTrace();
         } finally{
+
             cerrarFlujo(fos);
         }
 
+     return "nada";
     }
 }
