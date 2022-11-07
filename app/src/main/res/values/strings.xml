@@ -8,4 +8,7 @@
     <string name="girar">GIRAR</string>
     <string name="nombreusuario">nombreusuario</string>
     <string name="puntos">puntos</string>
+    <string name="volver">VOLVER</string>
+    <string name="puntosHistorial">PUNTOS</string>
+    <string name="nombres">NOMBRES</string>
 </resources>

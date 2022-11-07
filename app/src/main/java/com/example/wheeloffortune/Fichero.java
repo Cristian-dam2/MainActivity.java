@@ -58,16 +58,10 @@ public class Fichero {
         this.fichero = fichero;
     }
 
-    public static ArrayList<Jugador> getJugadoresAntiguos() {
-        return jugadoresAntiguos;
-    }
 
-    public static void setJugadoresAntiguos(ArrayList<Jugador> jugadoresAntiguos) {
-        Fichero.jugadoresAntiguos = jugadoresAntiguos;
-    }
 
-    private void recuperarJugadores() {
-
+    public ArrayList<Jugador> recuperarJugadores() {
+        ArrayList<Jugador> jugadoresAntiguos = new ArrayList<>();
         Jugador jugador;
         String informacion;
 
@@ -87,6 +81,8 @@ public class Fichero {
         } finally {
             cerrarFlujo(br);
         }
+
+        return jugadoresAntiguos;
     }
 
 
