@@ -19,24 +19,18 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login);
         nombre = (EditText) findViewById(R.id.login_campo_nombre);
         verHistorial = (Button) findViewById(R.id.btnVerHistorial);
-
-
     }
+
 
     public void iniciarJuego(View view) {
-    }
-
-    public void enviar(View view){
-        Intent myIntent = new Intent(this,MainActivity.class);
-        myIntent.putExtra("nombreusuario",nombre.getText().toString());
+        Intent myIntent = new Intent(this, MainActivity.class);
+        myIntent.putExtra("nombre_usuario", nombre.getText().toString());
         startActivity(myIntent);
-
     }
     public void verHistorial(View view){
         Intent myIntent = new Intent(this,ListaJugadoresActivity.class);
-        myIntent.putExtra("nombreusuario",nombre.getText().toString());
+        myIntent.putExtra("nombre_usuario", nombre.getText().toString());
         startActivity(myIntent);
-
     }
 
 }

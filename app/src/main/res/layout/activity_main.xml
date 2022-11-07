@@ -47,8 +47,6 @@
             android:scaleY="0.15"
             app:srcCompat="@drawable/pin" />
 
-
-
     </RelativeLayout>
 
 

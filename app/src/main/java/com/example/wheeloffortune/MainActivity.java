@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private Button cartelnombre;
     private Fichero fichero = new Fichero();
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
         botongirar = findViewById(R.id.botongirar);
         score = (TextView) findViewById(R.id.puntos);
         cartelnombre = findViewById(R.id.boton_nombre);
-        cartelnombre.setText(getIntent().getStringExtra("nombreusuario"));
+        cartelnombre.setText(getIntent().getStringExtra("nombre_usuario"));
 
         getDegreeForSectors();
         botongirar.setOnClickListener(new View.OnClickListener() {
@@ -51,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
 
@@ -80,20 +78,16 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationRepeat(Animation animation) {
-
             }
         });
         ruleta.startAnimation(rotateAnimacion);
     }
-
 
     private void getDegreeForSectors() {
         int sectorDegree = 360 / sectors.length;
         for (int i = 0; i < sectors.length; i++) {
             sectorDegress[i] = (i + 1) * sectorDegree;
         }
-
-
     }
 
     private void sumarPuntos(int valornuevo) {
