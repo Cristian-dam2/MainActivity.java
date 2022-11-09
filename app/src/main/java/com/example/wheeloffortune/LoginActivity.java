@@ -23,6 +23,9 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void iniciarJuego(View view) {
+        if(nombre.getText().toString().equals("")){
+            return;
+        }
         Intent myIntent = new Intent(this, MainActivity.class);
         myIntent.putExtra("nombre_usuario", nombre.getText().toString());
         nombre.setText("");
@@ -30,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     }
     public void verHistorial(View view){
         Intent myIntent = new Intent(this,ListaJugadoresActivity.class);
-        myIntent.putExtra("nombre_usuario", nombre.getText().toString());
+        //myIntent.putExtra("nombre_usuario", nombre.getText().toString());
         nombre.setText("");
         startActivity(myIntent);
     }

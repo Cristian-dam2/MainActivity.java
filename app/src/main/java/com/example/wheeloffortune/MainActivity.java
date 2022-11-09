@@ -82,6 +82,7 @@ public class MainActivity extends AppCompatActivity {
             public void onAnimationStart(Animation animation) {
                 Toast.makeText(MainActivity.this, "MUCHA SUERTE", Toast.LENGTH_SHORT).show();
                 botongirar.setEnabled(false);
+                botonSalidaActividad.setEnabled(false);
             }
 
             @Override
@@ -91,6 +92,7 @@ public class MainActivity extends AppCompatActivity {
                 sumarPuntos(valor);
                 isSpinning = false;
                 botongirar.setEnabled(true);
+                botonSalidaActividad.setEnabled(true);
             }
 
             @Override
