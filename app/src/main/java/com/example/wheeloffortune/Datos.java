@@ -20,7 +20,7 @@ public class Datos extends RecyclerView.Adapter<Datos.ViewHolderDatos> {
     @NonNull
     @Override
     public Datos.ViewHolderDatos onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.activity_lista_jugadores,null,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list,null,false);
         return new ViewHolderDatos(view);
     }
 
@@ -31,6 +31,7 @@ public class Datos extends RecyclerView.Adapter<Datos.ViewHolderDatos> {
 
     @Override
     public int getItemCount() {
+
         return jugadores.size();
     }
 
@@ -38,11 +39,11 @@ public class Datos extends RecyclerView.Adapter<Datos.ViewHolderDatos> {
         TextView datos;
         public ViewHolderDatos(@NonNull View itemView) {
             super(itemView);
-            datos = itemView.findViewById(R.id.textViewPrueba);
+            datos = (TextView) itemView.findViewById(R.id.idDato);
         }
 
         public void asignarDatos(Jugador jugador) {
-            datos.setText(jugador.getNombre() + " ----------- " + jugador.getPuntuacion());
+            datos.setText(jugador.getNombre() + " -------------------- " + jugador.getPuntuacion());
         }
     }
 }

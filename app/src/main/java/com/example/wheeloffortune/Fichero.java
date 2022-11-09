@@ -1,6 +1,7 @@
 package com.example.wheeloffortune;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -11,6 +12,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -117,29 +119,40 @@ public class Fichero {
         }
     }
 
-    private String formatearJugadorToTxt(Jugador j1) {
+    public static String formatearJugadorToTxt(Jugador j1) {
         return j1.getNombre().toUpperCase() + "$" + String.valueOf(j1.getPuntuacion()) + "\n";
     }
 
-    private Jugador formateartxtToJugador(String entrada) {
+    public static Jugador formateartxtToJugador(String entrada) {
+        System.out.println(entrada);
         Jugador jugador;
         String auxiliar = "";
         String nombre = "";
+        String stringauxiliar = "";
         int puntuacion = 0;
         for (int i = 0; i < entrada.length(); i++) {
             if (entrada.charAt(i) != '$') {
                 auxiliar = auxiliar + entrada.charAt(i);
+
             } else {
                 nombre = auxiliar;
                 auxiliar = "";
             }
         }
-        puntuacion = Integer.valueOf(auxiliar);
+
+            puntuacion = Integer.valueOf(auxiliar);
 
         return jugador = new Jugador(nombre, puntuacion);
     }
 
-
+    public static boolean comprobarNumero(String e){
+        for (int i = 0; i < e.length(); i++) {
+            if(Character.isDigit(e.charAt(i))){
+                return true;
+            }
+        }
+        return false;
+    }
 
 
 

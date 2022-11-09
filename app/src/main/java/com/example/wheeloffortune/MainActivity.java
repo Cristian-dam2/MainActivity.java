@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -13,11 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
+import java.io.Closeable;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
+    private static final String nombrefichero = "Jugadores.txt";
     private static final String[] sectors = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",};
     private static final int[] sectorDegress = new int[sectors.length];
     private static final Random random = new Random();
@@ -27,18 +31,21 @@ public class MainActivity extends AppCompatActivity {
     private Button botongirar;
     private TextView score;
     private Button cartelnombre;
-    private Fichero fichero = new Fichero();
+    private Button botonSalidaActividad;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         ruleta = findViewById(R.id.ruleta);
         botongirar = findViewById(R.id.botongirar);
         score = (TextView) findViewById(R.id.puntos);
         cartelnombre = findViewById(R.id.boton_nombre);
         cartelnombre.setText(getIntent().getStringExtra("nombre_usuario"));
+        botonSalidaActividad = findViewById(R.id.boton_Salir);
 
         getDegreeForSectors();
         botongirar.setOnClickListener(new View.OnClickListener() {
@@ -48,6 +55,16 @@ public class MainActivity extends AppCompatActivity {
                     spin();
                     isSpinning = true;
                 }
+            }
+        });
+
+        botonSalidaActividad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Jugador jugadarGuardar = new Jugador(cartelnombre.getText().toString(), Integer.valueOf(score.getText().toString()));
+                guardarPuntuacionJugadorMain(jugadarGuardar);
+                finish();
+
             }
         });
     }
@@ -70,7 +87,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 int valor = Integer.valueOf(sectors[sectors.length - (degree + 1)]);
-                Toast.makeText(MainActivity.this, "Tienes " + valor + " puntos.", Toast.LENGTH_LONG).show();
+                Toast.makeText(MainActivity.this, "Haz ganado " + valor + " puntos.", Toast.LENGTH_SHORT).show();
                 sumarPuntos(valor);
                 isSpinning = false;
                 botongirar.setEnabled(true);
@@ -95,5 +112,32 @@ public class MainActivity extends AppCompatActivity {
         int numeroviejo = Integer.valueOf(valorviejo);
         int suma = valornuevo + numeroviejo;
         score.setText(String.valueOf(suma));
+    }
+
+
+    public void guardarPuntuacionJugadorMain(Jugador jugador) {
+        FileOutputStream fos = null;
+        String jugadorString = Fichero.formatearJugadorToTxt(jugador);
+        try {
+            fos = openFileOutput(nombrefichero, MODE_APPEND);
+            fos.write(jugadorString.getBytes());
+            Log.d("TAG1", "Fichero guardado en: " + getFilesDir() + "/" + nombrefichero);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            cerrarFlujo(fos);
+        }
+
+    }
+
+
+    private void cerrarFlujo(Closeable c1) {
+        try {
+            if (c1 != null) {
+                c1.close();
+            }
+        } catch (IOException ex) {
+
+        }
     }
 }

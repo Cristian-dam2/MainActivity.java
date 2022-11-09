@@ -108,4 +108,17 @@
         android:textSize="20sp"
         android:textStyle="bold" />
 
+    <Button
+        android:id="@+id/boton_Salir"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="128dp"
+        android:layout_marginBottom="34dp"
+        android:backgroundTint="#DA5E5E"
+        android:text="@string/finalizar"
+        android:textSize="20sp"
+        android:textStyle="bold" />
+
 </RelativeLayout>
