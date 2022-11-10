@@ -4,23 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:onClick="asd"
     tools:context=".LoginActivity">
 
 
     <TextView
-
-        android:background="@color/naranja"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="71dp"
+        android:background="@color/naranja"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"
         android:text="@string/ruleta_de_la_suerte"
         android:textColor="#FFFFFF"
         android:textSize="36sp"
         android:textStyle="normal|bold"
-        tools:layout_editor_absoluteX="2dp"
-        tools:layout_editor_absoluteY="1dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -45,7 +45,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/login_boton_iniciar_sesion"
@@ -58,16 +59,19 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/btnVerHistorial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="36dp"
         android:backgroundTint="@color/naranja"
         android:onClick="verHistorial"
-        android:text="PUNTUACIONES"
+        android:text="@string/puntuaciones"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="TextContrastCheck" />
 </androidx.constraintlayout.widget.ConstraintLayout>
