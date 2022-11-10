@@ -37,6 +37,7 @@ public class Jugador implements Comparable<Jugador> {
         if (jugador.getPuntuacion() < puntuacion) {
             return -1;
         } else if (jugador.getPuntuacion() < puntuacion) {
+
             return 0;
         } else {
             return 1;

@@ -18,11 +18,12 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class ListaJugadoresActivity extends AppCompatActivity {
     private static final String nombrefichero = "Jugadores.txt";
     private ArrayList<Jugador> jugadores;
-    private RecyclerView tablaPuntos;
+    private RecyclerView tablaNombres;
     private TextView pruebaText;
     private Button boton_volver;
 
@@ -32,17 +33,14 @@ public class ListaJugadoresActivity extends AppCompatActivity {
         setContentView(R.layout.activity_lista_jugadores);
         pruebaText = (TextView) findViewById(R.id.textViewPrueba);
         boton_volver = (Button) findViewById(R.id.boton_volver);
-        tablaPuntos =(RecyclerView) findViewById(R.id.myRecycler);
+        tablaNombres =(RecyclerView) findViewById(R.id.myRecycler);
 
-        tablaPuntos.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
+        tablaNombres.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
 
 
-
-      // Jugador gx = new Jugador("BOLSONARO",250);
-       // guardarPuntuacionJugador(gx);
         jugadores = recuperarInformacion();
         Datos adapter = new Datos(jugadores);
-        tablaPuntos.setAdapter(adapter);
+        tablaNombres.setAdapter(adapter);
         boton_volver.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { finish(); } });
 
 
@@ -95,7 +93,6 @@ public class ListaJugadoresActivity extends AppCompatActivity {
                 jugador1 = Fichero.formateartxtToJugador(sB.toString());
                 collectorJugadores.add(jugador1);
                 Collections.sort(collectorJugadores);
-
                 jugador1 = null;
                 linea = "";
                 sB = new StringBuilder();

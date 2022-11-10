@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
         rotateAnimacion.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                Toast.makeText(MainActivity.this, "MUCHA SUERTE", Toast.LENGTH_SHORT).show();
+
                 botongirar.setEnabled(false);
                 botonSalidaActividad.setEnabled(false);
             }
@@ -109,11 +109,26 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void sumarPuntos(int valornuevo) {
+    private void sumarPuntos(int numeronuevo) {
         String valorviejo = score.getText().toString();
         int numeroviejo = Integer.valueOf(valorviejo);
-        int suma = valornuevo + numeroviejo;
+        int suma = numeronuevo + numeroviejo;
         score.setText(String.valueOf(suma));
+
+//        boolean flag = true;
+//        while(flag){
+//            numeroviejo++;
+//            score.setText(String.valueOf(numeroviejo));
+//            if(suma == numeroviejo){
+//                flag = false;
+//            }
+//            try {
+//                Thread.sleep(350);
+//            } catch (InterruptedException e) {
+//                e.printStackTrace();
+//            }
+//
+//        }
     }
 
 
