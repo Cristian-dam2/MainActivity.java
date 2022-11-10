@@ -115,7 +115,7 @@ public class Fichero {
                 c1.close();
             }
         } catch (IOException ex) {
-
+            Log.d("404", "Error cerrando un stream");
         }
     }
 
