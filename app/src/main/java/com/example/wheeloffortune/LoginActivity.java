@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -24,6 +25,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void iniciarJuego(View view) {
         if(nombre.getText().toString().equals("")){
+            Toast.makeText(this,"Introduce un nombre antes de empezar", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent myIntent = new Intent(this, MainActivity.class);

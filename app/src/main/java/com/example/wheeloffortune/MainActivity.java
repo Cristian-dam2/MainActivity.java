@@ -3,6 +3,9 @@ package com.example.wheeloffortune;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.media.SoundPool;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -33,6 +36,8 @@ public class MainActivity extends AppCompatActivity {
     private Button cartelnombre;
     private Button botonSalidaActividad;
 
+    private int reproducir_sonido;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +51,8 @@ public class MainActivity extends AppCompatActivity {
         cartelnombre = findViewById(R.id.boton_nombre);
         cartelnombre.setText(getIntent().getStringExtra("nombre_usuario"));
         botonSalidaActividad = findViewById(R.id.boton_Salir);
+
+
 
         getDegreeForSectors();
         botongirar.setOnClickListener(new View.OnClickListener() {
@@ -88,11 +95,12 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAnimationEnd(Animation animation) {
                 int valor = Integer.valueOf(sectors[sectors.length - (degree + 1)]);
-                Toast.makeText(MainActivity.this, "Haz ganado " + valor + " puntos.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Haz ganado " + valor + " puntos.", Toast.LENGTH_LONG).show();
                 sumarPuntos(valor);
                 isSpinning = false;
                 botongirar.setEnabled(true);
                 botonSalidaActividad.setEnabled(true);
+                audioVictoria();
             }
 
             @Override
@@ -156,5 +164,11 @@ public class MainActivity extends AppCompatActivity {
         } catch (IOException ex) {
 
         }
+    }
+
+    private void audioVictoria(){
+        MediaPlayer mp = MediaPlayer.create(this,R.raw.victoriasound);
+        mp.start();
+
     }
 }

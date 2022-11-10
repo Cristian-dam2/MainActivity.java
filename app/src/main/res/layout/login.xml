@@ -9,15 +9,18 @@
 
 
     <TextView
+
+        android:background="@color/naranja"
         android:layout_width="match_parent"
-        android:layout_height="55dp"
-        android:background="#DA5E5E"
+        android:layout_height="71dp"
         android:fontFamily="sans-serif-condensed"
         android:gravity="center"
         android:text="@string/ruleta_de_la_suerte"
         android:textColor="#FFFFFF"
-        android:textSize="20dp"
-        android:textStyle="bold"
+        android:textSize="36sp"
+        android:textStyle="normal|bold"
+        tools:layout_editor_absoluteX="2dp"
+        tools:layout_editor_absoluteY="1dp"
         tools:ignore="MissingConstraints" />
 
     <TextView
@@ -39,7 +42,6 @@
         android:ems="10"
         android:hint="@string/nombre"
         android:inputType="textPersonName"
-        android:onClick="iniciarJuego"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
@@ -50,7 +52,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="276dp"
-        android:backgroundTint="#DA5E5E"
+        android:backgroundTint="@color/naranja"
         android:onClick="iniciarJuego"
         android:text="@string/empezar"
         app:layout_constraintEnd_toEndOf="parent"
@@ -62,8 +64,7 @@
         android:id="@+id/btnVerHistorial"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:backgroundTint="#DA5E5E"
+        android:backgroundTint="@color/naranja"
         android:onClick="verHistorial"
         android:text="PUNTUACIONES"
         app:layout_constraintBottom_toBottomOf="parent"
