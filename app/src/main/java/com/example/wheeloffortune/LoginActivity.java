@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
-
     private EditText nombre;
     private Button verHistorial;
 
@@ -24,7 +23,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
     public void iniciarJuego(View view) {
-        if(nombre.getText().toString().equals("")){
+        if(nombre.getText().toString().equals("") || !Character.isLetter(nombre.getText().toString().charAt(0))){
             Toast.makeText(this,"Introduce un nombre antes de empezar", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -39,5 +38,4 @@ public class LoginActivity extends AppCompatActivity {
         nombre.setText("");
         startActivity(myIntent);
     }
-
 }

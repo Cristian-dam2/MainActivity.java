@@ -35,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView score;
     private Button cartelnombre;
     private Button botonSalidaActividad;
+    private ImageView pin;
 
     private int reproducir_sonido;
 
@@ -44,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        pin = findViewById(R.id.pin);
         ruleta = findViewById(R.id.ruleta);
         botongirar = findViewById(R.id.botongirar);
         score = (TextView) findViewById(R.id.puntos);
@@ -101,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
                 botongirar.setEnabled(true);
                 botonSalidaActividad.setEnabled(true);
                 audioVictoria();
+
+//                pin.setVisibility(View.GONE);
+//                ruleta.setVisibility(View.GONE);
             }
 
             @Override
