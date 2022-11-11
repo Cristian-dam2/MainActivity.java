@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/textPuntos"
@@ -8,6 +8,26 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/cuadro3"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/panelespacio"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="364dp" />
+
+    <TextView
+        android:id="@+id/cuadro6"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        app:layout_constraintStart_toEndOf="@+id/cuadro3"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="364dp" />
+
+    <TextView
+        android:id="@+id/textView21"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@color/naranja"
@@ -15,40 +35,168 @@
         android:gravity="center"
         android:text="@string/ruleta_de_la_suerte"
         android:textColor="#FFFFFF"
-        android:textSize="20dp"
-        android:textStyle="bold" />
+        android:textSize="20sp"
+        android:textStyle="bold"
+        tools:ignore="MissingConstraints" />
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true">
 
-        <ImageView
-            android:id="@+id/ruleta"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="50dp"
-            android:layout_marginEnd="50dp"
-            android:adjustViewBounds="true"
-            android:rotation="270"
-            android:scaleType="centerInside"
-            app:srcCompat="@drawable/ruleta" />
+    <ImageView
+        android:id="@+id/ruleta"
+        android:layout_width="248dp"
+        android:layout_height="281dp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="168dp"
+        android:adjustViewBounds="true"
+        android:rotation="270"
+        android:scaleType="centerInside"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.496"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView21"
+        app:srcCompat="@drawable/ruleta" />
 
-        <ImageView
-            android:id="@+id/pin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:layout_marginTop="40dp"
-            android:layout_marginEnd="85dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerInside"
-            android:scaleX="0.15"
-            android:scaleY="0.15"
-            app:srcCompat="@drawable/pin" />
+    <ImageView
+        android:id="@+id/pin"
+        android:layout_width="215dp"
+        android:layout_height="195dp"
+        android:layout_marginTop="170dp"
+        android:adjustViewBounds="true"
+        android:scaleType="centerInside"
+        android:scaleX="0.25"
+        android:scaleY="0.25"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/ruleta"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView21"
+        app:srcCompat="@drawable/pin" />
 
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/cuadro1"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:layout_editor_absoluteX="59dp"
+        tools:layout_editor_absoluteY="259dp" />
 
+    <TextView
+        android:id="@+id/cuadro4"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        app:layout_constraintStart_toEndOf="@+id/cuadro2"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="311dp" />
+
+    <TextView
+        android:id="@+id/cuadro5"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        app:layout_constraintStart_toEndOf="@+id/cuadro1"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="259dp" />
+
+    <TextView
+        android:id="@+id/cuadro21"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="254dp"
+        tools:layout_editor_absoluteY="311dp" />
+
+    <TextView
+        android:id="@+id/cuadro7"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:layout_editor_absoluteX="98dp"
+        tools:layout_editor_absoluteY="311dp" />
+
+    <TextView
+        android:id="@+id/cuadro8"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="98dp"
+        tools:layout_editor_absoluteY="364dp" />
+
+    <TextView
+        android:id="@+id/cuadro9"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="332dp"
+        tools:layout_editor_absoluteY="364dp" />
+
+    <TextView
+        android:id="@+id/cuadro20"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="254dp"
+        tools:layout_editor_absoluteY="364dp" />
+
+    <TextView
+        android:id="@+id/cuadro16"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="215dp"
+        tools:layout_editor_absoluteY="258dp" />
+
+    <TextView
+        android:id="@+id/cuadro17"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.514"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="215dp" />
+
+    <TextView
+        android:id="@+id/cuadro10"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="137dp"
+        tools:layout_editor_absoluteY="311dp" />
+
+    <TextView
+        android:id="@+id/cuadro11"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="137dp"
+        tools:layout_editor_absoluteY="364dp" />
+
+    <TextView
+        android:id="@+id/cuadro12"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="137dp"
+        tools:layout_editor_absoluteY="259dp" />
+
+    <TextView
+        android:id="@+id/cuadro13"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="176dp"
+        tools:layout_editor_absoluteY="258dp" />
 
     <Button
         android:id="@+id/botongirar"
@@ -56,13 +204,93 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="152dp"
-        android:layout_marginBottom="94dp"
         android:backgroundTint="@color/naranja"
         android:fontFamily="sans-serif-black"
         android:text="@string/girar"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="206dp"
+        tools:layout_editor_absoluteY="333dp" />
+
+    <TextView
+        android:id="@+id/cuadro25"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="293dp"
+        tools:layout_editor_absoluteY="364dp" />
+
+    <TextView
+        android:id="@+id/cuadro26"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="332dp"
+        tools:layout_editor_absoluteY="258dp" />
+
+    <TextView
+        android:id="@+id/cuadro27"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="332dp"
+        tools:layout_editor_absoluteY="311dp" />
+
+    <TextView
+        android:id="@+id/cuadro22"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:layout_editor_absoluteX="254dp"
+        tools:layout_editor_absoluteY="258dp" />
+
+    <TextView
+        android:id="@+id/cuadro23"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:layout_editor_absoluteX="293dp"
+        tools:layout_editor_absoluteY="259dp" />
+
+    <TextView
+        android:id="@+id/cuadro24"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:layout_editor_absoluteX="293dp"
+        tools:layout_editor_absoluteY="311dp" />
+
+    <TextView
+        android:id="@+id/cuadro18"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="215dp"
+        tools:layout_editor_absoluteY="364dp" />
+
+    <TextView
+        android:id="@+id/cuadro15"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="176dp"
+        tools:layout_editor_absoluteY="364dp" />
+
+    <TextView
+        android:id="@+id/cuadro14"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="176dp"
+        tools:layout_editor_absoluteY="311dp" />
 
     <Button
         android:id="@+id/boton_nombre"
@@ -70,15 +298,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-
-        android:layout_marginTop="88dp"
+        android:layout_marginTop="25dp"
         android:backgroundTint="@color/naranja"
         android:checkable="false"
         android:clickable="false"
         android:fontFamily="sans-serif-black"
         android:text="@string/nombreusuario"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintTop_toBottomOf="@+id/textView21"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteX="5dp" />
 
     <Button
         android:id="@+id/boton_puntos"
@@ -86,15 +316,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="91dp"
-        android:layout_marginEnd="2dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginEnd="5dp"
         android:backgroundTint="@color/naranja"
         android:checkable="false"
         android:clickable="false"
         android:fontFamily="sans-serif-black"
         android:text="@string/puntos"
         android:textAlignment="center"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView21" />
 
     <TextView
         android:id="@+id/puntos"
@@ -102,11 +334,12 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="144dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/cero"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boton_puntos" />
 
     <Button
         android:id="@+id/boton_Salir"
@@ -114,11 +347,51 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginEnd="128dp"
-        android:layout_marginBottom="0dp"
         android:backgroundTint="@color/naranja"
         android:text="@string/finalizar"
         android:textSize="20sp"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
-</RelativeLayout>
+    <EditText
+        android:id="@+id/editTextColocarLetra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="@color/naranja"
+        android:fontFamily="sans-serif-black"
+        android:hint="@string/introduce_tu_letra"
+        android:inputType="textPersonName"
+
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/botongirar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="gone" />
+
+    <TextView
+        android:id="@+id/Cuadro0"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/panelespacio"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints"
+        tools:layout_editor_absoluteY="259dp" />
+
+    <TextView
+        android:id="@+id/cuadro2"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="20dp"
+        android:background="@drawable/panelespacio"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Cuadro0" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -13,6 +13,7 @@ import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,10 +37,10 @@ public class MainActivity extends AppCompatActivity {
     private Button cartelnombre;
     private Button botonSalidaActividad;
     private ImageView pin;
+    private EditText introducirLetra;
 
-    private int reproducir_sonido;
 
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,9 +53,7 @@ public class MainActivity extends AppCompatActivity {
         cartelnombre = findViewById(R.id.boton_nombre);
         cartelnombre.setText(getIntent().getStringExtra("nombre_usuario"));
         botonSalidaActividad = findViewById(R.id.boton_Salir);
-
-
-
+        introducirLetra = (EditText) findViewById(R.id.editTextColocarLetra);
         getDegreeForSectors();
         botongirar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,6 +101,14 @@ public class MainActivity extends AppCompatActivity {
                 botongirar.setEnabled(true);
                 botonSalidaActividad.setEnabled(true);
                 audioVictoria();
+                try {
+                    Thread.sleep(1000);
+                    ocultarCosas();
+                    Thread.sleep(1500);
+                    mostrarColocadordeLetras();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
 
 //                pin.setVisibility(View.GONE);
 //                ruleta.setVisibility(View.GONE);
@@ -174,5 +181,19 @@ public class MainActivity extends AppCompatActivity {
         MediaPlayer mp = MediaPlayer.create(this,R.raw.victoriasound);
         mp.start();
 
+    }
+    private void ocultarCosas(){
+        pin.setVisibility(View.GONE);
+        ruleta.setVisibility(View.GONE);
+        botongirar.setVisibility(View.GONE);
+    }
+    private void devolverCosas(){
+        pin.setVisibility(View.VISIBLE);
+        ruleta.setVisibility(View.VISIBLE);
+        botongirar.setVisibility(View.VISIBLE);
+    }
+
+    private void mostrarColocadordeLetras(){
+        introducirLetra.setVisibility(View.VISIBLE);
     }
 }
