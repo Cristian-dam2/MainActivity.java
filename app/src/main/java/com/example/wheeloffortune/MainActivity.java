@@ -21,6 +21,7 @@ import android.widget.Toast;
 import java.io.Closeable;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -38,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
     private Button botonSalidaActividad;
     private ImageView pin;
     private EditText introducirLetra;
+    private TextView informacion;
+    private TextView [] myTextViews = new TextView[27];
+
 
 
     @SuppressLint("MissingInflatedId")
@@ -45,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        generarCuadros();
         pin = findViewById(R.id.pin);
         ruleta = findViewById(R.id.ruleta);
         botongirar = findViewById(R.id.botongirar);
@@ -54,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         cartelnombre.setText(getIntent().getStringExtra("nombre_usuario"));
         botonSalidaActividad = findViewById(R.id.boton_Salir);
         introducirLetra = (EditText) findViewById(R.id.editTextColocarLetra);
+        informacion = (TextView)findViewById(R.id.InformacionparaAdivinar);
         getDegreeForSectors();
         botongirar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,7 +87,8 @@ public class MainActivity extends AppCompatActivity {
         RotateAnimation rotateAnimacion = new RotateAnimation(0, (360 * sectors.length) + sectorDegress[degree],
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
         rotateAnimacion.setDuration(4800);
-        rotateAnimacion.setFillAfter(true);
+        //SI COLOCO TRUE EN EL METODO SETFILLAFTER NO PUEDO HACER INVISIBLE MI IMAGEN
+        rotateAnimacion.setFillAfter(false);
         rotateAnimacion.setInterpolator(new DecelerateInterpolator());
         rotateAnimacion.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -102,16 +108,14 @@ public class MainActivity extends AppCompatActivity {
                 botonSalidaActividad.setEnabled(true);
                 audioVictoria();
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(2500);
                     ocultarCosas();
-                    Thread.sleep(1500);
                     mostrarColocadordeLetras();
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
 
-//                pin.setVisibility(View.GONE);
-//                ruleta.setVisibility(View.GONE);
             }
 
             @Override
@@ -134,20 +138,7 @@ public class MainActivity extends AppCompatActivity {
         int suma = numeronuevo + numeroviejo;
         score.setText(String.valueOf(suma));
 
-//        boolean flag = true;
-//        while(flag){
-//            numeroviejo++;
-//            score.setText(String.valueOf(numeroviejo));
-//            if(suma == numeroviejo){
-//                flag = false;
-//            }
-//            try {
-//                Thread.sleep(350);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//
-//        }
+
     }
 
 
@@ -183,17 +174,59 @@ public class MainActivity extends AppCompatActivity {
 
     }
     private void ocultarCosas(){
-        pin.setVisibility(View.GONE);
-        ruleta.setVisibility(View.GONE);
-        botongirar.setVisibility(View.GONE);
+        pin.setVisibility(View.INVISIBLE);
+       // ruleta.clearAnimation(); SI NO COLOCO TRUE EN EL SETFILLAFTER DE LA ANIMACION
+        ruleta.setVisibility(View.INVISIBLE);
+        botongirar.setVisibility(View.INVISIBLE);
     }
     private void devolverCosas(){
+
         pin.setVisibility(View.VISIBLE);
         ruleta.setVisibility(View.VISIBLE);
         botongirar.setVisibility(View.VISIBLE);
+
     }
 
     private void mostrarColocadordeLetras(){
+        informacion.setVisibility(View.VISIBLE);
         introducirLetra.setVisibility(View.VISIBLE);
+        mostrarCuadrosLetras();
+
+    }
+
+    private void quitarColocadoresdeLetras(){
+        informacion.setVisibility(View.INVISIBLE);
+        introducirLetra.setVisibility(View.INVISIBLE);
+    }
+
+
+    private void generarCuadros(){
+
+           int temp;
+        ArrayList<String> id = cmultiples();
+        for (int i = 0; i < id.size(); i++) {
+            temp = getResources().getIdentifier(id.get(i), "id", getPackageName());
+            myTextViews[i] = (TextView) findViewById(temp);
+           // myTextViews[i].setVisibility(View.GONE);
+        }
+
+
+        }
+
+
+    private ArrayList<String> cmultiples(){
+        String letra = "c";
+        ArrayList<String> letrasEnumeradas = new ArrayList<>();
+        for (int i = 0; i < 27; i++) {
+            letrasEnumeradas.add(letra.concat(String.valueOf(i)));
+        }
+        return letrasEnumeradas;
+
+    }
+    private void mostrarCuadrosLetras() {
+        for (int i = 0; i < myTextViews.length; i++) {
+            myTextViews[i].setVisibility(View.VISIBLE);
+        }
+
     }
 }

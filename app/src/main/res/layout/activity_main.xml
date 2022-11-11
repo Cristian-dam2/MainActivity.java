@@ -8,26 +8,7 @@
     tools:context=".MainActivity">
 
     <TextView
-        android:id="@+id/cuadro3"
-        android:layout_width="39dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/panelespacio"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="364dp" />
-
-    <TextView
-        android:id="@+id/cuadro6"
-        android:layout_width="39dp"
-        android:layout_height="53dp"
-        android:background="@drawable/panelespacio"
-        app:layout_constraintStart_toEndOf="@+id/cuadro3"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="364dp" />
-
-    <TextView
-        android:id="@+id/textView21"
+        android:id="@+id/CabezeraMain"
         android:layout_width="match_parent"
         android:layout_height="55dp"
         android:background="@color/naranja"
@@ -49,154 +30,301 @@
         android:adjustViewBounds="true"
         android:rotation="270"
         android:scaleType="centerInside"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.496"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21"
+        app:layout_constraintTop_toBottomOf="@+id/CabezeraMain"
         app:srcCompat="@drawable/ruleta" />
 
     <ImageView
         android:id="@+id/pin"
         android:layout_width="215dp"
         android:layout_height="195dp"
-        android:layout_marginTop="170dp"
+        android:layout_marginTop="100dp"
         android:adjustViewBounds="true"
         android:scaleType="centerInside"
         android:scaleX="0.25"
         android:scaleY="0.25"
-        android:visibility="gone"
+        android:visibility="visible"
         app:layout_constraintBottom_toTopOf="@+id/ruleta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21"
+        app:layout_constraintTop_toBottomOf="@+id/boton_nombre"
         app:srcCompat="@drawable/pin" />
 
     <TextView
-        android:id="@+id/cuadro1"
+        android:id="@+id/c0"
         android:layout_width="39dp"
         android:layout_height="53dp"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="120dp"
         android:background="@drawable/panelespacio"
-        tools:layout_editor_absoluteX="59dp"
-        tools:layout_editor_absoluteY="259dp" />
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boton_nombre"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/cuadro4"
+        android:id="@+id/c1"
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        app:layout_constraintStart_toEndOf="@+id/cuadro2"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="311dp" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/c0"
+        app:layout_constraintStart_toEndOf="@+id/c0"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/cuadro5"
+        android:id="@+id/c2"
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        app:layout_constraintStart_toEndOf="@+id/cuadro1"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="259dp" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/c1"
+        app:layout_constraintStart_toEndOf="@+id/c1"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/cuadro21"
+        android:id="@+id/c3"
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="254dp"
-        tools:layout_editor_absoluteY="311dp" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/c2"
+        app:layout_constraintStart_toEndOf="@+id/c2"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/cuadro7"
+        android:id="@+id/c4"
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        tools:layout_editor_absoluteX="98dp"
-        tools:layout_editor_absoluteY="311dp" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/c3"
+        app:layout_constraintStart_toEndOf="@+id/c3"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/cuadro8"
+        android:id="@+id/c5"
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="98dp"
-        tools:layout_editor_absoluteY="364dp" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/c4"
+        app:layout_constraintStart_toEndOf="@+id/c4"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/cuadro9"
+        android:id="@+id/c6"
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="332dp"
-        tools:layout_editor_absoluteY="364dp" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/c5"
+        app:layout_constraintStart_toEndOf="@+id/c5"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/cuadro20"
+        android:id="@+id/c7"
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="254dp"
-        tools:layout_editor_absoluteY="364dp" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/c6"
+        app:layout_constraintStart_toEndOf="@+id/c6"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/cuadro16"
+        android:id="@+id/c8"
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="215dp"
-        tools:layout_editor_absoluteY="258dp" />
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/c7"
+        app:layout_constraintStart_toEndOf="@+id/c7"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/cuadro17"
+        android:id="@+id/c9"
         android:layout_width="39dp"
         android:layout_height="53dp"
+        android:layout_marginStart="22dp"
         android:background="@drawable/panelespacio"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.514"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="215dp" />
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/c0" />
 
     <TextView
-        android:id="@+id/cuadro10"
+        android:id="@+id/c10"
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="311dp" />
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c9"
+        app:layout_constraintTop_toBottomOf="@+id/c1"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/cuadro11"
+        android:id="@+id/c11"
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="364dp" />
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c10"
+        app:layout_constraintTop_toBottomOf="@+id/c2"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/cuadro12"
+        android:id="@+id/c12"
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="259dp" />
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c11"
+        app:layout_constraintTop_toBottomOf="@+id/c3"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/cuadro13"
+        android:id="@+id/c13"
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="258dp" />
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c12"
+        app:layout_constraintTop_toBottomOf="@+id/c4"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/c14"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c13"
+        app:layout_constraintTop_toBottomOf="@+id/c5"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/c15"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c14"
+        app:layout_constraintTop_toBottomOf="@+id/c6"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/c16"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c15"
+        app:layout_constraintTop_toBottomOf="@+id/c7"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/c17"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c16"
+        app:layout_constraintTop_toBottomOf="@+id/c8"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/c18"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:layout_marginStart="22dp"
+        android:background="@drawable/panelespacio"
+        android:visibility="invisible"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/c9"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/c19"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c18"
+        app:layout_constraintTop_toBottomOf="@+id/c10"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/c20"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c19"
+        app:layout_constraintTop_toBottomOf="@+id/c11"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/c21"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c20"
+        app:layout_constraintTop_toBottomOf="@+id/c12"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/c22"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c21"
+        app:layout_constraintTop_toBottomOf="@+id/c13"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/c23"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c22"
+        app:layout_constraintTop_toBottomOf="@+id/c14"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/c24"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c23"
+        app:layout_constraintTop_toBottomOf="@+id/c15"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/c25"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c24"
+        app:layout_constraintTop_toBottomOf="@+id/c16"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/c26"
+        android:layout_width="39dp"
+        android:layout_height="53dp"
+        android:background="@drawable/panelespacio"
+        android:visibility="invisible"
+        app:layout_constraintStart_toEndOf="@+id/c25"
+        app:layout_constraintTop_toBottomOf="@+id/c17"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/botongirar"
@@ -204,93 +332,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="26dp"
         android:backgroundTint="@color/naranja"
         android:fontFamily="sans-serif-black"
         android:text="@string/girar"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:visibility="gone"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="206dp"
-        tools:layout_editor_absoluteY="333dp" />
-
-    <TextView
-        android:id="@+id/cuadro25"
-        android:layout_width="39dp"
-        android:layout_height="53dp"
-        android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="293dp"
-        tools:layout_editor_absoluteY="364dp" />
-
-    <TextView
-        android:id="@+id/cuadro26"
-        android:layout_width="39dp"
-        android:layout_height="53dp"
-        android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="332dp"
-        tools:layout_editor_absoluteY="258dp" />
-
-    <TextView
-        android:id="@+id/cuadro27"
-        android:layout_width="39dp"
-        android:layout_height="53dp"
-        android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="332dp"
-        tools:layout_editor_absoluteY="311dp" />
-
-    <TextView
-        android:id="@+id/cuadro22"
-        android:layout_width="39dp"
-        android:layout_height="53dp"
-        android:background="@drawable/panelespacio"
-        tools:layout_editor_absoluteX="254dp"
-        tools:layout_editor_absoluteY="258dp" />
-
-    <TextView
-        android:id="@+id/cuadro23"
-        android:layout_width="39dp"
-        android:layout_height="53dp"
-        android:background="@drawable/panelespacio"
-        tools:layout_editor_absoluteX="293dp"
-        tools:layout_editor_absoluteY="259dp" />
-
-    <TextView
-        android:id="@+id/cuadro24"
-        android:layout_width="39dp"
-        android:layout_height="53dp"
-        android:background="@drawable/panelespacio"
-        tools:layout_editor_absoluteX="293dp"
-        tools:layout_editor_absoluteY="311dp" />
-
-    <TextView
-        android:id="@+id/cuadro18"
-        android:layout_width="39dp"
-        android:layout_height="53dp"
-        android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="215dp"
-        tools:layout_editor_absoluteY="364dp" />
-
-    <TextView
-        android:id="@+id/cuadro15"
-        android:layout_width="39dp"
-        android:layout_height="53dp"
-        android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="364dp" />
-
-    <TextView
-        android:id="@+id/cuadro14"
-        android:layout_width="39dp"
-        android:layout_height="53dp"
-        android:background="@drawable/panelespacio"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteX="176dp"
-        tools:layout_editor_absoluteY="311dp" />
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@+id/boton_Salir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
 
     <Button
         android:id="@+id/boton_nombre"
@@ -306,8 +358,8 @@
         android:text="@string/nombreusuario"
         android:textAlignment="center"
         android:textSize="16sp"
-        app:layout_constraintTop_toBottomOf="@+id/textView21"
-        tools:ignore="MissingConstraints"
+        app:layout_constraintTop_toBottomOf="@+id/CabezeraMain"
+        tools:ignore="MissingConstraints,TextContrastCheck"
         tools:layout_editor_absoluteX="5dp" />
 
     <Button
@@ -326,20 +378,8 @@
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView21" />
-
-    <TextView
-        android:id="@+id/puntos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="24dp"
-        android:text="@string/cero"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/boton_puntos" />
+        app:layout_constraintTop_toBottomOf="@+id/CabezeraMain"
+        tools:ignore="TextContrastCheck" />
 
     <Button
         android:id="@+id/boton_Salir"
@@ -355,43 +395,53 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
+    <TextView
+        android:id="@+id/puntos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="24dp"
+        android:text="@string/cero"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/boton_puntos" />
+
     <EditText
         android:id="@+id/editTextColocarLetra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
+        android:autofillHints=""
         android:backgroundTint="@color/naranja"
         android:fontFamily="sans-serif-black"
+
         android:hint="@string/introduce_tu_letra"
         android:inputType="textPersonName"
-
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
-        android:visibility="gone"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/botongirar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/InformacionparaAdivinar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="60dp"
+        android:fontFamily="sans-serif-smallcaps"
+        android:text="@string/informacion"
+        android:textColor="#F60606"
+        android:textSize="20sp"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/botongirar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        tools:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@+id/c22" />
 
-    <TextView
-        android:id="@+id/Cuadro0"
-        android:layout_width="39dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/panelespacio"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints"
-        tools:layout_editor_absoluteY="259dp" />
-
-    <TextView
-        android:id="@+id/cuadro2"
-        android:layout_width="39dp"
-        android:layout_height="53dp"
-        android:layout_marginStart="20dp"
-        android:background="@drawable/panelespacio"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/Cuadro0" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

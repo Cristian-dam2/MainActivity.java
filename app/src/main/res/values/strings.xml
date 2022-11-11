@@ -17,4 +17,5 @@
     <string name="mensaje">mensaje</string>
     <string name="puntuaciones">PUNTUACIONES</string>
     <string name="introduce_tu_letra">Introduce tu Letra</string>
+    <string name="informacion">Informacion</string>
 </resources>
