@@ -21,6 +21,7 @@ import android.widget.Toast;
 import java.io.Closeable;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText introducirLetra;
     private TextView informacion;
     private TextView [] myTextViews = new TextView[27];
-
+    private Palabra adivinar;
 
 
     @SuppressLint("MissingInflatedId")
@@ -49,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        System.out.println("HOLA");
         generarCuadros();
         pin = findViewById(R.id.pin);
         ruleta = findViewById(R.id.ruleta);
@@ -60,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
         introducirLetra = (EditText) findViewById(R.id.editTextColocarLetra);
         informacion = (TextView)findViewById(R.id.InformacionparaAdivinar);
         getDegreeForSectors();
+        adivinar =new Palabra(myTextViews);
+        informacion.setText(adivinar.getInformacion());
         botongirar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -102,11 +106,14 @@ public class MainActivity extends AppCompatActivity {
             public void onAnimationEnd(Animation animation) {
                 int valor = Integer.valueOf(sectors[sectors.length - (degree + 1)]);
                 Toast.makeText(MainActivity.this, "Haz ganado " + valor + " puntos.", Toast.LENGTH_LONG).show();
-                sumarPuntos(valor);
+
                 isSpinning = false;
                 botongirar.setEnabled(true);
                 botonSalidaActividad.setEnabled(true);
-                audioVictoria();
+
+
+
+               adivinar.mostraLetra(introducirLetra.getText().toString().toLowerCase());
                 try {
                     Thread.sleep(2500);
                     ocultarCosas();
@@ -115,6 +122,7 @@ public class MainActivity extends AppCompatActivity {
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
+
 
             }
 
@@ -168,7 +176,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void audioVictoria(){
+    public void audioVictoria(){
         MediaPlayer mp = MediaPlayer.create(this,R.raw.victoriasound);
         mp.start();
 
@@ -227,6 +235,14 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < myTextViews.length; i++) {
             myTextViews[i].setVisibility(View.VISIBLE);
         }
+
+    }
+
+
+    public void enviarLetra(View view){
+        adivinar.mostraLetra(introducirLetra.getText().toString().toLowerCase());
+
+
 
     }
 }

@@ -417,9 +417,10 @@
         android:autofillHints=""
         android:backgroundTint="@color/naranja"
         android:fontFamily="sans-serif-black"
-
         android:hint="@string/introduce_tu_letra"
+
         android:inputType="textPersonName"
+        android:onClick="enviarLetra"
         android:textAlignment="center"
         android:textSize="20sp"
         android:textStyle="bold"
