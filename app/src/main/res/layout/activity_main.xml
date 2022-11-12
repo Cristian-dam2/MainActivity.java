@@ -418,7 +418,7 @@
         android:backgroundTint="@color/naranja"
         android:fontFamily="sans-serif-black"
         android:hint="@string/introduce_tu_letra"
-
+        android:imeOptions="actionDone"
         android:inputType="textPersonName"
         android:onClick="enviarLetra"
         android:textAlignment="center"
@@ -427,7 +427,8 @@
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/botongirar"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InformacionparaAdivinar" />
 
     <TextView
         android:id="@+id/InformacionparaAdivinar"
