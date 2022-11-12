@@ -180,7 +180,7 @@ public class Palabra extends AppCompatActivity {
         return id;
     }
 
-    public void limpiarHashMapYcoincidencias() {
+    public void limpiarValoreStaticos() {
         letrasAsignadas.clear();
         coincidencias = 0;
         vocales.clear();

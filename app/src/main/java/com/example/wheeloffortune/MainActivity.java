@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity {
 
 
                 botonFinalizar.callOnClick();
-                palabraAdivinar.limpiarHashMapYcoincidencias();
+                palabraAdivinar.limpiarValoreStaticos();
                 informacion.setText(palabraAdivinar.getInformacion());
 
             }
