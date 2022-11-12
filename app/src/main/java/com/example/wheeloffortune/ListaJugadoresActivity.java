@@ -11,14 +11,11 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class ListaJugadoresActivity extends AppCompatActivity {
     private static final String nombrefichero = "Jugadores.txt";
@@ -34,93 +31,54 @@ public class ListaJugadoresActivity extends AppCompatActivity {
         pruebaText = (TextView) findViewById(R.id.textViewPrueba);
         boton_volver = (Button) findViewById(R.id.boton_volver);
         tablaNombres =(RecyclerView) findViewById(R.id.myRecycler);
-
         tablaNombres.setLayoutManager(new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false));
-
-
         jugadores = recuperarInformacion();
         Datos adapter = new Datos(jugadores);
         tablaNombres.setAdapter(adapter);
         boton_volver.setOnClickListener(new View.OnClickListener() { public void onClick(View v) { finish(); } });
-
-
-
-
     }
 
-
-
-
-    public void guardarPuntuacionJugador(Jugador jugador) {
-        FileOutputStream fos = null;
-        String jugadorString = Fichero.formatearJugadorToTxt(jugador);
-        try {
-            fos = openFileOutput(nombrefichero, MODE_APPEND);
-            fos.write(jugadorString.getBytes());
-            Log.d("TAG1", "Fichero guardado en: " + getFilesDir() + "/" + nombrefichero);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            cerrarFlujo(fos);
-        }
-
-    }
-
-    private void cerrarFlujo(Closeable c1) {
-        try {
-            if (c1 != null) {
-                c1.close();
-            }
-        } catch (IOException ex) {
-            Log.d("TAG2", "NO SE PUDO CERRAR EL FLUJO");
-        }
-    }
 
     public  ArrayList<Jugador> recuperarInformacion() {
         FileInputStream fos = null;
         ArrayList<Jugador> collectorJugadores = new ArrayList<>();
-        int contador = 0;
         try {
             fos = openFileInput(nombrefichero);
             InputStreamReader inputStreamReader = new InputStreamReader(fos);
             BufferedReader bw = new BufferedReader(inputStreamReader);
             String linea;
-            Jugador jugador1;
-
+            Jugador jugador;
             StringBuilder sB = new StringBuilder();
             while ((linea = bw.readLine()) != null) {
                 sB.append(linea);
-                jugador1 = Fichero.formateartxtToJugador(sB.toString());
-                collectorJugadores.add(jugador1);
+                jugador = Fichero.formateartxtToJugador(sB.toString());
+                collectorJugadores.add(jugador);
                 Collections.sort(collectorJugadores);
-                jugador1 = null;
+                jugador = null;
                 linea = "";
                 sB = new StringBuilder();
-
-
-
             }
             Collections.sort(collectorJugadores);
 
         } catch (IOException e) {
             Log.d("TAG1", "NO PUDO RECUPERAR JUGADORES");
         } finally {
-            cerrarFlujo(fos);
+            Fichero.cerrarFlujo(fos);
         }
 
-        return reservarTOP10(collectorJugadores);
+        return best10Players(collectorJugadores);
     }
 
-    private ArrayList<Jugador>  reservarTOP10(ArrayList<Jugador> entrada){
-        ArrayList<Jugador> auxiliar = new ArrayList<>();
+    private ArrayList<Jugador> best10Players(ArrayList<Jugador> entrada){
+        ArrayList<Jugador> mejoresJugadores = new ArrayList<>();
         int contador = 0;
         for (int i = 0; i < entrada.size(); i++) {
-            auxiliar.add(entrada.get(contador));
+            mejoresJugadores.add(entrada.get(contador));
             contador++;
             if(contador ==10){
-                return auxiliar;
+                return mejoresJugadores;
             }
         }
-        return auxiliar;
+        return mejoresJugadores;
     }
 }

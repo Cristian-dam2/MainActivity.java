@@ -102,14 +102,14 @@ public class Fichero {
         } catch (IOException ex) {
             ex.getStackTrace();
         } finally {
-            cerrarFlujo(br);
+            Fichero.cerrarFlujo(br);
         }
 
         return jugadoresAntiguos;
     }
 
 
-    private void cerrarFlujo(Closeable c1) {
+    public static void cerrarFlujo(Closeable c1) {
         try {
             if (c1 != null) {
                 c1.close();

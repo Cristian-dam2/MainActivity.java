@@ -42,11 +42,15 @@
         android:ems="10"
         android:hint="@string/nombre"
         android:inputType="textPersonName"
+        android:maxLength="8"
+        android:textAlignment="center"
+        android:textColorHint="#757575"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck,TouchTargetSizeCheck" />
+        tools:ignore="TouchTargetSizeCheck"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/login_boton_iniciar_sesion"
@@ -56,11 +60,12 @@
         android:backgroundTint="@color/naranja"
         android:onClick="iniciarJuego"
         android:text="@string/empezar"
+        android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TextContrastCheck" />
+         />
 
     <Button
         android:id="@+id/btnVerHistorial"
@@ -68,6 +73,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="36dp"
         android:backgroundTint="@color/naranja"
+        android:textSize="22sp"
         android:onClick="verHistorial"
         android:text="@string/puntuaciones"
         app:layout_constraintBottom_toBottomOf="parent"

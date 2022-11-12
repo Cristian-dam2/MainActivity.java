@@ -31,6 +31,7 @@ public class LoginActivity extends AppCompatActivity {
         myIntent.putExtra("nombre_usuario", nombre.getText().toString());
         nombre.setText("");
         startActivity(myIntent);
+
     }
     public void verHistorial(View view){
         Intent myIntent = new Intent(this,ListaJugadoresActivity.class);
