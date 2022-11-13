@@ -20,8 +20,64 @@ public class Palabra extends AppCompatActivity {
     private static TextView[] letrasGeneradas = new TextView[27];
     public static HashMap<String, List<Integer>> letrasAsignadas = new HashMap<>();
     public static int coincidencias = 0;
-    public static ArrayList<String> vocales = new ArrayList<>();
+    public static ArrayList<String> letrasUtilizadas = new ArrayList<>();
+    public static  String[] letra = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z"};
 
+    public static int getPosicion_inicial() {
+        return posicion_inicial;
+    }
+
+    public static void setPosicion_inicial(int posicion_inicial) {
+        Palabra.posicion_inicial = posicion_inicial;
+    }
+
+    public ArrayList<String> getLetrasMarcadas() {
+        return letrasMarcadas;
+    }
+
+    public void setLetrasMarcadas(ArrayList<String> letrasMarcadas) {
+        this.letrasMarcadas = letrasMarcadas;
+    }
+
+    public static TextView[] getLetrasGeneradas() {
+        return letrasGeneradas;
+    }
+
+    public static void setLetrasGeneradas(TextView[] letrasGeneradas) {
+        Palabra.letrasGeneradas = letrasGeneradas;
+    }
+
+    public static HashMap<String, List<Integer>> getLetrasAsignadas() {
+        return letrasAsignadas;
+    }
+
+    public static void setLetrasAsignadas(HashMap<String, List<Integer>> letrasAsignadas) {
+        Palabra.letrasAsignadas = letrasAsignadas;
+    }
+
+    public static int getCoincidencias() {
+        return coincidencias;
+    }
+
+    public static void setCoincidencias(int coincidencias) {
+        Palabra.coincidencias = coincidencias;
+    }
+
+    public static ArrayList<String> getLetrasUtilizadas() {
+        return letrasUtilizadas;
+    }
+
+    public static void setLetrasUtilizadas(ArrayList<String> letrasUtilizadas) {
+        Palabra.letrasUtilizadas = letrasUtilizadas;
+    }
+
+    public static String[] getLetra() {
+        return letra;
+    }
+
+    public static void setLetra(String[] letra) {
+        Palabra.letra = letra;
+    }
 
     public String getPalabra() {
         return palabra;
@@ -91,7 +147,7 @@ public class Palabra extends AppCompatActivity {
     public String[] palabraseInformacion() {
         String[] seleccionado = new String[2];
         //(5 es el num MAX, -1 el num MIN +1) +1
-        int random = new Random().nextInt(5 - 1 + 1) + 1;
+        int random = new Random().nextInt(6 - 1 + 1) + 1;
 
         switch (random) {
             case 1:
@@ -112,6 +168,9 @@ public class Palabra extends AppCompatActivity {
             case 5:
                 seleccionado[0] = "YATRA";
                 seleccionado[1] = "Mi pedazo de Sol, la niña de mis ojos";
+            case 6:
+                seleccionado[0] = "RUBEN";
+                seleccionado[1] = "Profesor de SGE";
         }
 
         return seleccionado;
@@ -120,7 +179,7 @@ public class Palabra extends AppCompatActivity {
 
     private ArrayList<String> generadorCartasMarcadas() {
         String empieza = "letra";
-        String[] letra = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z"};
+
         for (int i = 0; i < letra.length; i++) {
             letrasMarcadas.add(empieza + letra[i]);
         }
@@ -130,18 +189,22 @@ public class Palabra extends AppCompatActivity {
 
     public boolean mostrarLetra(String Vocal) {
         boolean aux = false;
-        // SI NO RECOJO ENTRADA EN ENTRADA2 EXPLOTA AL INTRODUCIR POR TECLADO UNA LETRA EN MAYUSCULA
         String minusVocal = Vocal;
         String letraMarcada = "letra" + Vocal;
         int temp;
+        int contador = 0;
         ArrayList<String> id = generadorCartasMarcadas();
-        if(copias(vocales,Vocal)){
+        if(copias(letrasUtilizadas,Vocal)){
             return false;
         }
-        vocales.add(Vocal);
+        letrasUtilizadas.add(Vocal);
 
+        if(ExisteLetramiPalabra(getPalabra(),Vocal)){
 
-        int qwerty = 0;
+        }else{
+            return false;
+        }
+
         for (int i = 0; i < id.size(); i++) {
             if (id.get(i).equals(letraMarcada)) {
                 aux = true;
@@ -154,13 +217,16 @@ public class Palabra extends AppCompatActivity {
 
                 } else {
                     Integer numero = letrasAsignadas.get(Vocal.toUpperCase()).get(0);
-                    letrasAsignadas.remove(Vocal.toUpperCase());
+                 //  letrasAsignadas.remove(Vocal.toUpperCase());
                     cuadros[numero].setBackgroundResource(temp);
                 }
 
             }
         }
         return aux;
+
+
+
     }
 
     public int getDrawableId(String name) {
@@ -181,9 +247,10 @@ public class Palabra extends AppCompatActivity {
     }
 
     public void limpiarValoreStaticos() {
-        letrasAsignadas.clear();
+        letrasAsignadas = new HashMap<>();
         coincidencias = 0;
-        vocales.clear();
+        letrasUtilizadas = new ArrayList<>();
+
     }
 
     private boolean copias(ArrayList<String> e , String letra){
@@ -201,5 +268,43 @@ public class Palabra extends AppCompatActivity {
 
         return flag;
     }
+
+
+    private boolean ExisteLetramiPalabra(String nombre, String letrapequenha){
+        String namesinletrasRepetidas = quitarLetrasRepetidasDelNombre(nombre.toLowerCase());
+
+        char [] letras = new char[namesinletrasRepetidas.length()];
+        for (int i = 0; i < namesinletrasRepetidas.length(); i++) {
+            letras[i] = namesinletrasRepetidas.charAt(i);
+        }
+
+        for (int i = 0; i < letras.length; i++) {
+            if(letras[i] == letrapequenha.charAt(0)){
+                System.out.println(letras[i]);
+                return true;
+            }
+        }
+
+
+        return false;
+
+
+    }
+
+
+    private String quitarLetrasRepetidasDelNombre(String e) {
+        StringBuilder sinRepetir = new StringBuilder();
+        for (int i = 0; i < e.length(); i++) {
+            String si = e.substring(i, i + 1);
+            if (sinRepetir.indexOf(si) == -1) {
+                sinRepetir.append(si);
+            }
+        }
+        return sinRepetir.toString();
+    }
+
+
+
+
 
 }

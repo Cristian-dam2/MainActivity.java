@@ -47,7 +47,6 @@ public class MainActivity extends AppCompatActivity {
     private static Jugador jugadarGuardar;
 
 
-
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,6 +64,16 @@ public class MainActivity extends AppCompatActivity {
         introducirLetra = (EditText) findViewById(R.id.editTextColocarLetra);
         informacion = (TextView) findViewById(R.id.InformacionparaAdivinar);
         palabraAdivinar = new Palabra(conjuntoTextViews);
+        if(palabraAdivinar != null){
+
+
+            palabraAdivinar.limpiarValoreStaticos();
+            palabraAdivinar = null;
+            palabraAdivinar = new Palabra(conjuntoTextViews);
+            informacion.setText(palabraAdivinar.getInformacion());
+
+        }
+
         informacion.setText(palabraAdivinar.getInformacion());
         botonGirar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -77,14 +86,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
-
-
         botonFinalizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(score.getText().toString()));
-                guardarPuntuacion(jugadarGuardar);
+                finalizarActividad();
                 finish();
+
 
             }
         });
@@ -145,12 +153,14 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-    private void restar(){
+
+    private void restar() {
         //SI EL USUARIO SE EQUIVOCA DE LETRA, SE RESTA 5 PUNTOS
         String valorviejo = score.getText().toString();
         int numeroviejo = Integer.valueOf(valorviejo);
         int resta = numeroviejo - 5;
         score.setText(String.valueOf(resta));
+        Toast.makeText(MainActivity.this, "Acabas de perder " + 5 + " puntos!!", Toast.LENGTH_SHORT).show();
     }
 
 
@@ -186,31 +196,33 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void audioCorrecto(){
+    private void audioCorrecto() {
         MediaPlayer correct = MediaPlayer.create(this, R.raw.acierto);
         correct.start();
     }
 
-    private void audioIncorrecto(){
+    private void audioIncorrecto() {
         MediaPlayer lose = MediaPlayer.create(this, R.raw.losesound);
         lose.start();
     }
 
-    private void audioGiro(){
+    private void audioGiro() {
         MediaPlayer giro = MediaPlayer.create(this, R.raw.spinningeffect);
         giro.start();
     }
-    public void yatraMusic(){
+
+    public void yatraMusic() {
         MediaPlayer yatra = MediaPlayer.create(this, R.raw.yatra);
         yatra.start();
     }
-    private void bloquearBotonesGiro(){
+
+    private void bloquearBotonesGiro() {
         botonGirar.setEnabled(false);
         botonFinalizar.setEnabled(false);
         audioGiro();
     }
 
-    private void desbloquearBotonesGiro(){
+    private void desbloquearBotonesGiro() {
         botonGirar.setEnabled(true);
         botonFinalizar.setEnabled(true);
     }
@@ -237,7 +249,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void ocultarTablero() {
-       // informacion.setVisibility(View.INVISIBLE);
+        // informacion.setVisibility(View.INVISIBLE);
         introducirLetra.setVisibility(View.INVISIBLE);
         mostrarRuleta();
         ocultarCuadrosLetras();
@@ -271,7 +283,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void ocultarCuadrosLetras(){
+    private void ocultarCuadrosLetras() {
         for (int i = 0; i < conjuntoTextViews.length; i++) {
             conjuntoTextViews[i].setVisibility(View.INVISIBLE);
         }
@@ -280,34 +292,47 @@ public class MainActivity extends AppCompatActivity {
 
     public void enviarLetra(View view) {
         int longitud = contarLetras(palabraAdivinar.getPalabra().toString());
-        if(palabraAdivinar.mostrarLetra(introducirLetra.getText().toString().toLowerCase())){
+        if (palabraAdivinar.mostrarLetra(introducirLetra.getText().toString().toLowerCase())) {
             audioCorrecto();
             sumarPuntos(valorConseguido);
             introducirLetra.setText("");
             completarPalabra++;
-            if (longitud == completarPalabra){
+            if (longitud == completarPalabra) {
                 completarPalabra = 0;
-                if(palabraAdivinar.getPalabra().equals("YATRA")){
+                if (palabraAdivinar.getPalabra().equals("YATRA")) {
+                    try {
+                        Thread.sleep(2000);
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                     yatraMusic();
-
-                                    try {
-                    Thread.sleep(6000);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                }else{
+                    try {
+                        Thread.sleep(8000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                } else {
                     audioVictoria();
+                    try {
+                        Thread.sleep(3000);
+
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
                 }
 
-
-                botonFinalizar.callOnClick();
+                super.onBackPressed();
+                jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(score.getText().toString()));
+                guardarPuntuacion(jugadarGuardar);
                 palabraAdivinar.limpiarValoreStaticos();
+                palabraAdivinar = new Palabra(conjuntoTextViews);
                 informacion.setText(palabraAdivinar.getInformacion());
 
             }
 
 
-        }else{
+        } else {
             audioIncorrecto();
             restar();
 
@@ -328,11 +353,11 @@ public class MainActivity extends AppCompatActivity {
 
     private void ocultarTeclado() {
         View view = this.getCurrentFocus();
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
-    private int contarLetras(String e){
+    private int contarLetras(String e) {
         StringBuilder sinRepetir = new StringBuilder();
         for (int i = 0; i < e.length(); i++) {
             String si = e.substring(i, i + 1);
@@ -340,7 +365,27 @@ public class MainActivity extends AppCompatActivity {
                 sinRepetir.append(si);
             }
         }
-       return sinRepetir.toString().length();
+        return sinRepetir.toString().length();
     }
+
+
+    private void finalizarActividad(){
+        guardarPuntuacion(jugadarGuardar);
+        palabraAdivinar.limpiarValoreStaticos();
+        palabraAdivinar = null;
+        palabraAdivinar = new Palabra(conjuntoTextViews);
+        informacion.setText(palabraAdivinar.getInformacion());
+        finish();
+
+//        palabraAdivinar.limpiarValoreStaticos();
+//        palabraAdivinar = null;
+//        palabraAdivinar = new Palabra(conjuntoTextViews);
+//        informacion.setText(palabraAdivinar.getInformacion());
+
+
+
+    }
+
+
 
 }
