@@ -28,6 +28,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="125dp"
         android:adjustViewBounds="true"
+        android:onClick="touchRuleta"
         android:rotation="270"
         android:scaleType="centerInside"
         android:visibility="visible"

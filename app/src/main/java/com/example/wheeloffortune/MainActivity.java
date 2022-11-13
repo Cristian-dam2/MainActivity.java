@@ -100,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void girar() {
+        ruleta.setEnabled(false);
         degree = random.nextInt(secciones.length - 1);
         RotateAnimation rotateAnimacion = new RotateAnimation(0, (360 * secciones.length) + gradosSecciones[degree],
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
@@ -131,6 +132,7 @@ public class MainActivity extends AppCompatActivity {
 
             }
 
+
             @Override
             public void onAnimationRepeat(Animation animation) {
             }
@@ -143,6 +145,11 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < secciones.length; i++) {
             gradosSecciones[i] = (i + 1) * rangoSeccion;
         }
+    }
+
+    public void touchRuleta(View view){
+        girar();
+        ruleta.setEnabled(false);
     }
 
     private void sumarPuntos(int numeronuevo) {
@@ -341,6 +348,7 @@ public class MainActivity extends AppCompatActivity {
         ocultarTeclado();
         introducirLetra.setText("");
         ocultarTablero();
+        ruleta.setEnabled(true);
         try {
             Thread.sleep(2000);
 
@@ -374,7 +382,7 @@ public class MainActivity extends AppCompatActivity {
         palabraAdivinar.limpiarValoreStaticos();
         palabraAdivinar = null;
         palabraAdivinar = new Palabra(conjuntoTextViews);
-        informacion.setText(palabraAdivinar.getInformacion());
+       // informacion.setText(palabraAdivinar.getInformacion());
         finish();
 
 //        palabraAdivinar.limpiarValoreStaticos();

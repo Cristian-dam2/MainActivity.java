@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Palabra extends AppCompatActivity {
     private String palabra;
@@ -146,10 +147,10 @@ public class Palabra extends AppCompatActivity {
 
     public String[] palabraseInformacion() {
         String[] seleccionado = new String[2];
-        //(5 es el num MAX, -1 el num MIN +1) +1
-        int random = new Random().nextInt(6 - 1 + 1) + 1;
 
-        switch (random) {
+            int a = (int) ((Math.random() * (7 - 1)) + 1);
+
+        switch (a) {
             case 1:
                 seleccionado[0] = "IVAN";
                 seleccionado[1] = "Profesor de Android";
@@ -162,15 +163,25 @@ public class Palabra extends AppCompatActivity {
             case 3:
                 seleccionado[0] = "SONIC";
                 seleccionado[1] = "Erizo azul";
+                return seleccionado;
             case 4:
                 seleccionado[0] = "PIQUE";
                 seleccionado[1] = "EX DE SHAKIRA";
+                return seleccionado;
             case 5:
                 seleccionado[0] = "YATRA";
                 seleccionado[1] = "Mi pedazo de Sol, la niña de mis ojos";
+                return seleccionado;
             case 6:
                 seleccionado[0] = "RUBEN";
                 seleccionado[1] = "Profesor de SGE";
+                return seleccionado;
+            case 7:
+                seleccionado[0] = "JESUS";
+                seleccionado[1] = "Profesor de Bases de Datos";
+                return seleccionado;
+
+
         }
 
         return seleccionado;
