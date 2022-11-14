@@ -33,14 +33,13 @@ public class Jugador implements Comparable<Jugador> {
     @Override
     public int compareTo(Jugador jugador) {
 
-        //DE MAYOR A MENOR SEGUN LA PUNTUACION
-        int iSalComaprison = Integer.compare(this.puntuacion, jugador.getPuntuacion());
-        if (iSalComaprison == 0)//Salaries are equal use name as comparison criteria
-        {
-            //lhs name comparison with rhs name
-            return this.getNombre().compareTo(jugador.getNombre());
+        if (jugador.getPuntuacion() < puntuacion) {
+            return -1;
+        } else if (jugador.getPuntuacion() < puntuacion) {
+
+            return 0;
+        } else {
+            return 1;
         }
-        //Now if salaries are not equal, return comparison of salries
-        return iSalComaprison;
     }
 }
