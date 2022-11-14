@@ -272,6 +272,15 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private void resetearCuadros() {
+        int temp;
+        ArrayList<String> id = generadorNombreLetrasPNG();
+        for (int i = 0; i < conjuntoTextViews.length; i++) {
+            conjuntoTextViews[i].setBackgroundResource(R.drawable.panelespacio);
+
+        }
+    }
+
 
     private ArrayList<String> generadorNombreLetrasPNG() {
         String letra = "c";
