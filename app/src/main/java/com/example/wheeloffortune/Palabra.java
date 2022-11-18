@@ -111,15 +111,8 @@ public class Palabra extends AppCompatActivity {
         this.cuadros = cuadros;
         this.informacion = adivinar[1];
 
-        int longidudpalabra = palabra.length();
-        int longitudmatriz = cuadros.length;
-        int mitadlongitudmatriz = longitudmatriz / 2;
-        int mitadlongitudpalabra = longidudpalabra / 2;
-        int principio = mitadlongitudmatriz - mitadlongitudpalabra;
-        posicion_inicial = principio;
-
-
-        for (int i = principio; i < principio + longidudpalabra; i++) {
+        this.posicion_inicial = (cuadros.length / 2) - (palabra.length() / 2);
+        for (int i = this.posicion_inicial; i < this.posicion_inicial + palabra.length(); i++) {
             cuadros[i].setBackgroundResource(R.drawable.letra_sindescifrar);
 
         }
@@ -128,13 +121,13 @@ public class Palabra extends AppCompatActivity {
             System.out.println(letra);
 
             if (letrasAsignadas.containsKey(letra)) {
-                letrasAsignadas.get(letra).add(principio);
+                letrasAsignadas.get(letra).add(this.posicion_inicial);
             } else {
                 List<Integer> list = new ArrayList<>();
-                list.add(principio);
+                list.add(this.posicion_inicial);
                 letrasAsignadas.put(letra, list);
             }
-            principio++;
+            this.posicion_inicial++;
             System.out.println(letrasAsignadas);
 
 
