@@ -1,111 +1,35 @@
 package com.example.wheeloffortune;
 
-import android.content.Context;
 import android.util.Log;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.Closeable;
-import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.sql.SQLOutput;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 
-public class Fichero {
-    private File fichero;
-    private static final String nombrefichero = "Lista de puntuacion.txt";
-    public static ArrayList<Jugador> jugadoresAntiguos = new ArrayList<>();
-
-    public Fichero() {
-        String rutaProyecto = new File("").getAbsolutePath().toString();
-        String nombreCarpeta = "Registro";
-        String nombretxt = "Lista de puntuacion.txt";
-        File carpeta = new File(rutaProyecto + File.separator + nombreCarpeta);
-            carpeta.mkdir();
-        System.out.println("Carpeta CREADA");
-            File archivo = new File(carpeta.getAbsolutePath() + File.separator + nombretxt);
+public class Fichero extends AppCompatActivity {
+    private static final String nombrefichero = "Jugadores.txt";
 
 
-            try {
-                archivo.createNewFile();
-
-                this.fichero = archivo;
-            } catch (IOException ex) {
-                System.err.println("ERROR - NO SE CREO EL FICHERO");
-            }
-
-
-    }
-
-
-    public Fichero(String e){
-        File prueba = new File(e);
-        try {
-            prueba.createNewFile();
-            System.out.println("FICHERO PRUEBA E");
-        } catch (IOException ex) {
-            System.out.println("FICHERO PRUEBA ERROR / NO ENCONTRO NADA");
-            ex.printStackTrace();
-        }
-    }
-
-
-    private void guardarPuntuacionJugador(Jugador j1) {
-        File buscarArchivo = new File(this.fichero.getAbsolutePath());
-        BufferedWriter bw = null;
+    public void guardarPuntuacion(Jugador jugador) {
+        FileOutputStream fos = null;
 
         try {
-            bw = new BufferedWriter(new FileWriter(buscarArchivo, true));
-            bw.write(formatearJugadorToTxt(j1));
-            bw.flush();
-
-        } catch (IOException ex) {
-            System.err.println("ERROR - NO SE GUARDO JUGADOR");
+            fos = openFileOutput(nombrefichero, MODE_APPEND);
+            fos.write(jugador.toStringJugador().getBytes());
+            Log.d("TAG", "Fichero guardado en: " + getFilesDir() + "/" + nombrefichero);
+        } catch (IOException e) {
+            e.printStackTrace();
         } finally {
-            cerrarFlujo(bw);
-        }
-    }
-
-
-
-    public File getFichero() {
-        return fichero;
-    }
-
-    public void setFichero(File fichero) {
-        this.fichero = fichero;
-    }
-
-
-
-    public ArrayList<Jugador> recuperarJugadores() {
-        ArrayList<Jugador> jugadoresAntiguos = new ArrayList<>();
-        Jugador jugador;
-        String informacion;
-        File buscarArchivo = new File(this.fichero.getAbsolutePath());
-        BufferedReader br = null;
-
-        try {
-            br = new BufferedReader(new FileReader(buscarArchivo));
-            while ((informacion = br.readLine()) != null) {
-                jugador = formateartxtToJugador(informacion);
-                jugadoresAntiguos.add(jugador);
-            }
-            //ORDENAR JUGADORES SEGUN SU PUNTUACION DE MAYOR A MENOR
-            Collections.sort(jugadoresAntiguos);
-        } catch (IOException ex) {
-            ex.getStackTrace();
-        } finally {
-            Fichero.cerrarFlujo(br);
+            cerrarFlujo(fos);
         }
 
-        return jugadoresAntiguos;
     }
 
 
@@ -119,39 +43,46 @@ public class Fichero {
         }
     }
 
-    public static String formatearJugadorToTxt(Jugador j1) {
-        return j1.getNombre().toUpperCase() + "$" + String.valueOf(j1.getPuntuacion()) + "\n";
-    }
 
-    public static Jugador formateartxtToJugador(String entrada) {
-        System.out.println(entrada);
-        Jugador jugador;
-        String auxiliar = "";
-        String nombre = "";
-        String stringauxiliar = "";
-        int puntuacion = 0;
-        for (int i = 0; i < entrada.length(); i++) {
-            if (entrada.charAt(i) != '$') {
-                auxiliar = auxiliar + entrada.charAt(i);
 
-            } else {
-                nombre = auxiliar;
-                auxiliar = "";
+    public ArrayList<Jugador> recuperarInformacion() {
+        FileInputStream fos = null;
+        ArrayList<Jugador> jugadores = new ArrayList<>();
+        StringBuilder sB = new StringBuilder();
+        try {
+            fos = openFileInput(nombrefichero);
+            InputStreamReader inputStreamReader = new InputStreamReader(fos);
+            BufferedReader bw = new BufferedReader(inputStreamReader);
+            String linea;
+            Jugador jugador;
+            while ((linea = bw.readLine()) != null) {
+                sB.append(linea);
+                jugador = Jugador.recuperarJugador(sB.toString());
+                jugadores.add(jugador);
+                linea = "";
             }
+            Collections.sort(jugadores);
+
+        } catch (IOException e) {
+            Log.d("TAG", "NO PUDO RECUPERAR JUGADORES");
+        } finally {
+           cerrarFlujo(fos);
         }
 
-            puntuacion = Integer.valueOf(auxiliar);
-
-        return jugador = new Jugador(nombre, puntuacion);
+        return mejoresJugadore(jugadores);
     }
 
-    public static boolean comprobarNumero(String e){
-        for (int i = 0; i < e.length(); i++) {
-            if(Character.isDigit(e.charAt(i))){
-                return true;
+    private ArrayList<Jugador> mejoresJugadore(ArrayList<Jugador> entrada){
+        ArrayList<Jugador> mejoresJugadores = new ArrayList<>();
+        int contador = 0;
+        for (int i = 0; i < entrada.size(); i++) {
+            mejoresJugadores.add(entrada.get(contador));
+            contador++;
+            if(contador ==10){
+                return mejoresJugadores;
             }
         }
-        return false;
+        return mejoresJugadores;
     }
 
 

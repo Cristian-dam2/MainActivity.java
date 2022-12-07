@@ -9,20 +9,29 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
+import java.util.Locale;
 
 public class Palabra extends AppCompatActivity {
     private String palabra;
     private TextView[] cuadros;
     private String informacion;
+
+    public boolean isMusicapersonalizada() {
+        return musicapersonalizada;
+    }
+
+    public void setMusicapersonalizada(boolean musicapersonalizada) {
+        this.musicapersonalizada = musicapersonalizada;
+    }
+
+    private boolean musicapersonalizada;
     private static int posicion_inicial;
     ArrayList<String> letrasMarcadas = new ArrayList<>();
     private static TextView[] letrasGeneradas = new TextView[27];
     public static HashMap<String, List<Integer>> letrasAsignadas = new HashMap<>();
     public static int coincidencias = 0;
     public static ArrayList<String> letrasUtilizadas = new ArrayList<>();
-    public static  String[] letra = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z"};
+    public static String[] letra = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z"};
 
     public static int getPosicion_inicial() {
         return posicion_inicial;
@@ -108,18 +117,16 @@ public class Palabra extends AppCompatActivity {
 
         String[] adivinar = palabraseInformacion();
         this.palabra = adivinar[0];
-        this.cuadros = cuadros;
         this.informacion = adivinar[1];
+        this.musicapersonalizada = palabraHasCustomAudio(adivinar[0]);
+
 
         this.posicion_inicial = (cuadros.length / 2) - (palabra.length() / 2);
         for (int i = this.posicion_inicial; i < this.posicion_inicial + palabra.length(); i++) {
             cuadros[i].setBackgroundResource(R.drawable.letra_sindescifrar);
-
         }
         for (int i = 0; i < palabra.length(); i++) {
             String letra = String.valueOf(palabra.charAt(i));
-            System.out.println(letra);
-
             if (letrasAsignadas.containsKey(letra)) {
                 letrasAsignadas.get(letra).add(this.posicion_inicial);
             } else {
@@ -128,9 +135,6 @@ public class Palabra extends AppCompatActivity {
                 letrasAsignadas.put(letra, list);
             }
             this.posicion_inicial++;
-            System.out.println(letrasAsignadas);
-
-
         }
 
         System.out.println(letrasAsignadas);
@@ -141,7 +145,7 @@ public class Palabra extends AppCompatActivity {
     public String[] palabraseInformacion() {
         String[] seleccionado = new String[2];
 
-            int a = (int) ((Math.random() * (7 - 1)) + 1);
+        int a = (int) ((Math.random() * (7 - 1)) + 1);
 
         switch (a) {
             case 1:
@@ -182,30 +186,29 @@ public class Palabra extends AppCompatActivity {
 
 
     private ArrayList<String> generadorCartasMarcadas() {
-        String empieza = "letra";
+        String LETRA = "letra";
 
         for (int i = 0; i < letra.length; i++) {
-            letrasMarcadas.add(empieza + letra[i]);
+            letrasMarcadas.add(LETRA + letra[i]);
         }
         return letrasMarcadas;
 
     }
 
-    public boolean mostrarLetra(String Vocal) {
+    public boolean analizarLetra(String Vocal) {
         boolean aux = false;
         String minusVocal = Vocal;
         String letraMarcada = "letra" + Vocal;
         int temp;
-        int contador = 0;
         ArrayList<String> id = generadorCartasMarcadas();
-        if(copias(letrasUtilizadas,Vocal)){
+        if (copias(letrasUtilizadas, Vocal)) {
             return false;
         }
         letrasUtilizadas.add(Vocal);
 
-        if(ExisteLetramiPalabra(getPalabra(),Vocal)){
+        if (ExisteLetramiPalabra(getPalabra(), Vocal)) {
 
-        }else{
+        } else {
             return false;
         }
 
@@ -221,14 +224,12 @@ public class Palabra extends AppCompatActivity {
 
                 } else {
                     Integer numero = letrasAsignadas.get(Vocal.toUpperCase()).get(0);
-                 //  letrasAsignadas.remove(Vocal.toUpperCase());
                     cuadros[numero].setBackgroundResource(temp);
                 }
 
             }
         }
         return aux;
-
 
 
     }
@@ -257,14 +258,14 @@ public class Palabra extends AppCompatActivity {
 
     }
 
-    private boolean copias(ArrayList<String> e , String letra){
+    private boolean copias(ArrayList<String> e, String letra) {
         boolean flag = false;
-        if(e.size() == 0 || e == null){
+        if (e.size() == 0 || e == null) {
             return flag;
         }
 
         for (int i = 0; i < e.size(); i++) {
-            if(e.get(i).equals(letra)){
+            if (e.get(i).equals(letra)) {
                 flag = true;
                 return flag;
             }
@@ -274,17 +275,16 @@ public class Palabra extends AppCompatActivity {
     }
 
 
-    private boolean ExisteLetramiPalabra(String nombre, String letrapequenha){
-        String namesinletrasRepetidas = quitarLetrasRepetidasDelNombre(nombre.toLowerCase());
+    private boolean ExisteLetramiPalabra(String nombre, String letrapequenha) {
+        String nombresinletrasRepetidas = quitarLetrasRepetidasDelNombre(nombre.toLowerCase());
 
-        char [] letras = new char[namesinletrasRepetidas.length()];
-        for (int i = 0; i < namesinletrasRepetidas.length(); i++) {
-            letras[i] = namesinletrasRepetidas.charAt(i);
+        char[] letras = new char[nombresinletrasRepetidas.length()];
+        for (int i = 0; i < nombresinletrasRepetidas.length(); i++) {
+            letras[i] = nombresinletrasRepetidas.charAt(i);
         }
 
         for (int i = 0; i < letras.length; i++) {
-            if(letras[i] == letrapequenha.charAt(0)){
-                System.out.println(letras[i]);
+            if (letras[i] == letrapequenha.charAt(0)) {
                 return true;
             }
         }
@@ -308,7 +308,19 @@ public class Palabra extends AppCompatActivity {
     }
 
 
+    public boolean palabraHasCustomAudio(String entrada ) {
+        String palabraconmusica = entrada.toLowerCase();
+        Field[] f = null;
+        f = R.raw.class.getFields();
+        for (int i = 0; i < f.length; i++) {
+            if(f[i].toString() == palabraconmusica){
+                return true;
+            }
+        }
 
+        return false;
+
+    }
 
 
 }

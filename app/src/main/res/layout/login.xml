@@ -76,7 +76,7 @@
         android:layout_marginBottom="36dp"
         android:backgroundTint="@color/naranja"
         android:textSize="22sp"
-        android:onClick="verHistorial"
+        android:onClick="verListaJugadores"
         android:text="@string/puntuaciones"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

@@ -6,7 +6,6 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -18,15 +17,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.Closeable;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
 
-    private static final String nombrefichero = "Jugadores.txt";
     private static final String[] secciones = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",};
     private static final int[] gradosSecciones = new int[secciones.length];
     private static final Random random = new Random();
@@ -47,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private static Jugador jugadarGuardar;
 
 
-    @SuppressLint("MissingInflatedId")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -62,17 +57,23 @@ public class MainActivity extends AppCompatActivity {
         cartelNombre.setText(getIntent().getStringExtra("nombre_usuario"));
         botonFinalizar = findViewById(R.id.boton_Salir);
         introducirLetra = (EditText) findViewById(R.id.editTextColocarLetra);
+        introducirLetra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                enviarLetra();
+            }
+        });
         informacion = (TextView) findViewById(R.id.InformacionparaAdivinar);
         palabraAdivinar = new Palabra(conjuntoTextViews);
-        if(palabraAdivinar != null){
-
-
-            palabraAdivinar.limpiarValoreStaticos();
-            palabraAdivinar = null;
-            palabraAdivinar = new Palabra(conjuntoTextViews);
-            informacion.setText(palabraAdivinar.getInformacion());
-
-        }
+//        if(palabraAdivinar != null){
+//
+//
+//            palabraAdivinar.limpiarValoreStaticos();
+//            palabraAdivinar = null;
+//            palabraAdivinar = new Palabra(conjuntoTextViews);
+//            informacion.setText(palabraAdivinar.getInformacion());
+//
+//        }
 
         informacion.setText(palabraAdivinar.getInformacion());
         botonGirar.setOnClickListener(new View.OnClickListener() {
@@ -147,7 +148,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void touchRuleta(View view){
+    public void touchRuleta(View view) {
         girar();
         ruleta.setEnabled(false);
     }
@@ -170,32 +171,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(MainActivity.this, "Acabas de perder " + 5 + " puntos!!", Toast.LENGTH_SHORT).show();
     }
 
-
-    public void guardarPuntuacion(Jugador jugador) {
-        FileOutputStream fos = null;
-        String jugadorString = Fichero.formatearJugadorToTxt(jugador);
-        try {
-            fos = openFileOutput(nombrefichero, MODE_APPEND);
-            fos.write(jugadorString.getBytes());
-            Log.d("TAG1", "Fichero guardado en: " + getFilesDir() + "/" + nombrefichero);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            cerrarFlujo(fos);
-        }
-
-    }
-
-
-    private void cerrarFlujo(Closeable c1) {
-        try {
-            if (c1 != null) {
-                c1.close();
-            }
-        } catch (IOException ex) {
-
-        }
-    }
 
     private void audioVictoria() {
         MediaPlayer win = MediaPlayer.create(this, R.raw.victoriasound);
@@ -273,15 +248,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void resetearCuadros() {
-        int temp;
-        ArrayList<String> id = generadorNombreLetrasPNG();
         for (int i = 0; i < conjuntoTextViews.length; i++) {
             conjuntoTextViews[i].setBackgroundResource(R.drawable.panelespacio);
 
         }
     }
 
-
+    // C es el nombre de los TextViews en el MainActivity, se añade los numeros correspondiente al recuadro que pertenecen.
     private ArrayList<String> generadorNombreLetrasPNG() {
         String letra = "c";
         ArrayList<String> letrasEnumeradas = new ArrayList<>();
@@ -291,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
         return letrasEnumeradas;
 
     }
+
 
     private void mostrarCuadrosLetras() {
         for (int i = 0; i < conjuntoTextViews.length; i++) {
@@ -306,14 +280,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public void enviarLetra(View view) {
-        int longitud = contarLetras(palabraAdivinar.getPalabra().toString());
-        if (palabraAdivinar.mostrarLetra(introducirLetra.getText().toString().toLowerCase())) {
+    public void enviarLetra() {
+        int aciertos = contarLetras(palabraAdivinar.getPalabra().toString());
+        String letra = introducirLetra.getText().toString().toLowerCase();
+        if (palabraAdivinar.analizarLetra(letra)) {
             audioCorrecto();
             sumarPuntos(valorConseguido);
             introducirLetra.setText("");
             completarPalabra++;
-            if (longitud == completarPalabra) {
+            if (aciertos == completarPalabra) {
                 completarPalabra = 0;
                 if (palabraAdivinar.getPalabra().equals("YATRA")) {
                     try {
@@ -337,10 +312,8 @@ public class MainActivity extends AppCompatActivity {
                         e.printStackTrace();
                     }
                 }
-
-                super.onBackPressed();
                 jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(score.getText().toString()));
-                guardarPuntuacion(jugadarGuardar);
+                new Fichero().guardarPuntuacion(jugadarGuardar);
                 palabraAdivinar.limpiarValoreStaticos();
                 palabraAdivinar = new Palabra(conjuntoTextViews);
                 informacion.setText(palabraAdivinar.getInformacion());
@@ -386,12 +359,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void finalizarActividad(){
-        guardarPuntuacion(jugadarGuardar);
+    private void finalizarActividad() {
+        new Fichero().guardarPuntuacion(jugadarGuardar);
         palabraAdivinar.limpiarValoreStaticos();
         palabraAdivinar = null;
         palabraAdivinar = new Palabra(conjuntoTextViews);
-       // informacion.setText(palabraAdivinar.getInformacion());
+        // informacion.setText(palabraAdivinar.getInformacion());
         finish();
 
 //        palabraAdivinar.limpiarValoreStaticos();
@@ -400,8 +373,9 @@ public class MainActivity extends AppCompatActivity {
 //        informacion.setText(palabraAdivinar.getInformacion());
 
 
-
     }
+
+
 
 
 
