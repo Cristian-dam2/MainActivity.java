@@ -1,5 +1,6 @@
 package com.example.wheeloffortune;
 
+import android.content.Context;
 import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,15 +16,29 @@ import java.util.Collections;
 
 public class Fichero extends AppCompatActivity {
     private static final String nombrefichero = "Jugadores.txt";
+    private Context context;
+
+    public Context getContext() {
+        return context;
+    }
+
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public Fichero(Context context) {
+        //SI NO TENGO EL CONTEXT DE LA ACTIVIDAD DE DONDE LA ESTOY LLAMANDO, ME GENERARÁ UN ERROR.
+        this.context = context;
+    }
 
 
     public void guardarPuntuacion(Jugador jugador) {
         FileOutputStream fos = null;
-
+        System.out.println(jugador.toStringJugador());
         try {
-            fos = openFileOutput(nombrefichero, MODE_APPEND);
+            fos = getContext().openFileOutput(nombrefichero, MODE_APPEND);
             fos.write(jugador.toStringJugador().getBytes());
-            Log.d("TAG", "Fichero guardado en: " + getFilesDir() + "/" + nombrefichero);
+            Log.d("TAG", "Fichero guardado en: " + getContext().getFilesDir() + "/" + nombrefichero);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -50,15 +65,17 @@ public class Fichero extends AppCompatActivity {
         ArrayList<Jugador> jugadores = new ArrayList<>();
         StringBuilder sB = new StringBuilder();
         try {
-            fos = openFileInput(nombrefichero);
+            fos = getContext().openFileInput(nombrefichero);
             InputStreamReader inputStreamReader = new InputStreamReader(fos);
             BufferedReader bw = new BufferedReader(inputStreamReader);
             String linea;
             Jugador jugador;
             while ((linea = bw.readLine()) != null) {
                 sB.append(linea);
+                System.out.println(sB);
                 jugador = Jugador.recuperarJugador(sB.toString());
                 jugadores.add(jugador);
+                sB = new StringBuilder();
                 linea = "";
             }
             Collections.sort(jugadores);

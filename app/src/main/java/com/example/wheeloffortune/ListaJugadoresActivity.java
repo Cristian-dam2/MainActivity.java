@@ -22,6 +22,7 @@ public class ListaJugadoresActivity extends AppCompatActivity {
     private RecyclerView tablaNombres;
     private TextView pruebaText;
     private Button boton_volver;
+    private Fichero fichero = new Fichero(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +32,7 @@ public class ListaJugadoresActivity extends AppCompatActivity {
         boton_volver = (Button) findViewById(R.id.boton_volver);
         tablaNombres = (RecyclerView) findViewById(R.id.myRecycler);
         tablaNombres.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        jugadores = new Fichero().recuperarInformacion();
+        jugadores = fichero.recuperarInformacion();
         Datos adapter = new Datos(jugadores);
         tablaNombres.setAdapter(adapter);
         boton_volver.setOnClickListener(new View.OnClickListener() {

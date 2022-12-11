@@ -9,21 +9,11 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 public class Palabra extends AppCompatActivity {
     private String palabra;
     private TextView[] cuadros;
     private String informacion;
-
-    public boolean isMusicapersonalizada() {
-        return musicapersonalizada;
-    }
-
-    public void setMusicapersonalizada(boolean musicapersonalizada) {
-        this.musicapersonalizada = musicapersonalizada;
-    }
-
     private boolean musicapersonalizada;
     private static int posicion_inicial;
     ArrayList<String> letrasMarcadas = new ArrayList<>();
@@ -47,6 +37,14 @@ public class Palabra extends AppCompatActivity {
 
     public void setLetrasMarcadas(ArrayList<String> letrasMarcadas) {
         this.letrasMarcadas = letrasMarcadas;
+    }
+
+    public boolean isMusicapersonalizada() {
+        return musicapersonalizada;
+    }
+
+    public void setMusicapersonalizada(boolean musicapersonalizada) {
+        this.musicapersonalizada = musicapersonalizada;
     }
 
     public static TextView[] getLetrasGeneradas() {
@@ -119,12 +117,15 @@ public class Palabra extends AppCompatActivity {
         this.palabra = adivinar[0];
         this.informacion = adivinar[1];
         this.musicapersonalizada = palabraHasCustomAudio(adivinar[0]);
+        this.cuadros = cuadros;
 
-
+        //INDICA LA POSICION DONDE SE VA A PINTAR EN GRIS LOS RECUADROS.
         this.posicion_inicial = (cuadros.length / 2) - (palabra.length() / 2);
         for (int i = this.posicion_inicial; i < this.posicion_inicial + palabra.length(); i++) {
             cuadros[i].setBackgroundResource(R.drawable.letra_sindescifrar);
         }
+
+        //SEGÚN LA PALABRA SELECCIONADA, SE REALIZA UN HASHMAP PARA GUARDAR LA LETRA Y LA POSICION.
         for (int i = 0; i < palabra.length(); i++) {
             String letra = String.valueOf(palabra.charAt(i));
             if (letrasAsignadas.containsKey(letra)) {
@@ -196,7 +197,7 @@ public class Palabra extends AppCompatActivity {
     }
 
     public boolean analizarLetra(String Vocal) {
-        boolean aux = false;
+        boolean aux = true;
         String minusVocal = Vocal;
         String letraMarcada = "letra" + Vocal;
         int temp;
@@ -206,15 +207,41 @@ public class Palabra extends AppCompatActivity {
         }
         letrasUtilizadas.add(Vocal);
 
-        if (ExisteLetramiPalabra(getPalabra(), Vocal)) {
+        if (ExisteLetramiPalabra(this.getPalabra(), Vocal)) {
 
         } else {
             return false;
         }
+        pintarLetra(id, letraMarcada, minusVocal, Vocal);
+//        for (int i = 0; i < id.size(); i++) {
+//            if (id.get(i).equals(letraMarcada)) {
+//                aux = true;
+//                temp = getDrawableId(id.get(i));
+//                if (letrasAsignadas.get(minusVocal.toUpperCase()).size() > 1) {
+//                    for (int j = 0; j < letrasAsignadas.get(Vocal.toUpperCase()).size(); j++) {
+//                        Integer numero = letrasAsignadas.get(Vocal.toUpperCase()).get(j);
+//                        cuadros[numero].setBackgroundResource(temp);
+//                    }
+//
+//                } else {
+//                    Integer numero = letrasAsignadas.get(Vocal.toUpperCase()).get(0);
+//                    cuadros[numero].setBackgroundResource(temp);
+//                }
+//
+//            }
+//        }
+        return aux;
 
+
+    }
+
+
+    private void pintarLetra(ArrayList<String> id, String letraMarcada, String minusVocal, String Vocal) {
+
+        int temp;
         for (int i = 0; i < id.size(); i++) {
             if (id.get(i).equals(letraMarcada)) {
-                aux = true;
+
                 temp = getDrawableId(id.get(i));
                 if (letrasAsignadas.get(minusVocal.toUpperCase()).size() > 1) {
                     for (int j = 0; j < letrasAsignadas.get(Vocal.toUpperCase()).size(); j++) {
@@ -229,13 +256,10 @@ public class Palabra extends AppCompatActivity {
 
             }
         }
-        return aux;
-
 
     }
 
     public int getDrawableId(String name) {
-        Class<?> c = R.drawable.class;
         Field f = null;
         int id = 0;
 
@@ -243,9 +267,9 @@ public class Palabra extends AppCompatActivity {
             f = R.drawable.class.getField(name);
             id = f.getInt(null);
         } catch (NoSuchFieldException e) {
-            Log.i("Reflection", "Missing drawable " + name);
+            Log.i("TAG", "Missing drawable " + name);
         } catch (IllegalAccessException e) {
-            Log.i("Reflection", "Illegal access to field " + name);
+            Log.i("TAG", "Illegal access to field " + name);
         }
 
         return id;
@@ -308,12 +332,12 @@ public class Palabra extends AppCompatActivity {
     }
 
 
-    public boolean palabraHasCustomAudio(String entrada ) {
+    private boolean palabraHasCustomAudio(String entrada) {
         String palabraconmusica = entrada.toLowerCase();
         Field[] f = null;
         f = R.raw.class.getFields();
         for (int i = 0; i < f.length; i++) {
-            if(f[i].toString() == palabraconmusica){
+            if (f[i].getName().equals(palabraconmusica)) {
                 return true;
             }
         }

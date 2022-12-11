@@ -2,10 +2,10 @@ package com.example.wheeloffortune;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -17,11 +17,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.Closeable;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-
+    private static final String nombrefichero = "Jugadores.txt";
     private static final String[] secciones = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",};
     private static final int[] gradosSecciones = new int[secciones.length];
     private static final Random random = new Random();
@@ -40,6 +43,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView[] conjuntoTextViews = new TextView[27];
     private Palabra palabraAdivinar;
     private static Jugador jugadarGuardar;
+    private Audio audio = new Audio(this);
+    private Fichero fichero = new Fichero(this);
+    private boolean acabado = false;
 
 
 
@@ -49,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         generarCuadros();
         obtenerGradosSecciones();
+
         pin = findViewById(R.id.pin);
         ruleta = findViewById(R.id.ruleta);
         botonGirar = findViewById(R.id.botongirar);
@@ -86,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+        mostrarTablero();
         botonFinalizar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -105,9 +112,9 @@ public class MainActivity extends AppCompatActivity {
         degree = random.nextInt(secciones.length - 1);
         RotateAnimation rotateAnimacion = new RotateAnimation(0, (360 * secciones.length) + gradosSecciones[degree],
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
-        rotateAnimacion.setDuration(8870);
+        rotateAnimacion.setDuration(8870);  //8870
         //SI COLOCO TRUE EN EL METODO SETFILLAFTER NO PUEDO HACER INVISIBLE MI IMAGEN
-        rotateAnimacion.setFillAfter(false);
+        rotateAnimacion.setFillAfter(true);
         rotateAnimacion.setInterpolator(new DecelerateInterpolator());
         rotateAnimacion.setAnimationListener(new Animation.AnimationListener() {
             @Override
@@ -124,8 +131,9 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     Thread.sleep(2500);
-                    ocultarRuleta();
-                    mostrarTablero();
+                  //  ocultarRuleta();
+                    introducirLetra.setVisibility(View.VISIBLE);
+                  //  mostrarTablero();
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -172,36 +180,10 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void audioVictoria() {
-        MediaPlayer win = MediaPlayer.create(this, R.raw.victoriasound);
-        win.start();
-
-    }
-
-    private void audioCorrecto() {
-        MediaPlayer correct = MediaPlayer.create(this, R.raw.acierto);
-        correct.start();
-    }
-
-    private void audioIncorrecto() {
-        MediaPlayer lose = MediaPlayer.create(this, R.raw.losesound);
-        lose.start();
-    }
-
-    private void audioGiro() {
-        MediaPlayer giro = MediaPlayer.create(this, R.raw.spinningeffect);
-        giro.start();
-    }
-
-    public void yatraMusic() {
-        MediaPlayer yatra = MediaPlayer.create(this, R.raw.yatra);
-        yatra.start();
-    }
-
     private void bloquearBotonesGiro() {
         botonGirar.setEnabled(false);
         botonFinalizar.setEnabled(false);
-        audioGiro();
+       audio.Giro();
     }
 
     private void desbloquearBotonesGiro() {
@@ -225,7 +207,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void mostrarTablero() {
         informacion.setVisibility(View.VISIBLE);
-        introducirLetra.setVisibility(View.VISIBLE);
+        //introducirLetra.setVisibility(View.VISIBLE);
         mostrarCuadrosLetras();
 
     }
@@ -233,8 +215,8 @@ public class MainActivity extends AppCompatActivity {
     private void ocultarTablero() {
         // informacion.setVisibility(View.INVISIBLE);
         introducirLetra.setVisibility(View.INVISIBLE);
-        mostrarRuleta();
-        ocultarCuadrosLetras();
+       // mostrarRuleta();
+        //ocultarCuadrosLetras();
     }
 
 
@@ -281,61 +263,54 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void enviarLetra() {
-        int aciertos = contarLetras(palabraAdivinar.getPalabra().toString());
+        int aciertos = contarLetras(palabraAdivinar.getPalabra());
         String letra = introducirLetra.getText().toString().toLowerCase();
+        ocultarTeclado();
         if (palabraAdivinar.analizarLetra(letra)) {
-            audioCorrecto();
+            audio.Correcto();
             sumarPuntos(valorConseguido);
-            introducirLetra.setText("");
             completarPalabra++;
             if (aciertos == completarPalabra) {
-                completarPalabra = 0;
-                if (palabraAdivinar.getPalabra().equals("YATRA")) {
-                    try {
-                        Thread.sleep(2000);
+                audio.musicaVictoria(palabraAdivinar);
 
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                    yatraMusic();
-                    try {
-                        Thread.sleep(8000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
-                } else {
-                    audioVictoria();
-                    try {
-                        Thread.sleep(3000);
+                try {
+                    Thread.sleep(10000);
 
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
-                jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(score.getText().toString()));
-                new Fichero().guardarPuntuacion(jugadarGuardar);
-                palabraAdivinar.limpiarValoreStaticos();
-                palabraAdivinar = new Palabra(conjuntoTextViews);
-                informacion.setText(palabraAdivinar.getInformacion());
+                acabado = true;
 
+//                jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(score.getText().toString()));
+//                fichero.guardarPuntuacion(jugadarGuardar);
+//                palabraAdivinar.limpiarValoreStaticos();
+//                palabraAdivinar = new Palabra(conjuntoTextViews);
+//                informacion.setText(palabraAdivinar.getInformacion());
+//                completarPalabra = 0;
+
+              //  finalizarActividad();
             }
 
 
+
         } else {
-            audioIncorrecto();
+            audio.Incorrecto();
             restar();
 
 
         }
-        ocultarTeclado();
-        introducirLetra.setText("");
         ocultarTablero();
+        introducirLetra.setText("");
         ruleta.setEnabled(true);
         try {
             Thread.sleep(2000);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
+        }
+
+        if (acabado == true){
+            finalizarActividad();
         }
 
 
@@ -360,10 +335,11 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void finalizarActividad() {
-        new Fichero().guardarPuntuacion(jugadarGuardar);
+        jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(score.getText().toString()));
+        fichero.guardarPuntuacion(jugadarGuardar);
         palabraAdivinar.limpiarValoreStaticos();
-        palabraAdivinar = null;
-        palabraAdivinar = new Palabra(conjuntoTextViews);
+       // palabraAdivinar = null;
+      //  palabraAdivinar = new Palabra(conjuntoTextViews);
         // informacion.setText(palabraAdivinar.getInformacion());
         finish();
 
@@ -374,6 +350,10 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+
+
+
 
 
 

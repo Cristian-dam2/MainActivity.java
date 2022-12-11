@@ -1,47 +1,80 @@
 package com.example.wheeloffortune;
 
+import android.content.Context;
 import android.media.MediaPlayer;
-import android.media.SoundPool;
+import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.lang.reflect.Field;
+
 public class Audio extends AppCompatActivity {
-    private MediaPlayer audio;
+    private Context context;
 
-
-
-    public Audio (Palabra palabra){
-        if(palabra.isMusicapersonalizada() == true){
-
-        }else{
-            audioVictoria();
-        }
-
+    public Context getContext() {
+        return context;
     }
 
-    public void audioVictoria() {
-        MediaPlayer win = MediaPlayer.create(this, R.raw.victoriasound);
+    public void setContext(Context context) {
+        this.context = context;
+    }
+
+    public Audio(Context context) {
+        this.context = context;
+    }
+
+
+
+    public void Victoria() {
+        MediaPlayer win = MediaPlayer.create(getContext(), R.raw.victoriasound);
         win.start();
 
+
+
     }
 
-    public void audioCorrecto() {
-        MediaPlayer correct = MediaPlayer.create(this, R.raw.acierto);
+    public void Correcto() {
+        MediaPlayer correct = MediaPlayer.create(getContext(), R.raw.acierto);
         correct.start();
     }
 
-    public void audioIncorrecto() {
-        MediaPlayer lose = MediaPlayer.create(this, R.raw.losesound);
+    public void Incorrecto() {
+        MediaPlayer lose = MediaPlayer.create(getContext(), R.raw.losesound);
         lose.start();
     }
 
-    public void audioGiro() {
-        MediaPlayer giro = MediaPlayer.create(this, R.raw.spinningeffect);
+    public void Giro() {
+
+        MediaPlayer giro = MediaPlayer.create(getContext(),R.raw.spinningeffect);
         giro.start();
+
     }
 
-    public void yatraMusic() {
-        MediaPlayer yatra = MediaPlayer.create(this, R.raw.yatra);
-        yatra.start();
+
+    public int getRawId(String name) {
+        Class<?> c = R.raw.class;
+        Field f = null;
+        int id = 0;
+
+        try {
+            f = R.raw.class.getField(name);
+            id = f.getInt(null);
+        } catch (NoSuchFieldException e) {
+            Log.i("Reflection", "Missing raw " + name);
+        } catch (IllegalAccessException e) {
+            Log.i("Reflection", "Illegal access to field " + name);
+        }
+
+        return id;
+    }
+
+    public void musicaVictoria(Palabra palabra){
+        if (palabra.isMusicapersonalizada()) {
+            int id = getRawId(palabra.getPalabra().toLowerCase());
+            MediaPlayer music = MediaPlayer.create(getContext(), id);
+            music.start();
+        } else {
+            Victoria();
+        }
     }
 }

@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
     private EditText nombre;
     private Button verHistorial;
+    private Button botonIniciarJuego;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,14 @@ public class LoginActivity extends AppCompatActivity {
         nombre = (EditText) findViewById(R.id.login_campo_nombre);
         verHistorial = (Button) findViewById(R.id.btnVerHistorial);
         nombre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iniciarJuego();
+            }
+        });
+
+        botonIniciarJuego = (Button) findViewById(R.id.login_boton_iniciar_sesion);
+        botonIniciarJuego.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 iniciarJuego();
