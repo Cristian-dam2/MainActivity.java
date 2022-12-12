@@ -327,23 +327,7 @@
         app:layout_constraintTop_toBottomOf="@+id/c17"
         tools:ignore="MissingConstraints" />
 
-    <Button
-        android:id="@+id/botongirar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="26dp"
-        android:backgroundTint="@color/naranja"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/girar"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@+id/boton_Salir"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:ignore="MissingConstraints" />
+
 
     <Button
         android:id="@+id/boton_nombre"
@@ -437,6 +421,7 @@
         android:id="@+id/InformacionparaAdivinar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
         android:layout_marginBottom="90dp"
         android:elegantTextHeight="false"
         android:fontFamily="sans-serif-condensed"
@@ -446,7 +431,6 @@
         android:textSize="24sp"
         android:textStyle="bold|italic"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/botongirar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/c22" />

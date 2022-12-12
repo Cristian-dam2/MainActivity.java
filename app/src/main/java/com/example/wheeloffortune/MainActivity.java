@@ -33,7 +33,6 @@ public class MainActivity extends AppCompatActivity {
     private int degree = 0;
     private boolean girando = false;
     private ImageView ruleta;
-    private Button botonGirar;
     private TextView score;
     private Button cartelNombre;
     private Button botonFinalizar;
@@ -58,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
         pin = findViewById(R.id.pin);
         ruleta = findViewById(R.id.ruleta);
-        botonGirar = findViewById(R.id.botongirar);
+      //  botonGirar = findViewById(R.id.botongirar);
         score = (TextView) findViewById(R.id.puntos);
         cartelNombre = findViewById(R.id.boton_nombre);
         cartelNombre.setText(getIntent().getStringExtra("nombre_usuario"));
@@ -83,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 //        }
 
         informacion.setText(palabraAdivinar.getInformacion());
-        botonGirar.setOnClickListener(new View.OnClickListener() {
+        ruleta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!girando) {
@@ -181,13 +180,13 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void bloquearBotonesGiro() {
-        botonGirar.setEnabled(false);
+        //botonGirar.setVisibility(View.INVISIBLE);
         botonFinalizar.setEnabled(false);
        audio.Giro();
     }
 
     private void desbloquearBotonesGiro() {
-        botonGirar.setEnabled(true);
+        //botonGirar.setEnabled(true);
         botonFinalizar.setEnabled(true);
     }
 
@@ -195,13 +194,13 @@ public class MainActivity extends AppCompatActivity {
         pin.setVisibility(View.INVISIBLE);
         // ruleta.clearAnimation(); SI NO COLOCO TRUE EN EL SETFILLAFTER DE LA ANIMACION
         ruleta.setVisibility(View.INVISIBLE);
-        botonGirar.setVisibility(View.INVISIBLE);
+      //  botonGirar.setVisibility(View.INVISIBLE);
     }
 
     private void mostrarRuleta() {
         pin.setVisibility(View.VISIBLE);
         ruleta.setVisibility(View.VISIBLE);
-        botonGirar.setVisibility(View.VISIBLE);
+       // botonGirar.setVisibility(View.VISIBLE);
 
     }
 
@@ -267,6 +266,7 @@ public class MainActivity extends AppCompatActivity {
         String letra = introducirLetra.getText().toString().toLowerCase();
         ocultarTeclado();
         if (palabraAdivinar.analizarLetra(letra)) {
+            palabraAdivinar.pintarLetra(letra);
             audio.Correcto();
             sumarPuntos(valorConseguido);
             completarPalabra++;
@@ -300,6 +300,7 @@ public class MainActivity extends AppCompatActivity {
 
         }
         ocultarTablero();
+       // botonGirar.setVisibility(View.VISIBLE);
         introducirLetra.setText("");
         ruleta.setEnabled(true);
         try {

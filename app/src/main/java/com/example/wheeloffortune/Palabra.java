@@ -207,12 +207,10 @@ public class Palabra extends AppCompatActivity {
         }
         letrasUtilizadas.add(Vocal);
 
-        if (ExisteLetramiPalabra(this.getPalabra(), Vocal)) {
-
-        } else {
+        if (!ExisteLetramiPalabra(this.getPalabra(), Vocal)) {
             return false;
         }
-        pintarLetra(id, letraMarcada, minusVocal, Vocal);
+       // pintarLetra(id, letraMarcada, minusVocal, Vocal);
 //        for (int i = 0; i < id.size(); i++) {
 //            if (id.get(i).equals(letraMarcada)) {
 //                aux = true;
@@ -236,8 +234,10 @@ public class Palabra extends AppCompatActivity {
     }
 
 
-    private void pintarLetra(ArrayList<String> id, String letraMarcada, String minusVocal, String Vocal) {
-
+    public void pintarLetra( String Vocal) {
+        String minusVocal = Vocal.toLowerCase();
+        String letraMarcada =  "letra" + minusVocal;
+        ArrayList<String> id = generadorCartasMarcadas();
         int temp;
         for (int i = 0; i < id.size(); i++) {
             if (id.get(i).equals(letraMarcada)) {
