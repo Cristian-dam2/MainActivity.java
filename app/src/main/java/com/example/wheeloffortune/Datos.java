@@ -31,7 +31,6 @@ public class Datos extends RecyclerView.Adapter<Datos.ViewHolderDatos> {
 
     @Override
     public int getItemCount() {
-
         return jugadores.size();
     }
 

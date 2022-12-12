@@ -9,8 +9,6 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Palabra extends AppCompatActivity {
     private String palabra;
@@ -174,7 +172,6 @@ public class Palabra extends AppCompatActivity {
                 seleccionado[1] = "Profesor de Bases de Datos";
                 return seleccionado;
 
-
         }
 
         return seleccionado;
@@ -274,7 +271,11 @@ public class Palabra extends AppCompatActivity {
     }
 
 
-    private boolean ExisteLetramiPalabra(String nombre, String letrapequenha){
+    private boolean ExisteLetramiPalabra(String nombre, String letrapequenha) {
+        if (letrapequenha.length() == 0 || letrapequenha == null) {
+            return false;
+        }
+
         String namesinletrasRepetidas = quitarLetrasRepetidasDelNombre(nombre.toLowerCase());
 
         char [] letras = new char[namesinletrasRepetidas.length()];
