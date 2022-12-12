@@ -12,6 +12,7 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
     private EditText nombre;
     private Button verHistorial;
+    private Button botonIniciarJuego;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,24 +20,38 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login);
         nombre = (EditText) findViewById(R.id.login_campo_nombre);
         verHistorial = (Button) findViewById(R.id.btnVerHistorial);
+        nombre.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iniciarJuego();
+            }
+        });
+
+        botonIniciarJuego = (Button) findViewById(R.id.login_boton_iniciar_sesion);
+        botonIniciarJuego.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                iniciarJuego();
+            }
+        });
+
     }
 
 
-    public void iniciarJuego(View view) {
+    public void iniciarJuego() {
         if(nombre.getText().toString().equals("") || !Character.isLetter(nombre.getText().toString().charAt(0))){
             Toast.makeText(this,"Introduce un nombre antes de empezar", Toast.LENGTH_SHORT).show();
             return;
         }
         Intent myIntent = new Intent(this, MainActivity.class);
         myIntent.putExtra("nombre_usuario", nombre.getText().toString());
-        nombre.setText("");
         startActivity(myIntent);
+        nombre.setText("");
 
 
     }
-    public void verHistorial(View view){
+    public void verListaJugadores(View view){
         Intent myIntent = new Intent(this,ListaJugadoresActivity.class);
-        //myIntent.putExtra("nombre_usuario", nombre.getText().toString());
         nombre.setText("");
         startActivity(myIntent);
     }
