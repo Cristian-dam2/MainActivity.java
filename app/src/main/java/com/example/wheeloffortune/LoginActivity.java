@@ -13,6 +13,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText nombre;
     private Button verHistorial;
     private Button botonIniciarJuego;
+    private Fichero file = new Fichero(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.login);
         nombre = (EditText) findViewById(R.id.login_campo_nombre);
         verHistorial = (Button) findViewById(R.id.btnVerHistorial);
+
         nombre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,7 +36,9 @@ public class LoginActivity extends AppCompatActivity {
                 iniciarJuego();
             }
         });
-
+        if (file.existeArchivo() == false){
+            file.crearFichero();
+        }
     }
 
 

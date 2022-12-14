@@ -9,9 +9,9 @@ public class Jugador implements Comparable<Jugador> {
         this.puntuacion = puntuacion;
     }
 
-    public Jugador(Jugador entrada) {
-        this.nombre = entrada.getNombre();
-        this.puntuacion = entrada.getPuntuacion();
+    public Jugador(Jugador jugador) {
+        this.nombre = jugador.getNombre();
+        this.puntuacion = jugador.getPuntuacion();
     }
 
     public String getNombre() {
@@ -32,18 +32,25 @@ public class Jugador implements Comparable<Jugador> {
 
     @Override
     public int compareTo(Jugador jugador) {
-
         if (jugador.getPuntuacion() < puntuacion) {
             return -1;
-        } else if (jugador.getPuntuacion() < puntuacion) {
-
-            return 0;
-        } else {
+        }
+        if (jugador.getPuntuacion() > puntuacion) {
             return 1;
         }
+
+        for (int i = 0; i < nombre.length(); i++) {
+            if (jugador.getNombre().charAt(i) < nombre.charAt(i)) {
+                return 1;
+            }
+            if (jugador.getNombre().charAt(i) > nombre.charAt(i)) {
+                return -1;
+            }
+        }
+        return 0;
     }
 
-    public  String toStringJugador() {
+    public String toStringJugador() {
         return this.getNombre().toUpperCase() + "$" + String.valueOf(this.getPuntuacion()) + "\n";
     }
 

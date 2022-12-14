@@ -6,7 +6,9 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -46,17 +48,41 @@ public class Fichero extends AppCompatActivity {
         }
     }
 
+
+    public boolean existeArchivo(){
+        String ruta = getContext().getFilesDir() + "/" + nombre_fichero;
+        return new File(ruta).exists();
+    }
+
+    public void crearFichero() {
+        FileOutputStream fos = null;
+
+        try {
+            fos = getContext().openFileOutput(nombre_fichero, MODE_APPEND);
+            fos.write("".getBytes());
+            System.out.println("SE CREO EL FICHERO POR PRIMERA VEZ");
+            Log.d("ARCHIVO NUEVO", "SE CREO EL ARCHIVO" + getContext().getFilesDir() + File.separator + nombre_fichero);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            CerrarFlujos.cerrarStream(fos);
+        }
+    }
+
+
     public ArrayList<Jugador> leerJugador() {
         FileInputStream fos = null;
         ArrayList<Jugador> jugadores = new ArrayList<>();
         StringBuilder sB = new StringBuilder();
         try {
             fos = getContext().openFileInput(nombre_fichero);
+
             BufferedReader br = new BufferedReader(new InputStreamReader(fos));
             String linea;
             Jugador jugador;
 
-            while ((linea = br.readLine()) != null) {
+            while (fos.available() > 0) {
+                linea = br.readLine();
                 sB.append(linea);
                 System.out.println(sB);
                 jugador = Jugador.recuperarJugador(sB.toString());
@@ -71,14 +97,16 @@ public class Fichero extends AppCompatActivity {
             CerrarFlujos.cerrarStream(fos);
         }
 
-        return mejoresJugadores(jugadores);
+        return mejoresJugadores(jugadores, 10);
     }
 
-    private ArrayList<Jugador> mejoresJugadores(ArrayList<Jugador> entrada) {
+    private ArrayList<Jugador> mejoresJugadores(ArrayList<Jugador> entrada, int maximo) {
         ArrayList<Jugador> mejoresJugadores = new ArrayList<>();
-        for (int i = 0; i < entrada.size() || i < 10; i++) {
+        for (int i = 0; i < entrada.size() && i < maximo; i++) {
             mejoresJugadores.add(entrada.get(i));
         }
         return mejoresJugadores;
     }
+
+
 }
