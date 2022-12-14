@@ -34,6 +34,7 @@ public class Datos extends RecyclerView.Adapter<Datos.ViewHolderDatos> {
         return jugadores.size();
     }
 
+
     public class ViewHolderDatos extends RecyclerView.ViewHolder {
         TextView datos;
 
@@ -43,7 +44,6 @@ public class Datos extends RecyclerView.Adapter<Datos.ViewHolderDatos> {
         }
         public void asignarDatos(Jugador jugador) {
              datos.setText(jugador.getNombre() + " _____________________ " + jugador.getPuntuacion());
-
         }
     }
 }
