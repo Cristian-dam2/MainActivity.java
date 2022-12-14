@@ -15,13 +15,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 public class Fichero extends AppCompatActivity {
-    private static final String nombrefichero = "Jugadores.txt";
+    private static final String nombre_fichero = "Jugadores.txt";
     private Context context;
 
     public Context getContext() {
         return context;
     }
-
     public void setContext(Context context) {
         this.context = context;
     }
@@ -34,17 +33,18 @@ public class Fichero extends AppCompatActivity {
 
     public void guardarPuntuacion(Jugador jugador) {
         FileOutputStream fos = null;
-        System.out.println(jugador.toStringJugador());
+        String texto = jugador.toStringJugador();
+        Log.d("INFO PARA ESCRIBIR", texto);
+
         try {
-            fos = getContext().openFileOutput(nombrefichero, MODE_APPEND);
-            fos.write(jugador.toStringJugador().getBytes());
-            Log.d("TAG", "Fichero guardado en: " + getContext().getFilesDir() + "/" + nombrefichero);
+            fos = getContext().openFileOutput(nombre_fichero, MODE_APPEND);
+            fos.write(texto.getBytes());
+            Log.d("TAG", "Datos guardados en: " + getContext().getFilesDir() + "/" + nombre_fichero);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             cerrarFlujo(fos);
         }
-
     }
 
 
@@ -58,14 +58,12 @@ public class Fichero extends AppCompatActivity {
         }
     }
 
-
-
     public ArrayList<Jugador> recuperarInformacion() {
         FileInputStream fos = null;
         ArrayList<Jugador> jugadores = new ArrayList<>();
         StringBuilder sB = new StringBuilder();
         try {
-            fos = getContext().openFileInput(nombrefichero);
+            fos = getContext().openFileInput(nombre_fichero);
             InputStreamReader inputStreamReader = new InputStreamReader(fos);
             BufferedReader bw = new BufferedReader(inputStreamReader);
             String linea;
