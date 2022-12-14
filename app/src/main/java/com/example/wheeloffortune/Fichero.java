@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -34,7 +33,7 @@ public class Fichero extends AppCompatActivity {
 
     public void guardarJugador(Jugador jugador) {
         FileOutputStream fos = null;
-        String texto = jugador.toStringJugador();
+        String texto = jugador.toString();
         Log.d("INFO PARA ESCRIBIR", texto);
 
         try {
@@ -60,8 +59,7 @@ public class Fichero extends AppCompatActivity {
         try {
             fos = getContext().openFileOutput(nombre_fichero, MODE_APPEND);
             fos.write("".getBytes());
-            System.out.println("SE CREO EL FICHERO POR PRIMERA VEZ");
-            Log.d("ARCHIVO NUEVO", "SE CREO EL ARCHIVO" + getContext().getFilesDir() + File.separator + nombre_fichero);
+            Log.d("ARCHIVO NUEVO", "SE CREO EL ARCHIVO " + getContext().getFilesDir() + File.separator + nombre_fichero);
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
@@ -83,11 +81,10 @@ public class Fichero extends AppCompatActivity {
 
             while (fos.available() > 0) {
                 linea = br.readLine();
-                sB.append(linea);
-                System.out.println(sB);
-                jugador = Jugador.recuperarJugador(sB.toString());
+                Log.d("LINEA LEIDA", linea);
+
+                jugador = Jugador.recuperarJugador(linea);
                 jugadores.add(jugador);
-                sB = new StringBuilder();
             }
             Collections.sort(jugadores);
 

@@ -197,6 +197,10 @@ public class Palabra extends AppCompatActivity {
     }
 
     public boolean analizarLetra(String Vocal) {
+        if (Vocal.isEmpty() || Vocal == null) {
+            return false;
+        }
+
         boolean aux = true;
         String minusVocal = Vocal;
         String letraMarcada = "letra" + Vocal;

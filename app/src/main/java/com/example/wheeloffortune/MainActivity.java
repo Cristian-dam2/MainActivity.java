@@ -262,6 +262,7 @@ public class MainActivity extends AppCompatActivity {
         ocultarTeclado();
         if (palabraAdivinar.analizarLetra(letra)) {
             palabraAdivinar.pintarLetra(letra);
+
             audio.Correcto();
             sumarPuntos(valorConseguido);
             completarPalabra++;

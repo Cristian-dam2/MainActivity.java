@@ -50,27 +50,28 @@ public class Jugador implements Comparable<Jugador> {
         return 0;
     }
 
-    public String toStringJugador() {
+    @Override
+    public String toString() {
         return this.getNombre().toUpperCase() + "$" + String.valueOf(this.getPuntuacion()) + "\n";
     }
 
 
     public static Jugador recuperarJugador(String entrada) {
-        String auxiliar = "";
+        String bufer = "";
+
         String nombre = "";
         int puntuacion = 0;
         for (int i = 0; i < entrada.length(); i++) {
             if (entrada.charAt(i) != '$') {
-                auxiliar = auxiliar + entrada.charAt(i);
+                bufer = bufer + entrada.charAt(i);
 
             } else {
-                nombre = auxiliar;
-                auxiliar = "";
+                nombre = bufer;
+                bufer = "";
             }
         }
 
-        puntuacion = Integer.valueOf(auxiliar);
-
+        puntuacion = Integer.valueOf(bufer);
         return new Jugador(nombre, puntuacion);
     }
 }
