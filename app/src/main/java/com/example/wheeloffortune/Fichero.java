@@ -43,18 +43,7 @@ public class Fichero extends AppCompatActivity {
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
-            cerrarFlujo(fos);
-        }
-    }
-
-
-    public static void cerrarFlujo(Closeable c1) {
-        try {
-            if (c1 != null) {
-                c1.close();
-            }
-        } catch (IOException ex) {
-            Log.d("404", "Error cerrando un stream");
+            CerrarFlujos.cerrarStream(fos);
         }
     }
 
@@ -81,7 +70,7 @@ public class Fichero extends AppCompatActivity {
         } catch (IOException e) {
             Log.d("TAG", "NO PUDO RECUPERAR JUGADORES");
         } finally {
-           cerrarFlujo(fos);
+            CerrarFlujos.cerrarStream(fos);
         }
 
         return mejoresJugadore(jugadores);
@@ -93,7 +82,7 @@ public class Fichero extends AppCompatActivity {
         for (int i = 0; i < entrada.size(); i++) {
             mejoresJugadores.add(entrada.get(contador));
             contador++;
-            if(contador ==10){
+            if (contador ==10){
                 return mejoresJugadores;
             }
         }
