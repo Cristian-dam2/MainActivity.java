@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class Datos extends RecyclerView.Adapter<Datos.ViewHolderDatos> {
-    ArrayList<Jugador> jugadores;
+    private ArrayList<Jugador> jugadores;
 
     public Datos(ArrayList<Jugador> jugadores) {
         this.jugadores = jugadores;
@@ -20,13 +20,12 @@ public class Datos extends RecyclerView.Adapter<Datos.ViewHolderDatos> {
     @NonNull
     @Override
     public Datos.ViewHolderDatos onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_list,null,false);
-        return new ViewHolderDatos(view);
+        return new ViewHolderDatos(LayoutInflater.from(parent.getContext()).inflate(R.layout.modelo_lista_jugadores,null,false));
     }
 
     @Override
     public void onBindViewHolder(@NonNull Datos.ViewHolderDatos holder, int position) {
-        holder.asignarDatos(jugadores.get(position));
+        holder.formatearDatos(jugadores.get(position));
     }
 
     @Override
@@ -42,7 +41,7 @@ public class Datos extends RecyclerView.Adapter<Datos.ViewHolderDatos> {
             super(itemView);
             datos = (TextView) itemView.findViewById(R.id.idDato);
         }
-        public void asignarDatos(Jugador jugador) {
+        public void formatearDatos(Jugador jugador) {
              datos.setText(jugador.getNombre() + " _____________________ " + jugador.getPuntuacion());
         }
     }

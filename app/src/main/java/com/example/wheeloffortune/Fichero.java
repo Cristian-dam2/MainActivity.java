@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.BufferedReader;
-import java.io.Closeable;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -31,7 +30,7 @@ public class Fichero extends AppCompatActivity {
     }
 
 
-    public void guardarPuntuacion(Jugador jugador) {
+    public void guardarJugador(Jugador jugador) {
         FileOutputStream fos = null;
         String texto = jugador.toStringJugador();
         Log.d("INFO PARA ESCRIBIR", texto);
@@ -47,23 +46,22 @@ public class Fichero extends AppCompatActivity {
         }
     }
 
-    public ArrayList<Jugador> recuperarInformacion() {
+    public ArrayList<Jugador> leerJugador() {
         FileInputStream fos = null;
         ArrayList<Jugador> jugadores = new ArrayList<>();
         StringBuilder sB = new StringBuilder();
         try {
             fos = getContext().openFileInput(nombre_fichero);
-            InputStreamReader inputStreamReader = new InputStreamReader(fos);
-            BufferedReader bw = new BufferedReader(inputStreamReader);
+            BufferedReader br = new BufferedReader(new InputStreamReader(fos));
             String linea;
             Jugador jugador;
-            while ((linea = bw.readLine()) != null) {
+
+            while ((linea = br.readLine()) != null) {
                 sB.append(linea);
                 System.out.println(sB);
                 jugador = Jugador.recuperarJugador(sB.toString());
                 jugadores.add(jugador);
                 sB = new StringBuilder();
-                linea = "";
             }
             Collections.sort(jugadores);
 
@@ -73,22 +71,14 @@ public class Fichero extends AppCompatActivity {
             CerrarFlujos.cerrarStream(fos);
         }
 
-        return mejoresJugadore(jugadores);
+        return mejoresJugadores(jugadores);
     }
 
-    private ArrayList<Jugador> mejoresJugadore(ArrayList<Jugador> entrada){
+    private ArrayList<Jugador> mejoresJugadores(ArrayList<Jugador> entrada) {
         ArrayList<Jugador> mejoresJugadores = new ArrayList<>();
-        int contador = 0;
-        for (int i = 0; i < entrada.size(); i++) {
-            mejoresJugadores.add(entrada.get(contador));
-            contador++;
-            if (contador ==10){
-                return mejoresJugadores;
-            }
+        for (int i = 0; i < entrada.size() || i < 10; i++) {
+            mejoresJugadores.add(entrada.get(i));
         }
         return mejoresJugadores;
     }
-
-
-
 }

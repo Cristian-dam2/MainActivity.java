@@ -3,9 +3,7 @@ package com.example.wheeloffortune;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
@@ -17,9 +15,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.Closeable;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -337,7 +332,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void finalizarActividad() {
         jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(score.getText().toString()));
-        fichero.guardarPuntuacion(jugadarGuardar);
+        fichero.guardarJugador(jugadarGuardar);
         palabraAdivinar.limpiarValoreStaticos();
        // palabraAdivinar = null;
       //  palabraAdivinar = new Palabra(conjuntoTextViews);

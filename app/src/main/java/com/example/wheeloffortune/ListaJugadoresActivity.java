@@ -5,17 +5,11 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Collections;
 
 public class ListaJugadoresActivity extends AppCompatActivity {
     private ArrayList<Jugador> jugadores;
@@ -32,7 +26,7 @@ public class ListaJugadoresActivity extends AppCompatActivity {
         boton_volver = (Button) findViewById(R.id.boton_volver);
         tablaNombres = (RecyclerView) findViewById(R.id.myRecycler);
         tablaNombres.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        jugadores = fichero.recuperarInformacion();
+        jugadores = fichero.leerJugador();
         Datos adapter = new Datos(jugadores);
         tablaNombres.setAdapter(adapter);
         boton_volver.setOnClickListener(new View.OnClickListener() {
