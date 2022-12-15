@@ -320,7 +320,7 @@ public class Palabra extends AppCompatActivity {
         return false;
     }
 
-
+    // Método auxiliar que quita las letras repetidas del nombre
     private String quitarLetrasRepetidasDelNombre(String e) {
         StringBuilder sinRepetir = new StringBuilder();
         for (int i = 0; i < e.length(); i++) {
@@ -332,20 +332,16 @@ public class Palabra extends AppCompatActivity {
         return sinRepetir.toString();
     }
 
-
     private boolean palabraHasCustomAudio(String entrada) {
-        String palabraconmusica = entrada.toLowerCase();
+        String entrada_en_minusculas = entrada.toLowerCase();
         Field[] f = null;
         f = R.raw.class.getFields();
         for (int i = 0; i < f.length; i++) {
-            if (f[i].getName().equals(palabraconmusica)) {
+            if (f[i].getName().equals(entrada_en_minusculas)) {
                 return true;
             }
         }
 
         return false;
-
     }
-
-
 }
