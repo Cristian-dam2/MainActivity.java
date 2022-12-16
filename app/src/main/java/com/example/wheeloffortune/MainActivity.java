@@ -19,7 +19,6 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String nombrefichero = "Jugadores.txt";
     private static final String[] secciones = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",};
     private static final int[] gradosSecciones = new int[secciones.length];
     private static final Random random = new Random();
@@ -33,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     private Button botonFinalizar;
     private ImageView pin;
     private EditText introducirLetra;
+    private EditText introducirPalabra;
     private TextView informacion;
     private TextView[] conjuntoTextViews = new TextView[27];
     private Palabra palabraAdivinar;
@@ -40,6 +40,8 @@ public class MainActivity extends AppCompatActivity {
     private Audio audio = new Audio(this);
     private Fichero fichero = new Fichero(this);
     private boolean acabado = false;
+    private TextView resolverPalabra;
+
 
 
 
@@ -49,10 +51,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         generarCuadros();
         obtenerGradosSecciones();
+        resolverPalabra = (TextView) findViewById(R.id.textResolverPalabra);
 
         pin = findViewById(R.id.pin);
         ruleta = findViewById(R.id.ruleta);
-      //  botonGirar = findViewById(R.id.botongirar);
         score = (TextView) findViewById(R.id.puntos);
         cartelNombre = findViewById(R.id.boton_nombre);
         cartelNombre.setText(getIntent().getStringExtra("nombre_usuario"));
@@ -61,9 +63,20 @@ public class MainActivity extends AppCompatActivity {
         introducirLetra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                correr();
+                enviarLetra();
             }
         });
+
+
+        introducirPalabra = (EditText) findViewById(R.id.editTextColocarPalabra);
+        introducirPalabra.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                resolverPalabra();
+            }
+        });
+
+
         informacion = (TextView) findViewById(R.id.InformacionparaAdivinar);
         palabraAdivinar = new Palabra(conjuntoTextViews);
 //        if(palabraAdivinar != null){
@@ -103,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void girar() {
         ruleta.setEnabled(false);
+        resolverPalabra.setEnabled(false);
         degree = random.nextInt(secciones.length - 1);
         RotateAnimation rotateAnimacion = new RotateAnimation(0, (360 * secciones.length) + gradosSecciones[degree],
                 RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
@@ -121,6 +135,7 @@ public class MainActivity extends AppCompatActivity {
                 valorConseguido = Integer.valueOf(secciones[secciones.length - (degree + 1)]);
                 Toast.makeText(MainActivity.this, "Puedes ganar " + valorConseguido + " puntos, si aciertas!!!", Toast.LENGTH_LONG).show();
                 girando = false;
+                resolverPalabra.setEnabled(true);
                 desbloquearBotonesGiro();
 
                 try {
@@ -255,6 +270,33 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void resolverPalabra(){
+        String palabraIntroducida = introducirPalabra.getText().toString().toLowerCase();
+        String palabraAadivinar = palabraAdivinar.getPalabra().toLowerCase();
+        boolean flag = true;
+
+        for (int i = 0; i < palabraAadivinar.length(); i++) {
+            if(palabraAadivinar.charAt(i) != palabraIntroducida.charAt(i)){
+                flag = false;
+                break;
+            }
+        }
+
+        if(flag == false){
+            audio.Incorrecto();
+        }
+        palabraAdivinar.pintarPalabra();
+        ocultarTeclado();
+        audio.musicaVictoria(palabraAdivinar);
+
+        try {
+            Thread.sleep(5000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        finalizarActividad();
+    }
+
 
     public void enviarLetra() {
         int aciertos = contarLetras(palabraAdivinar.getPalabra());
@@ -309,11 +351,12 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void correr(){
-        enviarLetra();
-        if (acabado == true){
-            finalizarActividad();
-        }
+
+
+
+    public void activarResolverPalabra(){
+       introducirLetra.setVisibility(View.INVISIBLE);
+       introducirPalabra.setVisibility(View.VISIBLE);
     }
 
     private void ocultarTeclado() {
@@ -352,11 +395,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-
-
-
-
-
-
-
+    public void activarResolverPalabra(View view) {
+        activarResolverPalabra();
+    }
 }

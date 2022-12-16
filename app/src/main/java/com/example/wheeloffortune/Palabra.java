@@ -19,7 +19,7 @@ public class Palabra extends AppCompatActivity {
 
     private static int posicion_inicial;
     private static TextView[] letrasGeneradas = new TextView[27];
-    public static HashMap<Character, List<Integer>> letrasAsignadas = new HashMap<>();
+    public static HashMap<String, List<Integer>> letrasAsignadas = new HashMap<>();
     public static int coincidencias = 0;
     public static ArrayList<String> letrasUtilizadas = new ArrayList<>();
 
@@ -59,10 +59,10 @@ public class Palabra extends AppCompatActivity {
         Palabra.letrasGeneradas = letrasGeneradas;
     }
 
-    public static HashMap<Character, List<Integer>> getLetrasAsignadas() {
+    public static HashMap<String, List<Integer>> getLetrasAsignadas() {
         return letrasAsignadas;
     }
-    public static void setLetrasAsignadas(HashMap<Character, List<Integer>> letrasAsignadas) {
+    public static void setLetrasAsignadas(HashMap<String, List<Integer>> letrasAsignadas) {
         Palabra.letrasAsignadas = letrasAsignadas;
     }
 
@@ -128,7 +128,7 @@ public class Palabra extends AppCompatActivity {
         // SEGÚN LA PALABRA SELECCIONADA, SE REALIZA UN HASHMAP PARA GUARDAR LA LETRA Y LA POSICION.
         int posicion_actual = this.posicion_inicial;
         for (int i = 0; i < palabra.length(); i++) {
-            char letra = palabra.charAt(i);
+            String letra = String.valueOf(palabra.charAt(i));
 
             if (letrasAsignadas.containsKey(letra)) {
                 letrasAsignadas.get(letra).add(posicion_actual);
@@ -148,7 +148,7 @@ public class Palabra extends AppCompatActivity {
 
         int a = (int)((Math.random() * (7 - 1)) + 1);
 
-        switch (0) {
+        switch (a) {
             case 0: //debug
                 seleccionado[0] = "AZ";
                 seleccionado[1] = "A y Z";
@@ -261,6 +261,13 @@ public class Palabra extends AppCompatActivity {
             }
         }
 
+    }
+
+    public void pintarPalabra(){
+        String palabra  = quitarLetrasRepetidasDelNombre(getPalabra());
+        for (int i = 0; i < palabra.length(); i++) {
+            pintarLetra(String.valueOf(palabra.charAt(i)));
+        }
     }
 
     public int getDrawableId(String name) {
