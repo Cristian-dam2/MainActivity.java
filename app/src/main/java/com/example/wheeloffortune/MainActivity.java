@@ -61,7 +61,7 @@ public class MainActivity extends AppCompatActivity {
         introducirLetra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                enviarLetra();
+                correr();
             }
         });
         informacion = (TextView) findViewById(R.id.InformacionparaAdivinar);
@@ -306,11 +306,14 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+
+    }
+
+    public void correr(){
+        enviarLetra();
         if (acabado == true){
             finalizarActividad();
         }
-
-
     }
 
     private void ocultarTeclado() {

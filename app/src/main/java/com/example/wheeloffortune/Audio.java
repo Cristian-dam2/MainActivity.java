@@ -28,9 +28,6 @@ public class Audio extends AppCompatActivity {
     public void Victoria() {
         MediaPlayer win = MediaPlayer.create(getContext(), R.raw.victoriasound);
         win.start();
-
-
-
     }
 
     public void Correcto() {

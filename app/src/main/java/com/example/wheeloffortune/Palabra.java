@@ -148,7 +148,7 @@ public class Palabra extends AppCompatActivity {
 
         int a = (int)((Math.random() * (7 - 1)) + 1);
 
-        switch (a) {
+        switch (0) {
             case 0: //debug
                 seleccionado[0] = "AZ";
                 seleccionado[1] = "A y Z";
