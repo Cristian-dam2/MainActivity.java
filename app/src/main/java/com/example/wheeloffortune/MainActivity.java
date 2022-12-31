@@ -24,10 +24,11 @@ public class MainActivity extends AppCompatActivity {
     private static final Random random = new Random();
     private static int valorConseguido = 0;
     private static int completarPalabra = 0;
-    private int degree = 0;
+    private static Jugador jugadarGuardar;
     private boolean girando = false;
+    private int degree = 0;
     private ImageView ruleta;
-    private TextView score;
+    private TextView puntuacion;
     private Button cartelNombre;
     private Button botonFinalizar;
     private ImageView pin;
@@ -36,31 +37,41 @@ public class MainActivity extends AppCompatActivity {
     private TextView informacion;
     private TextView[] conjuntoTextViews = new TextView[27];
     private Palabra palabraAdivinar;
-    private static Jugador jugadarGuardar;
     private Audio audio = new Audio(this);
     private Fichero fichero = new Fichero(this);
-    private boolean acabado = false;
     private TextView resolverPalabra;
-    private C diosito;
-
-
+    private Esperar Esperando = new Esperar();
+    private C cc = new C();
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        cc.setBoo(false);
+        cc.setOnBooChangeListener(new C.BooChangeListener() {
+            @Override
+            public void OnBooChange(boolean Boo) {
+
+            }
+
+            @Override
+            public void onBooChange(boolean b) {
+                Esperando.segundos(500);
+                palabraAdivinar.pintarPalabra();
+                audio.musicaVictoria(palabraAdivinar);
+                finalizarActividad();
+            }
+        });
         setContentView(R.layout.activity_main);
         generarCuadros();
+        mostrarCuadrosLetras();
         obtenerGradosSecciones();
-        diosito = new C();
-        //SOLUCIONAR ESTO DE ARRIBA
         resolverPalabra = (TextView) findViewById(R.id.textResolverPalabra);
         pin = findViewById(R.id.pin);
         ruleta = findViewById(R.id.ruleta);
-        score = (TextView) findViewById(R.id.puntos);
+        puntuacion = (TextView) findViewById(R.id.puntos);
         cartelNombre = findViewById(R.id.boton_nombre);
         cartelNombre.setText(getIntent().getStringExtra("nombre_usuario"));
-        botonFinalizar = findViewById(R.id.boton_Salir);
         introducirLetra = (EditText) findViewById(R.id.editTextColocarLetra);
         introducirLetra.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -78,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
         informacion = (TextView) findViewById(R.id.InformacionparaAdivinar);
         palabraAdivinar = new Palabra(conjuntoTextViews);
         informacion.setText(palabraAdivinar.getInformacion());
@@ -92,26 +102,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        mostrarTablero();
-        botonFinalizar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(score.getText().toString()));
-                finalizarActividad();
-                finish();
 
 
-            }
-        });
     }
 
 
     private void girar() {
         ruleta.setEnabled(false);
-        resolverPalabra.setEnabled(false);
         degree = random.nextInt(secciones.length - 1);
-        RotateAnimation rotateAnimacion = new RotateAnimation(0, (360 * secciones.length) + gradosSecciones[degree],
-                RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        RotateAnimation rotateAnimacion = new RotateAnimation(0, (360 * secciones.length) + gradosSecciones[degree], RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
         rotateAnimacion.setDuration(8870);  //8870
         //SI COLOCO TRUE EN EL METODO SETFILLAFTER NO PUEDO HACER INVISIBLE MI IMAGEN
         rotateAnimacion.setFillAfter(true);
@@ -119,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         rotateAnimacion.setAnimationListener(new Animation.AnimationListener() {
             @Override
             public void onAnimationStart(Animation animation) {
-                bloquearBotonesGiro();
+                audio.Giro();
             }
 
             @Override
@@ -127,18 +126,8 @@ public class MainActivity extends AppCompatActivity {
                 valorConseguido = Integer.valueOf(secciones[secciones.length - (degree + 1)]);
                 Toast.makeText(MainActivity.this, "Puedes ganar " + valorConseguido + " puntos, si aciertas!!!", Toast.LENGTH_LONG).show();
                 girando = false;
-                resolverPalabra.setEnabled(true);
-                desbloquearBotonesGiro();
-
-                try {
-                    Thread.sleep(2500);
-                  //  ocultarRuleta();
-                    introducirLetra.setVisibility(View.VISIBLE);
-                  //  mostrarTablero();
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                Esperando.segundos(2500);
+                activarIntroductores();
 
             }
 
@@ -157,68 +146,41 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void touchRuleta(View view) {
-        girar();
-        ruleta.setEnabled(false);
-    }
 
     private void sumarPuntos(int numeronuevo) {
-        String valorviejo = score.getText().toString();
+        String valorviejo = puntuacion.getText().toString();
         int numeroviejo = Integer.valueOf(valorviejo);
         int suma = (Palabra.encuentros*numeronuevo) + numeroviejo;
-        score.setText(String.valueOf(suma));
+        puntuacion.setText(String.valueOf(suma));
 
 
     }
 
     private void restar() {
         //SI EL USUARIO SE EQUIVOCA DE LETRA, SE RESTA 5 PUNTOS
-        String valorviejo = score.getText().toString();
+        String valorviejo = puntuacion.getText().toString();
         int numeroviejo = Integer.valueOf(valorviejo);
         int resta = numeroviejo - 5;
-        score.setText(String.valueOf(resta));
+        puntuacion.setText(String.valueOf(resta));
         Toast.makeText(MainActivity.this, "Acabas de perder " + 5 + " puntos!!", Toast.LENGTH_SHORT).show();
     }
 
-
-    private void bloquearBotonesGiro() {
-        //botonGirar.setVisibility(View.INVISIBLE);
-        botonFinalizar.setEnabled(false);
-       audio.Giro();
+    private void quitarPuntos(){
+        puntuacion.setText(String.valueOf(0));
+        Toast.makeText(MainActivity.this, "Acabas de perder todos tus puntos!!", Toast.LENGTH_SHORT).show();
     }
 
-    private void desbloquearBotonesGiro() {
-        //botonGirar.setEnabled(true);
-        botonFinalizar.setEnabled(true);
-    }
-
-    private void ocultarRuleta() {
-        pin.setVisibility(View.INVISIBLE);
-        // ruleta.clearAnimation(); SI NO COLOCO TRUE EN EL SETFILLAFTER DE LA ANIMACION
-        ruleta.setVisibility(View.INVISIBLE);
-      //  botonGirar.setVisibility(View.INVISIBLE);
-    }
-
-    private void mostrarRuleta() {
-        pin.setVisibility(View.VISIBLE);
-        ruleta.setVisibility(View.VISIBLE);
-       // botonGirar.setVisibility(View.VISIBLE);
+    private void duplicarPuntos(){
+        String valorviejo = puntuacion.getText().toString();
+        int numeroviejo = Integer.valueOf(valorviejo);
+        puntuacion.setText(String.valueOf(numeroviejo*2));
+        Toast.makeText(MainActivity.this, "Acabas de duplicar tus puntos!!", Toast.LENGTH_SHORT).show();
 
     }
 
-    private void mostrarTablero() {
-        informacion.setVisibility(View.VISIBLE);
-        //introducirLetra.setVisibility(View.VISIBLE);
-        mostrarCuadrosLetras();
 
-    }
 
-    private void ocultarTablero() {
-        // informacion.setVisibility(View.INVISIBLE);
-        introducirLetra.setVisibility(View.INVISIBLE);
-       // mostrarRuleta();
-        //ocultarCuadrosLetras();
-    }
+
 
 
     private void generarCuadros() {
@@ -230,12 +192,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void resetearCuadros() {
-        for (int i = 0; i < conjuntoTextViews.length; i++) {
-            conjuntoTextViews[i].setBackgroundResource(R.drawable.panelespacio);
-
-        }
-    }
 
     // C es el nombre de los TextViews en el MainActivity, se añade los numeros correspondiente al recuadro que pertenecen.
     private ArrayList<String> generadorNombreLetrasPNG() {
@@ -273,84 +229,83 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-
+            Esperando.segundos(500);
         if(flag == false){
             audio.Incorrecto();
-        }
-        palabraAdivinar.pintarPalabra();
-        ocultarTeclado();
-        audio.musicaVictoria(palabraAdivinar);
+            Esperando.segundos(500);
+            quitarPuntos();
+            Esperando.segundos(500);
+            desactivarIntroductores();
+        }else{
+            duplicarPuntos();
+            Esperando.segundos(500);
+           // palabraAdivinar.pintarPalabra();
+            ocultarTeclado();
+            //A lo mejor hay que sacar el audio en la condicion de victoria
+            // para que pinte antes de que suene la musica
+            //audio.musicaVictoria(palabraAdivinar);
+            // Esperando.segundos(500);
+            desactivarIntroductores();
+            cc.setBoo(true);
 
-        try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
+           // finalizarActividad();
+
         }
-        finalizarActividad();
     }
-
 
     public void enviarLetra() {
         int aciertos = contarLetras(palabraAdivinar.getPalabra());
         String letra = introducirLetra.getText().toString().toLowerCase();
-        ocultarTeclado();
         if (palabraAdivinar.analizarLetra(letra)) {
             palabraAdivinar.pintarLetra(letra);
-
+            Esperando.segundos(500);
             audio.Correcto();
             sumarPuntos(valorConseguido);
             completarPalabra++;
             if (aciertos == completarPalabra) {
+                Esperando.segundos(1500);
+                palabraAdivinar.pintarLetra(letra);
                 audio.musicaVictoria(palabraAdivinar);
+               // acabado = true;
 
-                try {
-                    Thread.sleep(10000);
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-                acabado = true;
-
-//                jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(score.getText().toString()));
-//                fichero.guardarPuntuacion(jugadarGuardar);
-//                palabraAdivinar.limpiarValoreStaticos();
-//                palabraAdivinar = new Palabra(conjuntoTextViews);
-//                informacion.setText(palabraAdivinar.getInformacion());
-//                completarPalabra = 0;
-
-              //  finalizarActividad();
             }
-
-
-
         } else {
             audio.Incorrecto();
             restar();
-
-
         }
-        ocultarTablero();
-       // botonGirar.setVisibility(View.VISIBLE);
-        introducirLetra.setText("");
-        ruleta.setEnabled(true);
-        try {
-            Thread.sleep(2000);
+        desactivarIntroductores();
+    }
 
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
+
+    private void activarIntroductores() {
+        introducirLetra.setVisibility(View.VISIBLE);
+        resolverPalabra.setVisibility(View.VISIBLE);
+        resolverPalabra.setEnabled(true);
 
 
     }
 
+    private void LimpiarEntradas(){
+        introducirPalabra.setText("");
+        introducirLetra.setText("");
+    }
 
-
+    private void desactivarIntroductores() {
+        resolverPalabra.setVisibility(View.INVISIBLE);
+        resolverPalabra.setEnabled(false);
+        ruleta.setEnabled(true);
+        introducirLetra.setVisibility(View.INVISIBLE);
+        introducirPalabra.setVisibility(View.INVISIBLE);
+        LimpiarEntradas();
+        ocultarTeclado();
+    }
 
     public void activarResolverPalabra(){
        introducirLetra.setVisibility(View.INVISIBLE);
        introducirPalabra.setVisibility(View.VISIBLE);
+       resolverPalabra.setEnabled(false);
     }
-
+    //REVISAR SI ESTE METODO FUNCIONA
     private void ocultarTeclado() {
         View view = this.getCurrentFocus();
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
@@ -369,21 +324,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void finalizarActividad() {
-        jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(score.getText().toString()));
+    public  void finalizarActividad() {
+        Esperando.segundos(1000);
+        jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(puntuacion.getText().toString()));
         fichero.guardarJugador(jugadarGuardar);
         palabraAdivinar.limpiarValoreStaticos();
-       // palabraAdivinar = null;
-      //  palabraAdivinar = new Palabra(conjuntoTextViews);
-        // informacion.setText(palabraAdivinar.getInformacion());
         finish();
-
-//        palabraAdivinar.limpiarValoreStaticos();
-//        palabraAdivinar = null;
-//        palabraAdivinar = new Palabra(conjuntoTextViews);
-//        informacion.setText(palabraAdivinar.getInformacion());
-
-
     }
 
 
