@@ -28,6 +28,11 @@ public class Audio extends AppCompatActivity {
     public void Victoria() {
         MediaPlayer win = MediaPlayer.create(getContext(), R.raw.victoriasound);
         win.start();
+        try {
+            Thread.sleep(win.getDuration()  + 1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public void Correcto() {
@@ -70,6 +75,12 @@ public class Audio extends AppCompatActivity {
             int id = getRawId(palabra.getPalabra().toLowerCase());
             MediaPlayer music = MediaPlayer.create(getContext(), id);
             music.start();
+            try {
+                Thread.sleep(music.getDuration() +1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
         } else {
             Victoria();
         }

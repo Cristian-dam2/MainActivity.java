@@ -16,6 +16,7 @@
         <activity
             android:name=".LoginActivity"
             android:exported="true">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -23,7 +24,12 @@
 
             <meta-data
                 android:name="android.app.lib_name"
-                android:value="" />
+                android:value=""
+                android:screenOrientation="portrait"
+                android:theme="@style/CardView"
+                android:windowSoftInputMode="adjustResize"
+
+                />
         </activity>
         <activity
             android:name=".ListaJugadoresActivity"

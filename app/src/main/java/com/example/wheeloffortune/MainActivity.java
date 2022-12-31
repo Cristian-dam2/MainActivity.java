@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     private Fichero fichero = new Fichero(this);
     private boolean acabado = false;
     private TextView resolverPalabra;
+    private C diosito;
 
 
 
@@ -51,8 +52,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         generarCuadros();
         obtenerGradosSecciones();
+        diosito = new C();
+        //SOLUCIONAR ESTO DE ARRIBA
         resolverPalabra = (TextView) findViewById(R.id.textResolverPalabra);
-
         pin = findViewById(R.id.pin);
         ruleta = findViewById(R.id.ruleta);
         score = (TextView) findViewById(R.id.puntos);
@@ -79,16 +81,6 @@ public class MainActivity extends AppCompatActivity {
 
         informacion = (TextView) findViewById(R.id.InformacionparaAdivinar);
         palabraAdivinar = new Palabra(conjuntoTextViews);
-//        if(palabraAdivinar != null){
-//
-//
-//            palabraAdivinar.limpiarValoreStaticos();
-//            palabraAdivinar = null;
-//            palabraAdivinar = new Palabra(conjuntoTextViews);
-//            informacion.setText(palabraAdivinar.getInformacion());
-//
-//        }
-
         informacion.setText(palabraAdivinar.getInformacion());
         ruleta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -173,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
     private void sumarPuntos(int numeronuevo) {
         String valorviejo = score.getText().toString();
         int numeroviejo = Integer.valueOf(valorviejo);
-        int suma = numeronuevo + numeroviejo;
+        int suma = (Palabra.encuentros*numeronuevo) + numeroviejo;
         score.setText(String.valueOf(suma));
 
 
