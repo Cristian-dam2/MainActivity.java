@@ -7,6 +7,30 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <EditText
+        android:id="@+id/editTextColocarPalabra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:autofillHints=""
+        android:backgroundTint="@color/naranja"
+        android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        android:fontFamily="sans-serif-black"
+        android:hint="Introduce la Palabra"
+        android:imeOptions="actionDone"
+        android:inputType="textPersonName"
+        android:textAlignment="center"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@+id/boton_Salir"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/InformacionparaAdivinar"
+        app:layout_constraintVertical_bias="0.0" />
+
     <TextView
         android:id="@+id/CabezeraMain"
         android:layout_width="match_parent"
@@ -28,7 +52,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="60dp"
         android:adjustViewBounds="true"
-        android:onClick="touchRuleta"
+        android:onClick="girar"
         android:rotation="270"
         android:scaleType="centerInside"
         android:visibility="visible"
@@ -328,7 +352,6 @@
         tools:ignore="MissingConstraints" />
 
 
-
     <Button
         android:id="@+id/boton_nombre"
         android:layout_width="wrap_content"
@@ -343,9 +366,9 @@
         android:text="@string/nombreusuario"
         android:textAlignment="center"
         android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CabezeraMain"
-        tools:ignore="MissingConstraints,TextContrastCheck"
-        tools:layout_editor_absoluteX="5dp" />
+        tools:ignore="MissingConstraints,TextContrastCheck" />
 
     <Button
         android:id="@+id/boton_puntos"
@@ -354,7 +377,6 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginTop="25dp"
-        android:layout_marginEnd="5dp"
         android:backgroundTint="@color/naranja"
         android:checkable="false"
         android:clickable="false"
@@ -400,16 +422,17 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="36dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="30dp"
         android:autofillHints=""
         android:backgroundTint="@color/naranja"
         android:fontFamily="sans-serif-black"
         android:hint="@string/introduce_tu_letra"
         android:imeOptions="actionDone"
-        android:inputType="textPersonName"
+        android:inputType="textCapCharacters"
         android:maxLength="1"
         android:textAlignment="center"
-        android:textSize="20sp"
+        android:textSize="30sp"
         android:textStyle="bold"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@+id/boton_Salir"
@@ -421,8 +444,7 @@
         android:id="@+id/InformacionparaAdivinar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="90dp"
+        android:layout_marginTop="25dp"
         android:elegantTextHeight="false"
         android:fontFamily="sans-serif-condensed"
         android:text="@string/informacion"
@@ -434,6 +456,24 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/c22" />
+
+    <TextView
+        android:id="@+id/textResolverPalabra"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
+        android:background="#4CAF50"
+        android:hapticFeedbackEnabled="false"
+        android:onClick="activarResolverPalabra"
+        android:padding="10px"
+        android:text="RESOLVER PALABRA"
+        android:textColor="#FFFFFF"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toTopOf="@+id/c7"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

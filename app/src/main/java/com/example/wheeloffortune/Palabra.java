@@ -1,5 +1,6 @@
 package com.example.wheeloffortune;
 
+import android.content.Context;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -11,101 +12,27 @@ import java.util.HashMap;
 import java.util.List;
 
 public class Palabra extends AppCompatActivity {
+    private boolean musicapersonalizada;
     private String palabra;
     private String informacion;
-
     private TextView[] cuadros;
-    ArrayList<String> letrasMarcadas = new ArrayList<>();
-
-    private static int posicion_inicial;
-    private static TextView[] letrasGeneradas = new TextView[27];
-    public static HashMap<Character, List<Integer>> letrasAsignadas = new HashMap<>();
     public static int coincidencias = 0;
+    public static int encuentros = 0;
+    private static int posicion_inicial;
+    private static ArrayList<String> letrasMarcadas = new ArrayList<>();
+    private static TextView[] letrasGeneradas = new TextView[27];
     public static ArrayList<String> letrasUtilizadas = new ArrayList<>();
-
-    private boolean musicapersonalizada;
-
+    public static HashMap<String, List<Integer>> letrasAsignadas = new HashMap<>();
     public static String[] letra = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z"};
-
-
-    public static int getPosicion_inicial() {
-        return posicion_inicial;
-    }
-
-    public static void setPosicion_inicial(int posicion_inicial) {
-        Palabra.posicion_inicial = posicion_inicial;
-    }
-
-    public ArrayList<String> getLetrasMarcadas() {
-        return letrasMarcadas;
-    }
-
-    public void setLetrasMarcadas(ArrayList<String> letrasMarcadas) {
-        this.letrasMarcadas = letrasMarcadas;
-    }
 
     public boolean isMusicapersonalizada() {
         return musicapersonalizada;
     }
-
-    public void setMusicapersonalizada(boolean musicapersonalizada) {
-        this.musicapersonalizada = musicapersonalizada;
-    }
-
-    public static TextView[] getLetrasGeneradas() {
-        return letrasGeneradas;
-    }
-    public static void setLetrasGeneradas(TextView[] letrasGeneradas) {
-        Palabra.letrasGeneradas = letrasGeneradas;
-    }
-
-    public static HashMap<Character, List<Integer>> getLetrasAsignadas() {
-        return letrasAsignadas;
-    }
-    public static void setLetrasAsignadas(HashMap<Character, List<Integer>> letrasAsignadas) {
-        Palabra.letrasAsignadas = letrasAsignadas;
-    }
-
-    public static int getCoincidencias() {
-        return coincidencias;
-    }
-    public static void setCoincidencias(int coincidencias) {
-        Palabra.coincidencias = coincidencias;
-    }
-
-    public static ArrayList<String> getLetrasUtilizadas() {
-        return letrasUtilizadas;
-    }
-    public static void setLetrasUtilizadas(ArrayList<String> letrasUtilizadas) {
-        Palabra.letrasUtilizadas = letrasUtilizadas;
-    }
-
-    public static String[] getLetra() {
-        return letra;
-    }
-    public static void setLetra(String[] letra) {
-        Palabra.letra = letra;
-    }
-
     public String getPalabra() {
         return palabra;
     }
-    public void setPalabra(String palabra) {
-        this.palabra = palabra;
-    }
-
-    public TextView[] getCuadros() {
-        return cuadros;
-    }
-    public void setCuadros(TextView[] cuadros) {
-        this.cuadros = cuadros;
-    }
-
     public String getInformacion() {
         return informacion;
-    }
-    public void setInformacion(String informacion) {
-        this.informacion = informacion;
     }
 
 
@@ -128,10 +55,11 @@ public class Palabra extends AppCompatActivity {
         // SEGÚN LA PALABRA SELECCIONADA, SE REALIZA UN HASHMAP PARA GUARDAR LA LETRA Y LA POSICION.
         int posicion_actual = this.posicion_inicial;
         for (int i = 0; i < palabra.length(); i++) {
-            char letra = palabra.charAt(i);
+            String letra = String.valueOf(palabra.charAt(i));
 
             if (letrasAsignadas.containsKey(letra)) {
                 letrasAsignadas.get(letra).add(posicion_actual);
+
             } else {
                 List<Integer> list = new ArrayList<>();
                 list.add(posicion_actual);
@@ -148,7 +76,7 @@ public class Palabra extends AppCompatActivity {
 
         int a = (int)((Math.random() * (7 - 1)) + 1);
 
-        switch (a) {
+        switch (5) {
             case 0: //debug
                 seleccionado[0] = "AZ";
                 seleccionado[1] = "A y Z";
@@ -200,40 +128,14 @@ public class Palabra extends AppCompatActivity {
         if (letra.isEmpty() || letra == null) {
             return false;
         }
-
         boolean aux = true;
-//        String minusVocal = letra;
-//        String letraMarcada = "letra" + letra;
-//        int temp;
-//        ArrayList<String> id = getPanelConLetra();
-
         if (copias(letrasUtilizadas, letra)) {
             return false;
         }
         letrasUtilizadas.add(letra);
-
         if (!ExisteLetramiPalabra(this.getPalabra(), letra)) {
             return false;
         }
-       // pintarLetra(id, letraMarcada, minusVocal, Vocal);
-//        for (int i = 0; i < id.size(); i++) {
-//            if (id.get(i).equals(letraMarcada)) {
-//                aux = true;
-//                temp = getDrawableId(id.get(i));
-//                if (letrasAsignadas.get(minusVocal.toUpperCase()).size() > 1) {
-//                    for (int j = 0; j < letrasAsignadas.get(Vocal.toUpperCase()).size(); j++) {
-//                        Integer numero = letrasAsignadas.get(Vocal.toUpperCase()).get(j);
-//                        cuadros[numero].setBackgroundResource(temp);
-//                    }
-//
-//                } else {
-//                    Integer numero = letrasAsignadas.get(Vocal.toUpperCase()).get(0);
-//                    cuadros[numero].setBackgroundResource(temp);
-//                }
-//
-//            }
-//        }
-
         return true;
     }
 
@@ -242,23 +144,33 @@ public class Palabra extends AppCompatActivity {
         String minusVocal = Vocal.toLowerCase();
         String letraMarcada =  "letra" + minusVocal;
         ArrayList<String> id = getPanelConLetra();
-        int temp;
+        int codigoImagen;
         for (int i = 0; i < id.size(); i++) {
             if (id.get(i).equals(letraMarcada)) {
 
-                temp = getDrawableId(id.get(i));
+                codigoImagen = getDrawableId(id.get(i));
                 if (letrasAsignadas.get(minusVocal.toUpperCase()).size() > 1) {
                     for (int j = 0; j < letrasAsignadas.get(Vocal.toUpperCase()).size(); j++) {
                         Integer numero = letrasAsignadas.get(Vocal.toUpperCase()).get(j);
-                        cuadros[numero].setBackgroundResource(temp);
+                        cuadros[numero].setBackgroundResource(codigoImagen);
+                        encuentros = letrasAsignadas.get(minusVocal.toUpperCase()).size();
                     }
 
                 } else {
                     Integer numero = letrasAsignadas.get(Vocal.toUpperCase()).get(0);
-                    cuadros[numero].setBackgroundResource(temp);
+                    cuadros[numero].setBackgroundResource(codigoImagen);
+                    encuentros = letrasAsignadas.get(minusVocal.toUpperCase()).size();
                 }
 
             }
+        }
+
+    }
+
+    public void pintarPalabra(){
+        String palabra  = quitarLetrasRepetidasDelNombre(getPalabra());
+        for (int i = 0; i < palabra.length(); i++) {
+            pintarLetra(String.valueOf(palabra.charAt(i)));
         }
 
     }

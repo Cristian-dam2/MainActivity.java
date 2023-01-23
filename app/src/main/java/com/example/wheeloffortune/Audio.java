@@ -10,6 +10,8 @@ import java.lang.reflect.Field;
 
 public class Audio extends AppCompatActivity {
     private Context context;
+    private final int segundoExtra = 1500;
+    private Esperar esperando = new Esperar();
 
     public Context getContext() {
         return context;
@@ -24,12 +26,14 @@ public class Audio extends AppCompatActivity {
     }
 
 
+    public Audio (){
 
+    }
     public void Victoria() {
         MediaPlayer win = MediaPlayer.create(getContext(), R.raw.victoriasound);
         win.start();
-
-
+        //SE AGREGA UN SEGUNDO AL PARA FINALIZAR LA MUSICA.
+        esperando.segundos(win.getDuration()  + segundoExtra);
 
     }
 
@@ -73,6 +77,9 @@ public class Audio extends AppCompatActivity {
             int id = getRawId(palabra.getPalabra().toLowerCase());
             MediaPlayer music = MediaPlayer.create(getContext(), id);
             music.start();
+            //SE AGREGA UN SEGUNDO AL PARA FINALIZAR LA MUSICA.
+            esperando.segundos(music.getDuration()  + segundoExtra);
+
         } else {
             Victoria();
         }
