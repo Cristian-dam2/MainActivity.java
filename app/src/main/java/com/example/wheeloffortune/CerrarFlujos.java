@@ -28,7 +28,7 @@ public abstract class CerrarFlujos {
     /**
      * Cierra los flujos que lleguen de entrada a partir de la posición indicada
      * por el entero.
-     * <p>Si este entero es menor que 0, inmediatamente se convierte en un 0.</p>
+     * <p>Si el indice es menor que 0, inmediatamente sube a 0.</p>
      * @param comienzo Índice desde el que empezar a cerrar flujos
      * @param flujos Flujos para cerrar
      */
