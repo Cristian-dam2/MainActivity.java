@@ -3,6 +3,7 @@ package com.example.wheeloffortune;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -15,7 +16,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
@@ -42,6 +50,10 @@ public class MainActivity extends AppCompatActivity {
     private TextView resolverPalabra;
     private Esperar Esperando = new Esperar();
     private C cc = new C();
+    private FirebaseAuth myAuth;
+    private String idUsuario = "";
+    private FirebaseFirestore myStorage;
+
 
 
     @Override
@@ -71,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
         ruleta = findViewById(R.id.ruleta);
         puntuacion = (TextView) findViewById(R.id.puntos);
         cartelNombre = findViewById(R.id.boton_nombre);
-        cartelNombre.setText(getIntent().getStringExtra("nombre_usuario"));
+        cartelNombre.setText(getIntent().getStringExtra("nombre"));
         introducirLetra = (EditText) findViewById(R.id.editTextColocarLetra);
         introducirLetra.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -102,7 +114,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
+         myAuth = FirebaseAuth.getInstance();
+         idUsuario = myAuth.getCurrentUser().getUid();
+         myStorage = FirebaseFirestore.getInstance();
 
     }
 
@@ -266,7 +280,7 @@ public class MainActivity extends AppCompatActivity {
                 Esperando.segundos(1500);
                 palabraAdivinar.pintarLetra(letra);
                 audio.musicaVictoria(palabraAdivinar);
-               // acabado = true;
+                cc.setBoo(true);
 
             }
         } else {
@@ -326,8 +340,9 @@ public class MainActivity extends AppCompatActivity {
 
     public  void finalizarActividad() {
         Esperando.segundos(1000);
-        jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(puntuacion.getText().toString()));
-        fichero.guardarJugador(jugadarGuardar);
+        guardarDatosJugador();
+        // jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(puntuacion.getText().toString()));
+        //fichero.guardarJugador(jugadarGuardar);
         palabraAdivinar.limpiarValoreStaticos();
         finish();
     }
@@ -335,5 +350,25 @@ public class MainActivity extends AppCompatActivity {
 
     public void activarResolverPalabra(View view) {
         activarResolverPalabra();
+    }
+
+
+
+
+
+    public void guardarDatosJugador() {
+        String usuario = cartelNombre.getText().toString();
+        String puntuacionX = puntuacion.getText().toString();
+
+        DocumentReference doc_ref = myStorage.collection("Usuarios").document(idUsuario);
+        HashMap<String, String> info_usuario = new HashMap<>();
+        info_usuario.put("Nombre", usuario);
+        info_usuario.put("Puntuacion", puntuacionX);
+        doc_ref.set(info_usuario);
+        finish();
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+
+
     }
 }

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "562225808664",
+    "project_id": "whel-of-fortune",
+    "storage_bucket": "whel-of-fortune.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:562225808664:android:87d8937af3281fd8dd8a6d",
+        "android_client_info": {
+          "package_name": "com.example.wheeloffortune"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "562225808664-icl3p1gpqmq9icci7bt5qgbjf2ih8p5b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB8XlgNY0Sr3eW8qhTC6sLaTatymBZCU00"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "562225808664-icl3p1gpqmq9icci7bt5qgbjf2ih8p5b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

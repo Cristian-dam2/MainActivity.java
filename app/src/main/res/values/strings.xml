@@ -18,4 +18,16 @@
     <string name="puntuaciones">PUNTUACIONES</string>
     <string name="introduce_tu_letra">Introduce tu Letra</string>
     <string name="informacion">Informacion</string>
+    <string name="formulario_de_registro">Formulario de Registro</string>
+    <string name="introduzca_su_nombre">Introduzca su nombre</string>
+    <string name="email">Email</string>
+    <string name="introduzca_email">Introduzca email</string>
+    <string name="introduzca_su_tel_fono">Introduzca su telefono</string>
+    <string name="tel_fono">telefono</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="introduzca_su_contrase_a">Introduzca su contraseña</string>
+    <string name="confirme_su_contrase_a">Confirme su contraseña</string>
+    <string name="registrarse">Registrarse</string>
+
+
 </resources>
