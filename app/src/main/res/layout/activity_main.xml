@@ -363,7 +363,6 @@
         android:checkable="false"
         android:clickable="false"
         android:fontFamily="sans-serif-black"
-        android:text="@string/nombreusuario"
         android:textAlignment="center"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"

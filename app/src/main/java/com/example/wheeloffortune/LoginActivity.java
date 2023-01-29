@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,6 +16,10 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 public class LoginActivity extends AppCompatActivity {
     private EditText email;
@@ -24,7 +29,8 @@ public class LoginActivity extends AppCompatActivity {
     private Fichero file = new Fichero(this);
     private FirebaseAuth mAuth;
     private Button boton_registro;
-
+    private FirebaseFirestore db;
+    private String nombre = "";
 
     @SuppressLint("MissingInflatedId")
     @Override
@@ -36,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
         verHistorial = (Button) findViewById(R.id.btnVerHistorial);
         mAuth = FirebaseAuth.getInstance();
         boton_registro = (Button) findViewById(R.id.boton_registro);
+        db = FirebaseFirestore.getInstance();
 
 
 //        nombre.setOnClickListener(new View.OnClickListener() {
@@ -92,17 +99,18 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-        String nombre = "";
-                    for (int i = 0; i < correo.length(); i++) {
-                        if(correo.charAt(i) != '@'){
-                            nombre = nombre + correo.charAt(i);
-                        }else{
-                            break;
-                        }
 
-                    }
-        intent.putExtra("nombre" , nombre.toUpperCase());
-        System.out.println("XXXXXXXXXXXXXXXXX      -     " +  nombre);
+//        String nombre = "";
+//                    for (int i = 0; i < correo.length(); i++) {
+//                        if(correo.charAt(i) != '@'){
+//                            nombre = nombre + correo.charAt(i);
+//                        }else{
+//                            break;
+//                        }
+//
+//                    }
+//        intent.putExtra("nombre" , nombre.toUpperCase());
+//        System.out.println("XXXXXXXXXXXXXXXXX      -     " +  nombre);
 
         botonIniciarJuego.setEnabled(false);
         //barra_progreso.setVisibility(View.VISIBLE);
@@ -110,9 +118,10 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
                 if (task.isSuccessful()) {
+
+
                     //barra_progreso.setVisibility(View.INVISIBLE);
                     Toast.makeText(LoginActivity.this, "Credenciales correctas, bienvenido.", Toast.LENGTH_SHORT).show();
-
                     startActivity(intent);
                     return;
                 }
@@ -123,11 +132,14 @@ public class LoginActivity extends AppCompatActivity {
             }
  });
 }
-//    public void iniciarRegistro(View view) {
+    public void iniciarRegistro(View view) {
+
+        Intent myIntent = new Intent(this, registroActivity.class);
+        startActivity(myIntent);
 //
-//        Intent myIntent = new Intent(this, registroActivity.class);
-//        startActivity(myIntent);
 //
-//
-//    }
+   }
+
+
+
 }

@@ -27,7 +27,7 @@ public class registroActivity extends AppCompatActivity {
     EditText intro_nombre, intro_mail,  intro_pwd, intro_pwd_conf;
     Button boton_registro;
     TextView link_volver;
-    ProgressBar progressBar;
+    //ProgressBar progressBar;
     FirebaseAuth myAuth;
     FirebaseFirestore myStore;
     String idUsuario;
@@ -80,7 +80,7 @@ public class registroActivity extends AppCompatActivity {
     }
 
     public void mandarRegistro2(View view) {
-        progressBar.setVisibility(View.VISIBLE);
+
         String email = intro_mail.getText().toString();
         String password = intro_pwd.getText().toString();
         String name = intro_nombre.getText().toString();
@@ -121,7 +121,7 @@ public class registroActivity extends AppCompatActivity {
                     DocumentReference docRef = myStore.collection("Usuarios").document(idUsuario);
                     HashMap<String,String > infoUsuario = new HashMap<>();
                     infoUsuario.put("Nombre", name);
-                    infoUsuario.put("Email", email);
+                    infoUsuario.put("Puntuacion", "0");
 
                     docRef.set(infoUsuario);
                     System.out.println("XXXXXXXXXXXXXXXXXXXX  " + idUsuario );
@@ -131,10 +131,10 @@ public class registroActivity extends AppCompatActivity {
 
                     //Toast.makeText(Register.this,"Se ha producido une error en el proceso de registro.", Toast.LENGTH_SHORT ).show();
                     Toast.makeText(registroActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                    progressBar.setVisibility(View.INVISIBLE);
+                   // progressBar.setVisibility(View.INVISIBLE);
                 }
             }
         });
-        progressBar.setVisibility(View.INVISIBLE);
+        //progressBar.setVisibility(View.INVISIBLE);
     }
 }
