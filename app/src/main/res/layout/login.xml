@@ -44,7 +44,6 @@
         android:ems="10"
         android:hint="@string/nombre"
         android:inputType="textPersonName"
-        android:maxLength="8"
         android:textAlignment="center"
         android:textColorHint="#757575"
         app:layout_constraintEnd_toEndOf="parent"
@@ -58,16 +57,15 @@
         android:id="@+id/login_boton_iniciar_sesion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="276dp"
+        android:layout_marginTop="60dp"
         android:backgroundTint="@color/naranja"
-        android:onClick="iniciarJuego"
+        android:onClick="iniciarSesion"
         android:text="@string/empezar"
         android:textSize="28sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-         />
+        app:layout_constraintTop_toBottomOf="@+id/login_campo_nombre" />
 
     <Button
         android:id="@+id/btnVerHistorial"
@@ -82,4 +80,30 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="TextContrastCheck" />
+
+    <EditText
+        android:id="@+id/editcontraseña"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="Introduce contraseña"
+        android:inputType="textPassword"
+        android:textAlignment="center"
+        app:layout_constraintBottom_toTopOf="@+id/login_boton_iniciar_sesion"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_campo_nombre" />
+
+    <Button
+        android:id="@+id/boton_registro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="iniciarRegistro"
+        android:text="Registrarse"
+        android:background="@color/naranja"
+        app:layout_constraintBottom_toTopOf="@+id/btnVerHistorial"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/login_boton_iniciar_sesion" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
