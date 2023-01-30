@@ -331,7 +331,7 @@ public class MainActivity extends AppCompatActivity {
     //REVISAR SI ESTE METODO FUNCIONA
     private void ocultarTeclado() {
         View view = this.getCurrentFocus();
-        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) this.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
