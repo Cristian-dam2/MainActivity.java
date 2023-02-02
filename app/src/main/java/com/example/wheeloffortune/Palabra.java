@@ -1,6 +1,5 @@
 package com.example.wheeloffortune;
 
-import android.content.Context;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -25,7 +24,7 @@ public class Palabra extends AppCompatActivity {
     public static HashMap<String, List<Integer>> letrasAsignadas = new HashMap<>();
     public static String[] letra = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "y", "z"};
 
-    public boolean isMusicapersonalizada() {
+    public boolean isMusicaPersonalizada() {
         return musicapersonalizada;
     }
     public String getPalabra() {
