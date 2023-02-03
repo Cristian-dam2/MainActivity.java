@@ -16,7 +16,6 @@ public class Audio extends AppCompatActivity {
 
     private Context context;
     private MediaPlayer reproducir;
-    private Esperar esperando = new Esperar();
 
     // Getter y Setter
     public Context getContext() {
@@ -32,13 +31,6 @@ public class Audio extends AppCompatActivity {
     }
 
 
-    public void Victoria() {
-        reproducir = MediaPlayer.create(getContext(), R.raw.victoriasound);
-        reproducir.start();
-
-        //SE AGREGA UN SEGUNDO AL PARA FINALIZAR LA MUSICA.
-        esperando.segundos(reproducir.getDuration()  + SEGUNDO_EXTRA);
-    }
     /**
      * Reproduce el archivo /app/src/main/res/raw/acierto.mp3
      */
@@ -60,25 +52,27 @@ public class Audio extends AppCompatActivity {
         reproducir = MediaPlayer.create(getContext(), R.raw.spinningeffect);
         reproducir.start();
     }
+
     /**
-     * Reproduce el archivo /app/src/main/res/raw/acierto.mp3
-     * @param palabra La instancia de palabra tiene un atributo que indica si tiene música personalizada.
-     *                Si la tiene, buscará el nombre del archivo según la palabra guardada en el objeto,
-     *                la cual será leída en minúsculas.
-     *                (Ej.: Si palabra.musicaPersonalizada = true entonces Audio cargado: yatra.mp3)
+     * Reproduce el archivo /app/src/main/res/raw/victoriasound.mp3 u otro archivo según el estado del
+     * atributo isMusicaPersonalizada que tiene el parámetro.
+     * @param palabra Usado para determinar si la palabra usa música personalizada o no. Si la tiene,
+     *                averigua el nombre del archivo usando la "palabra" dentro de la instancia.
+     *                (Ej.: Palabra (yatra), si musicaPersonalizada = true, entonces cargar: yatra.mp3)
+     * @see Palabra
      */
-    public void musicaVictoria(Palabra palabra){
+    public void musicaVictoria(Palabra palabra) {
         if (palabra.isMusicaPersonalizada()) {
             int id = getRawId(palabra.getPalabra().toLowerCase());
 
-            MediaPlayer music = MediaPlayer.create(this.getContext(), id);
-            music.start();
-
-            //SE AGREGA UN SEGUNDO AL PARA FINALIZAR LA MUSICA.
-            esperando.segundos(music.getDuration() + SEGUNDO_EXTRA);
+            reproducir = MediaPlayer.create(this.getContext(), id);
         } else {
-            this.Victoria();
+            reproducir = MediaPlayer.create(getContext(), R.raw.victoriasound);
         }
+
+        reproducir.start();
+        //Esto equivale a Thread.sleep()
+        Esperar.segundos(reproducir.getDuration() + SEGUNDO_EXTRA);
     }
 
     /**
@@ -92,9 +86,9 @@ public class Audio extends AppCompatActivity {
             Field f = R.raw.class.getField(name);
             return f.getInt(null);
         } catch (NoSuchFieldException e) {
-            Log.i("Reflection", "Missing raw " + name);
+            Log.i("Reflection", "No se ha encontrado la pista de musical. " + name);
         } catch (IllegalAccessException e) {
-            Log.i("Reflection", "Illegal access to field " + name);
+            Log.i("Reflection", "Contenido no accesible " + name);
         }
 
         return 0;

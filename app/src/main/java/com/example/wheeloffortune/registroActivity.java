@@ -97,12 +97,6 @@ public class registroActivity extends AppCompatActivity {
             Toast.makeText(registroActivity.this,"Nombre no valido", Toast.LENGTH_SHORT).show();
             return;
         }
-
-
-
-
-
-
         myAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -114,7 +108,6 @@ public class registroActivity extends AppCompatActivity {
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-
                     //HE CAMBIADO EL ORDEN DE LA INICIALIZACION DEL IDUSUARIO, PARECE QUE FUNCIONA CORRECTAMENTE...
                     idUsuario = myAuth.getCurrentUser().getUid();
                     System.out.println("XXXXXXXXXXXXXXXXXXXX  " + idUsuario );
