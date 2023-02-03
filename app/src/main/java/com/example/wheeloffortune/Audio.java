@@ -6,6 +6,8 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.wheeloffortune.Auxiliares.Esperar;
+
 import java.lang.reflect.Field;
 
 /**

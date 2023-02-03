@@ -13,14 +13,14 @@
         android:theme="@style/Theme.WheelOfFortune"
         tools:targetApi="31" >
         <activity
-            android:name=".registroActivity"
+            android:name=".Actividades.registroActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".LoginActivity"
+            android:name=".Actividades.LoginActivity"
             android:exported="true" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -36,19 +36,19 @@
                 android:windowSoftInputMode="adjustResize" />
         </activity>
         <activity
-            android:name=".ListaJugadoresActivity"
+            android:name=".Actividades.ListaJugadoresActivity"
             android:exported="false" >
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".Actividades.MainActivity"
             android:label="Main Activity"
-            android:parentActivityName=".LoginActivity" >
+            android:parentActivityName=".Actividades.LoginActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.wheeloffortune.MainActivity" />
+                android:value="com.example.wheeloffortune.Actividades.MainActivity" />
         </activity>
     </application>
 

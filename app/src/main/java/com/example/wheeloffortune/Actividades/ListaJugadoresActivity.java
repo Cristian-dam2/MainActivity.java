@@ -1,7 +1,4 @@
-package com.example.wheeloffortune;
-
-import static android.content.ContentValues.TAG;
-
+package com.example.wheeloffortune.Actividades;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -12,25 +9,17 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
-
+import com.example.wheeloffortune.Datos;
+import com.example.wheeloffortune.Fichero;
+import com.example.wheeloffortune.Jugador;
+import com.example.wheeloffortune.R;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentChange;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.EventListener;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.FirebaseFirestoreException;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.sql.SQLOutput;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Map;
 
 public class ListaJugadoresActivity extends AppCompatActivity {
@@ -45,17 +34,12 @@ public class ListaJugadoresActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_lista_jugadores);
         db = FirebaseFirestore.getInstance();
         pruebaText = (TextView) findViewById(R.id.textViewPrueba);
         boton_volver = (Button) findViewById(R.id.boton_volver);
         tablaNombres = (RecyclerView) findViewById(R.id.myRecycler);
         tablaNombres.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-//        jugadores = fichero.leerJugador();
-//        Datos adapter = new Datos(jugadores);
-//        tablaNombres.setAdapter(adapter);
-
         boton_volver.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 finish();

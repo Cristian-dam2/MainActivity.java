@@ -1,4 +1,4 @@
-package com.example.wheeloffortune;
+package com.example.wheeloffortune.Actividades;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,9 +18,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wheeloffortune.Audio;
+import com.example.wheeloffortune.Auxiliares.Esperar;
+import com.example.wheeloffortune.C;
+import com.example.wheeloffortune.Fichero;
+import com.example.wheeloffortune.Jugador;
+import com.example.wheeloffortune.Palabra;
+import com.example.wheeloffortune.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -44,7 +50,6 @@ public class MainActivity extends AppCompatActivity {
     private ImageView ruleta;
     private TextView puntuacion;
     private Button cartelNombre;
-    private Button botonFinalizar;
     private ImageView pin;
     private EditText introducirLetra;
     private EditText introducirPalabra;
@@ -69,9 +74,7 @@ public class MainActivity extends AppCompatActivity {
         cc.setOnBooChangeListener(new C.BooChangeListener() {
             @Override
             public void OnBooChange(boolean Boo) {
-
             }
-
             @Override
             public void onBooChange(boolean b) {
                 Esperando.segundos(500);
@@ -395,6 +398,9 @@ public class MainActivity extends AppCompatActivity {
                         if(document.getId().equals(perfil)){
                             Log.d("TAG", "si entro");
                             nombre = document.getData().get("Nombre").toString();
+                            puntuacion.setText(document.getData().get("Puntuacion").toString());
+
+
                         }
 
 

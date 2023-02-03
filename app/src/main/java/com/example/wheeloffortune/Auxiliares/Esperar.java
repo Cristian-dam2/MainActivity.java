@@ -1,4 +1,4 @@
-package com.example.wheeloffortune;
+package com.example.wheeloffortune.Auxiliares;
 
 /**
  * Clase auxiliar para llamar a Thread.sleep(long)

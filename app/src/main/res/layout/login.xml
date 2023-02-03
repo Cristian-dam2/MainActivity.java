@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/cardview_light_background"
     android:backgroundTint="@color/cardview_light_background"
-    tools:context=".LoginActivity">
+    tools:context=".Actividades.LoginActivity">
 
 
     <TextView
@@ -41,8 +41,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="188dp"
+        android:autofillHints=""
         android:ems="10"
-        android:hint="@string/nombre"
+        android:hint="@string/introduzca_email"
         android:inputType="textPersonName"
         android:textAlignment="center"
         android:textColorHint="#757575"
@@ -50,8 +51,7 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="TouchTargetSizeCheck"
-        android:autofillHints="" />
+        tools:ignore="TouchTargetSizeCheck" />
 
     <Button
         android:id="@+id/login_boton_iniciar_sesion"
@@ -86,7 +86,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Introduce contraseña"
+        android:hint="Introduzca contraseña"
         android:inputType="textPassword"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/login_boton_iniciar_sesion"
@@ -100,7 +100,6 @@
         android:layout_height="wrap_content"
         android:onClick="iniciarRegistro"
         android:text="Registrarse"
-        android:background="@color/naranja"
         app:layout_constraintBottom_toTopOf="@+id/btnVerHistorial"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

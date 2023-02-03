@@ -1,6 +1,6 @@
 package com.example.wheeloffortune;
 
-class C
+public class C
 {
     private boolean mBoo; //that's our variable
 
@@ -11,7 +11,7 @@ class C
         void onBooChange(boolean b);
     }
 
-    private BooChangeListener mOnChange = null;
+    public BooChangeListener mOnChange = null;
 
     public void setOnBooChangeListener(BooChangeListener bcl)
     {
