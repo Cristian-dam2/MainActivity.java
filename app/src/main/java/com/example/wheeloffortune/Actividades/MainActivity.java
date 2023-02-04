@@ -80,10 +80,12 @@ public class MainActivity extends AppCompatActivity {
         cc.setOnBoolChangeListener(new C.BoolChangeListener() {
             @Override
             public void onBoolChange(boolean b) {
-                Esperando.segundos(500);
-                palabraAdivinar.pintarPalabra();
-                audio.Victoria(palabraAdivinar);
-                finalizarActividad();
+                if (b == true) {
+                    Esperando.segundos(500);
+                    palabraAdivinar.pintarPalabra();
+                    audio.Victoria(palabraAdivinar);
+                    finalizarActividad();
+                }
             }
         });
         setContentView(R.layout.activity_main);
