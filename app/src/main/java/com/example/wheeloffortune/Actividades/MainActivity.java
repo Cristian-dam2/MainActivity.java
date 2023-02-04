@@ -75,6 +75,8 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         cc.setBool(false);
+
+        // Este bloque se ejecutará cada vez que se ejecute cc.setBool()
         cc.setOnBoolChangeListener(new C.BoolChangeListener() {
             @Override
             public void onBoolChange(boolean b) {
