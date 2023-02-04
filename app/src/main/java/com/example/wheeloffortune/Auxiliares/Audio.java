@@ -11,7 +11,8 @@ import com.example.wheeloffortune.R;
 import java.lang.reflect.Field;
 
 /**
- * Clase para cargar sonido. Hay que instanciar un objeto y luego llamar sus métodos para cargar lo música.
+ * Clase para cargar sonido. Para usar sus métodos, hay que instanciar un objeto con el Context de
+ * la aplicación.
  */
 public class Audio extends AppCompatActivity {
     private final int SEGUNDO_EXTRA = 1500;
@@ -56,23 +57,24 @@ public class Audio extends AppCompatActivity {
     }
 
     /**
-     * Reproduce el archivo /app/src/main/res/raw/victoriasound.mp3 u otro archivo según el estado del
-     * atributo isMusicaPersonalizada que tiene el parámetro.
+     * Reproduce el archivo /app/src/main/res/raw/victoriasound.mp3 u otro archivo según el atributo
+     * isMusicaPersonalizada de la entrada.
      * @param palabra Usado para determinar si la palabra usa música personalizada o no. Si la tiene,
      *                averigua el nombre del archivo usando la "palabra" dentro de la instancia.
      *                (Ej.: Palabra (yatra), si musicaPersonalizada = true, entonces cargar: yatra.mp3)
      * @see Palabra
      */
-    public void musicaVictoria(Palabra palabra) {
+    public void Victoria(Palabra palabra) {
+        int id;
         if (palabra.isMusicaPersonalizada()) {
-            int id = getRawId(palabra.getPalabra().toLowerCase());
-
-            reproducir = MediaPlayer.create(this.getContext(), id);
+            id = Audio.getRawId(palabra.getPalabra().toLowerCase());
         } else {
-            reproducir = MediaPlayer.create(getContext(), R.raw.victoriasound);
+            id = R.raw.victoriasound;
         }
 
+        reproducir = MediaPlayer.create(this.getContext(), id);
         reproducir.start();
+
         //Esto equivale a Thread.sleep()
         Esperar.segundos(reproducir.getDuration() + SEGUNDO_EXTRA);
     }
@@ -83,7 +85,7 @@ public class Audio extends AppCompatActivity {
      * @param name Nombre del archivo a buscar
      * @return ID con el archivo o 0 si no se pudo encontrar el archivo
      */
-    public int getRawId(String name) {
+    public static int getRawId(String name) {
         try {
             Field f = R.raw.class.getField(name);
             return f.getInt(null);
