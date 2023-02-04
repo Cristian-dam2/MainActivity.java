@@ -1,4 +1,4 @@
-package com.example.wheeloffortune;
+package com.example.wheeloffortune.Auxiliares;
 
 import android.content.Context;
 import android.media.MediaPlayer;
@@ -6,7 +6,7 @@ import android.util.Log;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.wheeloffortune.Auxiliares.Esperar;
+import com.example.wheeloffortune.R;
 
 import java.lang.reflect.Field;
 

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Wheel of Fortune</string>
-    <string name="login_texto_instrucciones">Escribe tu nombre:</string>
+    <string name="login_texto_instrucciones"><u>EMPIEZA A JUGAR AHORA</u></string>
     <string name="nombre">Nombre</string>
     <string name="empezar">empezar</string>
     <string name="cero">0</string>
@@ -28,6 +28,7 @@
     <string name="introduzca_su_contrase_a">Introduzca su contraseña</string>
     <string name="confirme_su_contrase_a">Confirme su contraseña</string>
     <string name="registrarse">Registrarse</string>
+    <string name="registro_de_usuario"><u>REGISTRO DE USUARIO</u></string>
 
 
 </resources>
