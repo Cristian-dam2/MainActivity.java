@@ -20,9 +20,8 @@ import android.widget.Toast;
 
 import com.example.wheeloffortune.Audio;
 import com.example.wheeloffortune.Auxiliares.Esperar;
-import com.example.wheeloffortune.C;
+import com.example.wheeloffortune.Auxiliares.C;
 import com.example.wheeloffortune.Fichero;
-import com.example.wheeloffortune.Jugador;
 import com.example.wheeloffortune.Palabra;
 import com.example.wheeloffortune.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -44,7 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private static final Random random = new Random();
     private static int valorConseguido = 0;
     private static int completarPalabra = 0;
-    private static Jugador jugadarGuardar;
+
     private boolean girando = false;
     private int degree = 0;
     private ImageView ruleta;
@@ -55,34 +54,35 @@ public class MainActivity extends AppCompatActivity {
     private EditText introducirPalabra;
     private TextView informacion;
     private TextView[] conjuntoTextViews = new TextView[27];
+    private TextView resolverPalabra;
+
     private Palabra palabraAdivinar;
     private Audio audio = new Audio(this);
     private Fichero fichero = new Fichero(this);
-    private TextView resolverPalabra;
-    private Esperar Esperando = new Esperar();
     private C cc = new C();
+
     private FirebaseAuth myAuth;
-    private String idUsuario = "";
     private FirebaseFirestore myStorage;
+    private String idUsuario = "";
     private String nombre = "";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        cc.setBoo(false);
-        cc.setOnBooChangeListener(new C.BooChangeListener() {
+
+        cc.setBool(false);
+        cc.setOnBoolChangeListener(new C.BoolChangeListener() {
             @Override
-            public void OnBooChange(boolean Boo) {
-            }
-            @Override
-            public void onBooChange(boolean b) {
-                Esperando.segundos(500);
+            public void onBoolChange(boolean b) {
+                Esperar.segundos(500);
                 palabraAdivinar.pintarPalabra();
                 audio.Victoria(palabraAdivinar);
                 finalizarActividad();
             }
         });
+
+
         setContentView(R.layout.activity_main);
 
         generarCuadros();
@@ -124,12 +124,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-         myAuth = FirebaseAuth.getInstance();
-         idUsuario = myAuth.getCurrentUser().getUid();
-         myStorage = FirebaseFirestore.getInstance();
+        myAuth = FirebaseAuth.getInstance();
+        idUsuario = myAuth.getCurrentUser().getUid();
+        myStorage = FirebaseFirestore.getInstance();
         obtenerNombre(idUsuario);
-
-
     }
 
 
@@ -152,7 +150,7 @@ public class MainActivity extends AppCompatActivity {
                 valorConseguido = Integer.valueOf(secciones[secciones.length - (degree + 1)]);
                 Toast.makeText(MainActivity.this, "Puedes ganar " + valorConseguido + " puntos, si aciertas!!!", Toast.LENGTH_LONG).show();
                 girando = false;
-                Esperando.segundos(2500);
+                Esperar.segundos(2500);
                 activarIntroductores();
 
             }
@@ -255,16 +253,16 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-            Esperando.segundos(500);
+            Esperar.segundos(500);
         if(flag == false){
             audio.Incorrecto();
-            Esperando.segundos(500);
+            Esperar.segundos(500);
             quitarPuntos();
-            Esperando.segundos(500);
+            Esperar.segundos(500);
             desactivarIntroductores();
         }else{
             duplicarPuntos();
-            Esperando.segundos(500);
+            Esperar.segundos(500);
            // palabraAdivinar.pintarPalabra();
             ocultarTeclado();
             //A lo mejor hay que sacar el audio en la condicion de victoria
@@ -272,7 +270,7 @@ public class MainActivity extends AppCompatActivity {
             //audio.musicaVictoria(palabraAdivinar);
             // Esperando.segundos(500);
             desactivarIntroductores();
-            cc.setBoo(true);
+            cc.setBool(true);
 
            // finalizarActividad();
 
@@ -284,15 +282,15 @@ public class MainActivity extends AppCompatActivity {
         String letra = introducirLetra.getText().toString().toLowerCase();
         if (palabraAdivinar.analizarLetra(letra)) {
             palabraAdivinar.pintarLetra(letra);
-            Esperando.segundos(500);
+            Esperar.segundos(500);
             audio.Correcto();
             sumarPuntos(valorConseguido);
             completarPalabra++;
             if (aciertos == completarPalabra) {
-                Esperando.segundos(1500);
+                Esperar.segundos(1500);
                 palabraAdivinar.pintarLetra(letra);
                 audio.Victoria(palabraAdivinar);
-                cc.setBoo(true);
+                cc.setBool(true);
 
             }
         } else {
@@ -351,7 +349,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     public  void finalizarActividad() {
-        Esperando.segundos(1000);
+        Esperar.segundos(1000);
         guardarDatosJugador();
         // jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(puntuacion.getText().toString()));
         //fichero.guardarJugador(jugadarGuardar);
