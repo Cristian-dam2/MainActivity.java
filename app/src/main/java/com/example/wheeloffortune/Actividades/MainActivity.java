@@ -45,8 +45,10 @@ public class MainActivity extends AppCompatActivity {
     private static int valorConseguido = 0;
     private static int completarPalabra = 0;
     private static Jugador jugadarGuardar;
+
     private boolean girando = false;
     private int degree = 0;
+
     private ImageView ruleta;
     private TextView puntuacion;
     private Button cartelNombre;
@@ -55,28 +57,27 @@ public class MainActivity extends AppCompatActivity {
     private EditText introducirPalabra;
     private TextView informacion;
     private TextView[] conjuntoTextViews = new TextView[27];
+    private TextView resolverPalabra;
+
     private Palabra palabraAdivinar;
     private Audio audio = new Audio(this);
     private Fichero fichero = new Fichero(this);
-    private TextView resolverPalabra;
     private Esperar Esperando = new Esperar();
     private C cc = new C();
+
     private FirebaseAuth myAuth;
-    private String idUsuario = "";
     private FirebaseFirestore myStorage;
+    private String idUsuario = "";
     private String nombre = "";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        cc.setBoo(false);
-        cc.setOnBooChangeListener(new C.BooChangeListener() {
+        cc.setBool(false);
+        cc.setOnBoolChangeListener(new C.BoolChangeListener() {
             @Override
-            public void OnBooChange(boolean Boo) {
-            }
-            @Override
-            public void onBooChange(boolean b) {
+            public void onBoolChange(boolean b) {
                 Esperando.segundos(500);
                 palabraAdivinar.pintarPalabra();
                 audio.Victoria(palabraAdivinar);
@@ -272,7 +273,7 @@ public class MainActivity extends AppCompatActivity {
             //audio.musicaVictoria(palabraAdivinar);
             // Esperando.segundos(500);
             desactivarIntroductores();
-            cc.setBoo(true);
+            cc.setBool(true);
 
            // finalizarActividad();
 
@@ -292,7 +293,7 @@ public class MainActivity extends AppCompatActivity {
                 Esperando.segundos(1500);
                 palabraAdivinar.pintarLetra(letra);
                 audio.Victoria(palabraAdivinar);
-                cc.setBoo(true);
+                cc.setBool(true);
 
             }
         } else {

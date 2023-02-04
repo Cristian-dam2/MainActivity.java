@@ -1,22 +1,18 @@
 package com.example.wheeloffortune.Auxiliares;
 
 public class C  {
-    private boolean mBoo; //that's our variable
-
-    public interface BooChangeListener {
-        public void OnBooChange(boolean boo);
-        void onBooChange(boolean b);
+    private boolean myBool;
+    public void setBool(boolean b) {
+        myBool = b;
+        if (mOnChange != null) mOnChange.onBoolChange(b);
     }
 
-    public BooChangeListener mOnChange = null;
+    public BoolChangeListener mOnChange = null;
+    public interface BoolChangeListener {
+        void onBoolChange(boolean b);
+    }
 
-    public void setOnBooChangeListener(BooChangeListener bcl)
-    {
+    public void setOnBoolChangeListener(BoolChangeListener bcl) {
         mOnChange = bcl;
-    }
-
-    public void setBoo(boolean b) {
-        mBoo = b;
-        if (mOnChange != null) mOnChange.onBooChange(b);
     }
 }
