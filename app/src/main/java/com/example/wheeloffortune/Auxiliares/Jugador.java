@@ -1,4 +1,4 @@
-package com.example.wheeloffortune;
+package com.example.wheeloffortune.Auxiliares;
 
 public class Jugador implements Comparable<Jugador> {
     private String nombre;

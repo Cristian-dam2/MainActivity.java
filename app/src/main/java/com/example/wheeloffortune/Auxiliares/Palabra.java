@@ -1,9 +1,11 @@
-package com.example.wheeloffortune;
+package com.example.wheeloffortune.Auxiliares;
 
 import android.util.Log;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.wheeloffortune.R;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;

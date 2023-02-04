@@ -18,12 +18,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.wheeloffortune.Audio;
+import com.example.wheeloffortune.Auxiliares.Audio;
 import com.example.wheeloffortune.Auxiliares.Esperar;
-import com.example.wheeloffortune.C;
-import com.example.wheeloffortune.Fichero;
-import com.example.wheeloffortune.Jugador;
-import com.example.wheeloffortune.Palabra;
+import com.example.wheeloffortune.Auxiliares.C;
+import com.example.wheeloffortune.Auxiliares.Fichero;
+import com.example.wheeloffortune.Auxiliares.Jugador;
+import com.example.wheeloffortune.Auxiliares.Palabra;
 import com.example.wheeloffortune.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;

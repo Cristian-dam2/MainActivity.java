@@ -7,6 +7,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
+import android.content.ContentResolver;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -24,16 +26,23 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.wheeloffortune.Auxiliares.Esperar;
 import com.example.wheeloffortune.R;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import org.w3c.dom.Text;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -50,8 +59,13 @@ public class registroActivity extends AppCompatActivity {
     FirebaseAuth myAuth;
     FirebaseFirestore myStore;
     String idUsuario;
+    StorageReference myStorage;
+    StorageReference storageReference;
+    StorageReference photoReference;
+    Bitmap imageBitmap = null;
+    Uri selectedImageUri= null;
 
-    @SuppressLint("MissingInflatedId")
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -67,6 +81,10 @@ public class registroActivity extends AppCompatActivity {
         quitarAvatartexto = (TextView) findViewById(R.id.textviewCambiarAvatar);
         myStore = FirebaseFirestore.getInstance();
         myAuth = FirebaseAuth.getInstance();
+        myStorage = FirebaseStorage.getInstance().getReference();
+        storageReference = FirebaseStorage.getInstance().getReference();
+
+
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,18 +127,18 @@ public class registroActivity extends AppCompatActivity {
 //        }
 
     private void selectImage() {
-        final CharSequence[] options = { "Take Photo", "Choose from Gallery","Cancel" };
+        final CharSequence[] options = { "Tomar una foto", "Abrir la galeria","Cancelar" };
         AlertDialog.Builder builder = new AlertDialog.Builder(registroActivity.this);
-        builder.setTitle("Add Photo!");
+        builder.setTitle("Agregar foto!");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
-                if (options[item].equals("Take Photo"))
+                if (options[item].equals("Tomar una foto"))
                 {
                     Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(intent, 1);
                 }
-                else if (options[item].equals("Choose from Gallery"))
+                else if (options[item].equals("Abrir la galeria"))
                 {
                     Intent i = new Intent();
                     i.setType("image/*");
@@ -130,7 +148,7 @@ public class registroActivity extends AppCompatActivity {
                     // with the returned requestCode
                     startActivityForResult(Intent.createChooser(i, "Select Picture"), 2);
                 }
-                else if (options[item].equals("Cancel")) {
+                else if (options[item].equals("Cancelar")) {
                     dialog.dismiss();
                 }
             }
@@ -143,14 +161,16 @@ public class registroActivity extends AppCompatActivity {
         if (resultCode == RESULT_OK) {
             if (requestCode == 1) {
                 Bundle extras = data.getExtras();
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                avatar.setImageBitmap(imageBitmap);
+                 imageBitmap = (Bitmap) extras.get("data");
+                  avatar.setImageBitmap(imageBitmap);
+                  selectedImageUri = null;
             } else if (requestCode == 2) {
                 // Get the url of the image from data
-                    Uri selectedImageUri = data.getData();
+                    selectedImageUri = data.getData();
                     if (null != selectedImageUri) {
                         // update the preview image in the layout
                         avatar.setImageURI(selectedImageUri);
+                        imageBitmap = null;
                     }
             }
         }
@@ -197,15 +217,15 @@ public class registroActivity extends AppCompatActivity {
         String name = intro_nombre.getText().toString();
         String password2 = intro_pwd_conf.getText().toString();
 
-        if (!password.equals(password2)){
+        if (!password.equals(password2)) {
             intro_pwd.setError("Contraseña no coincide");
-            Toast.makeText(registroActivity.this,"Contraseñas no coinciden", Toast.LENGTH_SHORT).show();
+            Toast.makeText(registroActivity.this, "Contraseñas no coinciden", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        if(name.isEmpty() || name == null){
+        if (name.isEmpty() || name == null) {
             intro_nombre.setError("Nombre no valido");
-            Toast.makeText(registroActivity.this,"Nombre no valido", Toast.LENGTH_SHORT).show();
+            Toast.makeText(registroActivity.this, "Nombre no valido", Toast.LENGTH_SHORT).show();
             return;
         }
         myAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -213,37 +233,74 @@ public class registroActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 //Si no ha habido problemas (la tarea de registrar el usuario ha sido exitosa: Feedback y redireccion a la MainActivity
                 if (task.isSuccessful()) {
-                    Toast.makeText(registroActivity.this, "Usuario registrado correctamente.", Toast.LENGTH_SHORT).show();
-                    try {
-                        Thread.sleep(4000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+                    Log.d("OK", "Se guardo el perfil");
+
                     //HE CAMBIADO EL ORDEN DE LA INICIALIZACION DEL IDUSUARIO, PARECE QUE FUNCIONA CORRECTAMENTE...
                     idUsuario = myAuth.getCurrentUser().getUid();
-                    System.out.println("XXXXXXXXXXXXXXXXXXXX  " + idUsuario );
+                    photoReference = storageReference.child("usuarios/" + idUsuario + "/imagen_perfil.jpg");
                     DocumentReference docRef = myStore.collection("Usuarios").document(idUsuario);
-                    HashMap<String,String > infoUsuario = new HashMap<>();
+                    HashMap<String, String> infoUsuario = new HashMap<>();
                     infoUsuario.put("Nombre", name);
                     infoUsuario.put("Puntuacion", "0");
-
                     docRef.set(infoUsuario);
-                    System.out.println("XXXXXXXXXXXXXXXXXXXX  " + idUsuario );
+                    if (imageBitmap == null && selectedImageUri != null) {
+                        subirImagenCloudStorageFirebase(selectedImageUri);
+                    }
+                    if (imageBitmap != null && selectedImageUri == null) {
+                        subirImagenCloudStorageFirebase(getImageUri(imageBitmap));
+                    }
+                    if (imageBitmap == null && selectedImageUri == null) {
+                        subirImagenCloudStorageFirebase(transformarDrawabletoUri());
+                    }
                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                    Esperar.segundos(2500);
                     startActivity(intent);
                 } else {
+                    Log.d("ER", "No se guardo el perfil");
 
-                    //Toast.makeText(Register.this,"Se ha producido une error en el proceso de registro.", Toast.LENGTH_SHORT ).show();
-                    Toast.makeText(registroActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                   // progressBar.setVisibility(View.INVISIBLE);
                 }
             }
         });
-        //progressBar.setVisibility(View.INVISIBLE);
+
     }
 
     public void quitarAvatar(View view) {
         quitarAvatartexto.setVisibility(View.INVISIBLE);
+        imageBitmap = null;
+        selectedImageUri =null;
         avatar.setImageResource(R.drawable.avatar);
+    }
+
+
+    private void subirImagenCloudStorageFirebase(Uri imagen) {
+        StorageReference referenciaFichero = myStorage.child("usuarios/" + idUsuario + "/imagen_perfil.jpg");
+        referenciaFichero.putFile(imagen).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                Log.d("OK", "Se cargo la imagen en el Storage");
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Log.d("ER", "No se cargo la imagen en el Storage");
+
+            }
+        });
+    }
+
+
+    public Uri getImageUri(Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(this.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
+
+    public Uri transformarDrawabletoUri(){
+        Uri imageUri = Uri.parse(ContentResolver.SCHEME_ANDROID_RESOURCE +
+                "://" + getResources().getResourcePackageName(R.drawable.avatar)
+                + '/' + getResources().getResourceTypeName(R.drawable.avatar)
+                + '/' + getResources().getResourceEntryName(R.drawable.avatar));
+        return imageUri;
     }
 }
