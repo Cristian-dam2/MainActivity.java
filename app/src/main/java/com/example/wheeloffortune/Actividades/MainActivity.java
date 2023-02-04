@@ -45,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private static int valorConseguido = 0;
     private static int completarPalabra = 0;
     private static Jugador jugadarGuardar;
+    private static final int NUMERO_DE_PANELES = 27;
 
     private boolean girando = false;
     private int degree = 0;
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText introducirLetra;
     private EditText introducirPalabra;
     private TextView informacion;
-    private TextView[] conjuntoTextViews = new TextView[27];
+    private TextView[] conjuntoTextViews = new TextView[NUMERO_DE_PANELES];
     private TextView resolverPalabra;
 
     private Palabra palabraAdivinar;
@@ -90,6 +91,7 @@ public class MainActivity extends AppCompatActivity {
         });
         setContentView(R.layout.activity_main);
 
+
         generarCuadros();
         mostrarCuadrosLetras();
         obtenerGradosSecciones();
@@ -98,6 +100,7 @@ public class MainActivity extends AppCompatActivity {
         ruleta = findViewById(R.id.ruleta);
         puntuacion = (TextView) findViewById(R.id.puntos);
         cartelNombre = findViewById(R.id.boton_nombre);
+
 
         introducirLetra = (EditText) findViewById(R.id.editTextColocarLetra);
         introducirLetra.setOnClickListener(new View.OnClickListener() {
@@ -129,12 +132,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-         myAuth = FirebaseAuth.getInstance();
-         idUsuario = myAuth.getCurrentUser().getUid();
-         myStorage = FirebaseFirestore.getInstance();
+        myAuth = FirebaseAuth.getInstance();
+        idUsuario = myAuth.getCurrentUser().getUid();
+        myStorage = FirebaseFirestore.getInstance();
         obtenerNombre(idUsuario);
-
-
     }
 
 
@@ -161,7 +162,6 @@ public class MainActivity extends AppCompatActivity {
                 activarIntroductores();
 
             }
-
 
             @Override
             public void onAnimationRepeat(Animation animation) {
@@ -206,33 +206,34 @@ public class MainActivity extends AppCompatActivity {
         int numeroviejo = Integer.valueOf(valorviejo);
         puntuacion.setText(String.valueOf(numeroviejo*2));
         Toast.makeText(MainActivity.this, "Acabas de duplicar tus puntos!!", Toast.LENGTH_SHORT).show();
-
     }
 
-
-
-
-
-
+    /**
+     * Inicializa el array conjuntoTextViews con todos los cuadros del panel en activity_main.xml.<br>
+     * Para ello, llama al método generarNombreLetrasPNG(), que devolverá la que debería ser la lista
+     * con el ID de cada cuadro del panel.
+     */
     private void generarCuadros() {
-        int temp;
-        ArrayList<String> id = generadorNombreLetrasPNG();
-        for (int i = 0; i < id.size(); i++) {
-            temp = getResources().getIdentifier(id.get(i), "id", getPackageName());
-            conjuntoTextViews[i] = (TextView) findViewById(temp);
+        int idTextView;
+        ArrayList<String> paneles = generadorNombreLetrasPNG();
+        for (int i = 0; i < paneles.size(); i++) {
+            idTextView = getResources().getIdentifier(paneles.get(i), "id", getPackageName());
+            conjuntoTextViews[i] = (TextView)findViewById(idTextView);
         }
     }
-
-
-    // C es el nombre de los TextViews en el MainActivity, se añade los numeros correspondiente al recuadro que pertenecen.
+    /**
+     * Crea una lista con los nombres de los TextViews en activity_main.xml. El nombre de cada
+     * elemento será cN donde N es un número entre 0 y el límite establecido en la constante NUMERO_DE_PANELES
+     * de la misma clase.
+     * @return Lista con los nombres de los cuadros.
+     */
     private ArrayList<String> generadorNombreLetrasPNG() {
-        String letra = "c";
+        // c es el nombre de los TextViews en el MainActivity, se añade los numeros correspondiente al recuadro que pertenecen.
         ArrayList<String> letrasEnumeradas = new ArrayList<>();
-        for (int i = 0; i < 27; i++) {
-            letrasEnumeradas.add(letra.concat(String.valueOf(i)));
+        for (int i = 0; i < NUMERO_DE_PANELES; i++) {
+            letrasEnumeradas.add("c".concat(String.valueOf(i)));
         }
         return letrasEnumeradas;
-
     }
 
 
