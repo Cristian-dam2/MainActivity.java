@@ -4,7 +4,10 @@ package com.example.wheeloffortune;
 import java.io.Closeable;
 import java.io.IOException;
 
-public abstract class CerrarFlujos {
+/**
+ * Clase con métodos para cerrar flujos
+ */
+public class CerrarFlujos {
     /**
      * Cierra los flujos que lleguen de entrada. Antes de intentar eso, averigua
      * si el objeto no es nulo

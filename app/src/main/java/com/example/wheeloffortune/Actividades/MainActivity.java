@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             public void onBooChange(boolean b) {
                 Esperando.segundos(500);
                 palabraAdivinar.pintarPalabra();
-                audio.musicaVictoria(palabraAdivinar);
+                audio.Victoria(palabraAdivinar);
                 finalizarActividad();
             }
         });
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
             if (aciertos == completarPalabra) {
                 Esperando.segundos(1500);
                 palabraAdivinar.pintarLetra(letra);
-                audio.musicaVictoria(palabraAdivinar);
+                audio.Victoria(palabraAdivinar);
                 cc.setBoo(true);
 
             }
