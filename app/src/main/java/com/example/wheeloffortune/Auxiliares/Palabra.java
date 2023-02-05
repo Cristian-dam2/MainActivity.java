@@ -125,40 +125,55 @@ public class Palabra extends AppCompatActivity {
         return letrasMarcadas;
     }
 
+    /**
+     * Determina si la letra recibida es válida
+     * @param letra Letra para validar
+     * @return true, si la letra es válida; false si la letra es null, está vacía, ya fue usada o no
+     * está en la palabra
+     */
     public boolean analizarLetra(String letra) {
-        if (letra.isEmpty() || letra == null) {
+        if (letra == null) {
             return false;
         }
-        boolean aux = true;
+        if (letra.isEmpty()) {
+            return false;
+        }
         if (copias(letrasUtilizadas, letra)) {
             return false;
         }
+
+        // La letra es válida y no fue usada
         letrasUtilizadas.add(letra);
         if (!ExisteLetramiPalabra(this.getPalabra(), letra)) {
             return false;
         }
+
         return true;
     }
 
-
-    public void pintarLetra(String Vocal) {
-        String minusVocal = Vocal.toLowerCase();
-        String letraMarcada =  "letra" + minusVocal;
+    /**
+     * Descubre los paneles que contengan la letra adivinada. Se pintarán todas las instancias de esta
+     * en el panel.
+     * @param letra La letra que se va a revelar en el panel.
+     */
+    public void pintarLetra(String letra) {
+        String minusVocal = letra.toLowerCase();
+        String letraMarcada = "letra" + minusVocal;
         ArrayList<String> id = getPanelConLetra();
+
         int codigoImagen;
         for (int i = 0; i < id.size(); i++) {
             if (id.get(i).equals(letraMarcada)) {
-
                 codigoImagen = getDrawableId(id.get(i));
                 if (letrasAsignadas.get(minusVocal.toUpperCase()).size() > 1) {
-                    for (int j = 0; j < letrasAsignadas.get(Vocal.toUpperCase()).size(); j++) {
-                        Integer numero = letrasAsignadas.get(Vocal.toUpperCase()).get(j);
+                    for (int j = 0; j < letrasAsignadas.get(letra.toUpperCase()).size(); j++) {
+                        Integer numero = letrasAsignadas.get(letra.toUpperCase()).get(j);
                         cuadros[numero].setBackgroundResource(codigoImagen);
                         encuentros = letrasAsignadas.get(minusVocal.toUpperCase()).size();
                     }
 
                 } else {
-                    Integer numero = letrasAsignadas.get(Vocal.toUpperCase()).get(0);
+                    Integer numero = letrasAsignadas.get(letra.toUpperCase()).get(0);
                     cuadros[numero].setBackgroundResource(codigoImagen);
                     encuentros = letrasAsignadas.get(minusVocal.toUpperCase()).size();
                 }

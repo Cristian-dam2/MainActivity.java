@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -12,7 +11,6 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
-import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -58,12 +56,12 @@ public class MainActivity extends AppCompatActivity {
     private EditText introducirPalabra;
     private ImageView ruleta;
 
-    private TextView puntuacion;
+    private TextView puntos;
     private Button cartelNombre;
     private ImageView pin;
-    private TextView informacion;
+    private TextView textoPista;
     private TextView[] conjuntoTextViews = new TextView[NUMERO_DE_PANELES];
-    private TextView resolverPalabra;
+    private TextView botonResolverPalabra;
 
     private Palabra palabraAdivinar;
     private Audio audio = new Audio(this);
@@ -80,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         // Inicializa los elementos con listeners y luego sus listeners
         cc = new C(false);
         introducirLetra = (EditText) findViewById(R.id.editTextColocarLetra);
@@ -92,17 +89,18 @@ public class MainActivity extends AppCompatActivity {
         // Inicializa el panel y la ruleta
         generarCuadros();
         obtenerGradosSecciones();
-
-        cartelNombre = findViewById(R.id.boton_nombre);
-        resolverPalabra = (TextView) findViewById(R.id.textResolverPalabra);
-        pin = findViewById(R.id.pin);
-        puntuacion = (TextView) findViewById(R.id.puntos);
-
-
-        informacion = (TextView) findViewById(R.id.InformacionparaAdivinar);
         palabraAdivinar = new Palabra(conjuntoTextViews);
-        informacion.setText(palabraAdivinar.getInformacion());
 
+        pin = findViewById(R.id.pin);
+        cartelNombre = findViewById(R.id.boton_nombre);
+        puntos = (TextView) findViewById(R.id.texto_puntos);
+        botonResolverPalabra = (TextView) findViewById(R.id.boton_resolver_palabra);
+
+        textoPista = (TextView) findViewById(R.id.pista);
+        textoPista.setText(palabraAdivinar.getInformacion());
+
+
+        // Obtener sesión de Firebase y los datos de Firestore
         myAuth = FirebaseAuth.getInstance();
         idUsuario = myAuth.getCurrentUser().getUid();
         myStorage = FirebaseFirestore.getInstance();
@@ -197,6 +195,31 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void enviarLetra() {
+        int aciertos = contarLetras(palabraAdivinar.getPalabra());
+        String letra = introducirLetra.getText().toString().toLowerCase();
+
+        if (palabraAdivinar.analizarLetra(letra)) {
+            palabraAdivinar.pintarLetra(letra);
+            Esperar.segundos(500);
+            audio.Correcto();
+            sumarPuntos(valorConseguido);
+            completarPalabra++;
+            if (aciertos == completarPalabra) {
+                Esperar.segundos(1500);
+                palabraAdivinar.pintarLetra(letra);
+                audio.Victoria(palabraAdivinar);
+                cc.setBool(true);
+
+            }
+        } else {
+            audio.Incorrecto();
+            restar();
+        }
+
+        desactivarIntroductores();
+    }
+
     private void girar() {
         ruleta.setEnabled(false);
         degree = random.nextInt(SECTORES.length - 1);
@@ -231,32 +254,32 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void sumarPuntos(int numeronuevo) {
-        String valorviejo = puntuacion.getText().toString();
+        String valorviejo = puntos.getText().toString();
         int numeroviejo = Integer.valueOf(valorviejo);
         int suma = (Palabra.encuentros*numeronuevo) + numeroviejo;
-        puntuacion.setText(String.valueOf(suma));
+        puntos.setText(String.valueOf(suma));
 
 
     }
 
     private void restar() {
         //SI EL USUARIO SE EQUIVOCA DE LETRA, SE RESTA 5 PUNTOS
-        String valorviejo = puntuacion.getText().toString();
+        String valorviejo = puntos.getText().toString();
         int numeroviejo = Integer.valueOf(valorviejo);
         int resta = numeroviejo - 5;
-        puntuacion.setText(String.valueOf(resta));
+        puntos.setText(String.valueOf(resta));
         Toast.makeText(MainActivity.this, "Acabas de perder " + 5 + " puntos!!", Toast.LENGTH_SHORT).show();
     }
 
     private void quitarPuntos(){
-        puntuacion.setText(String.valueOf(0));
+        puntos.setText(String.valueOf(0));
         Toast.makeText(MainActivity.this, "Acabas de perder todos tus puntos!!", Toast.LENGTH_SHORT).show();
     }
 
     private void duplicarPuntos(){
-        String valorviejo = puntuacion.getText().toString();
+        String valorviejo = puntos.getText().toString();
         int numeroviejo = Integer.valueOf(valorviejo);
-        puntuacion.setText(String.valueOf(numeroviejo*2));
+        puntos.setText(String.valueOf(numeroviejo*2));
         Toast.makeText(MainActivity.this, "Acabas de duplicar tus puntos!!", Toast.LENGTH_SHORT).show();
     }
 
@@ -309,35 +332,11 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    public void enviarLetra() {
-        int aciertos = contarLetras(palabraAdivinar.getPalabra());
-        String letra = introducirLetra.getText().toString().toLowerCase();
-        if (palabraAdivinar.analizarLetra(letra)) {
-            palabraAdivinar.pintarLetra(letra);
-            Esperar.segundos(500);
-            audio.Correcto();
-            sumarPuntos(valorConseguido);
-            completarPalabra++;
-            if (aciertos == completarPalabra) {
-                Esperar.segundos(1500);
-                palabraAdivinar.pintarLetra(letra);
-                audio.Victoria(palabraAdivinar);
-                cc.setBool(true);
-
-            }
-        } else {
-            audio.Incorrecto();
-            restar();
-        }
-
-        desactivarIntroductores();
-    }
-
 
     private void activarIntroductores() {
         introducirLetra.setVisibility(View.VISIBLE);
-        resolverPalabra.setVisibility(View.VISIBLE);
-        resolverPalabra.setEnabled(true);
+        botonResolverPalabra.setVisibility(View.VISIBLE);
+        botonResolverPalabra.setEnabled(true);
 
 
     }
@@ -350,11 +349,11 @@ public class MainActivity extends AppCompatActivity {
         introducirLetra.setText("");
     }
     private void desactivarIntroductores() {
-        resolverPalabra.setVisibility(View.INVISIBLE);
+        botonResolverPalabra.setVisibility(View.INVISIBLE);
         introducirLetra.setVisibility(View.INVISIBLE);
         introducirPalabra.setVisibility(View.INVISIBLE);
 
-        resolverPalabra.setEnabled(false);
+        botonResolverPalabra.setEnabled(false);
         ruleta.setEnabled(true);
 
         limpiarEntradas();
@@ -364,7 +363,7 @@ public class MainActivity extends AppCompatActivity {
     public void activarResolverPalabra(){
        introducirLetra.setVisibility(View.INVISIBLE);
        introducirPalabra.setVisibility(View.VISIBLE);
-       resolverPalabra.setEnabled(false);
+       botonResolverPalabra.setEnabled(false);
     }
     //REVISAR SI ESTE METODO FUNCIONA
     //No funciona xd
@@ -408,7 +407,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void guardarDatosJugador() {
         String usuario = cartelNombre.getText().toString();
-        String puntuacionX = puntuacion.getText().toString();
+        String puntuacionX = puntos.getText().toString();
 
         DocumentReference doc_ref = myStorage.collection("Usuarios").document(idUsuario);
         HashMap<String, String> info_usuario = new HashMap<>();
@@ -436,7 +435,7 @@ public class MainActivity extends AppCompatActivity {
                         if(document.getId().equals(perfil)){
                             Log.d("TAG", "si entro");
                             nombre = document.getData().get("Nombre").toString();
-                            puntuacion.setText(document.getData().get("Puntuacion").toString());
+                            puntos.setText(document.getData().get("Puntuacion").toString());
 
 
                         }
