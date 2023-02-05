@@ -86,17 +86,18 @@ public class LoginActivity extends AppCompatActivity {
                     Toast.makeText(LoginActivity.this, "Credenciales correctas, bienvenido.", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
 
+                } else {
+                    botonIniciarJuego.setEnabled(true);
+                    Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                 }
-                botonIniciarJuego.setEnabled(true);
-                Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
             }
- });
-}
+        });
+    }
     public void iniciarRegistro(View view) {
 
         Intent myIntent = new Intent(this, registroActivity.class);
         startActivity(myIntent);
-   }
+    }
 
 
 
