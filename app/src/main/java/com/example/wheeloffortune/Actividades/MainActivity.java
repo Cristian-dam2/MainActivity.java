@@ -89,14 +89,14 @@ public class MainActivity extends AppCompatActivity {
 
         inicializarListeners();
 
+        // Inicializa el panel y la ruleta
         generarCuadros();
-        mostrarCuadrosLetras();
         obtenerGradosSecciones();
 
+        cartelNombre = findViewById(R.id.boton_nombre);
         resolverPalabra = (TextView) findViewById(R.id.textResolverPalabra);
         pin = findViewById(R.id.pin);
         puntuacion = (TextView) findViewById(R.id.puntos);
-        cartelNombre = findViewById(R.id.boton_nombre);
 
 
         informacion = (TextView) findViewById(R.id.InformacionparaAdivinar);
@@ -153,6 +153,49 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Crea una lista con los nombres de los TextViews en activity_main.xml. El nombre de cada elemento
+     * será cN donde N es un número entre 0 y el límite establecido en la constante NUMERO_DE_PANELES
+     * de la misma clase.
+     * @return Lista con los nombres de los cuadros.
+     */
+    private ArrayList<String> generadorNombreLetrasPNG() {
+        // c es el nombre de los TextViews en el MainActivity, se añade los numeros correspondiente al recuadro que pertenecen.
+        ArrayList<String> letrasEnumeradas = new ArrayList<>();
+        for (int i = 0; i < NUMERO_DE_PANELES; i++) {
+            letrasEnumeradas.add("c".concat(String.valueOf(i)));
+        }
+        return letrasEnumeradas;
+    }
+
+    /**
+     * Vuelve visibles todos los cuadros del panel
+     */
+    private void mostrarCuadrosLetras() {
+        for (int i = 0; i < conjuntoTextViews.length; i++) {
+            conjuntoTextViews[i].setVisibility(View.VISIBLE);
+        }
+    }
+    /**
+     * Vuelve invisibles todos los cuadros del panel
+     */
+    private void ocultarCuadrosLetras() {
+        for (int i = 0; i < conjuntoTextViews.length; i++) {
+            conjuntoTextViews[i].setVisibility(View.INVISIBLE);
+        }
+    }
+    /**
+     * Averigua cuántos grados mide cada sector de la ruleta y luego, con un índice, determina la
+     * posisión inicial de cada uno. El resultado se guarda en el array GRADOS_SECTORES.<br>
+     * Ejemplo: Si un círculo tiene 4 sectores, en la división se determina que cada sector mide 90.
+     * Con ello, multiplica 90 por su posición en el array de sectores (Resultado: 90, 180, 270 y 360).
+     */
+    private void obtenerGradosSecciones() {
+        int rangoSeccion = 360 / SECTORES.length;
+        for (int i = 0; i < SECTORES.length; i++) {
+            GRADOS_SECTORES[i] = (i + 1) * rangoSeccion;
+        }
+    }
 
     private void girar() {
         ruleta.setEnabled(false);
@@ -185,13 +228,6 @@ public class MainActivity extends AppCompatActivity {
         ruleta.startAnimation(rotateAnimacion);
     }
 
-
-    private void obtenerGradosSecciones() {
-        int rangoSeccion = 360 / SECTORES.length;
-        for (int i = 0; i < SECTORES.length; i++) {
-            GRADOS_SECTORES[i] = (i + 1) * rangoSeccion;
-        }
-    }
 
 
     private void sumarPuntos(int numeronuevo) {
@@ -235,33 +271,6 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < paneles.size(); i++) {
             idTextView = getResources().getIdentifier(paneles.get(i), "id", getPackageName());
             conjuntoTextViews[i] = (TextView)findViewById(idTextView);
-        }
-    }
-    /**
-     * Crea una lista con los nombres de los TextViews en activity_main.xml. El nombre de cada
-     * elemento será cN donde N es un número entre 0 y el límite establecido en la constante NUMERO_DE_PANELES
-     * de la misma clase.
-     * @return Lista con los nombres de los cuadros.
-     */
-    private ArrayList<String> generadorNombreLetrasPNG() {
-        // c es el nombre de los TextViews en el MainActivity, se añade los numeros correspondiente al recuadro que pertenecen.
-        ArrayList<String> letrasEnumeradas = new ArrayList<>();
-        for (int i = 0; i < NUMERO_DE_PANELES; i++) {
-            letrasEnumeradas.add("c".concat(String.valueOf(i)));
-        }
-        return letrasEnumeradas;
-    }
-
-    private void mostrarCuadrosLetras() {
-        for (int i = 0; i < conjuntoTextViews.length; i++) {
-            conjuntoTextViews[i].setVisibility(View.VISIBLE);
-        }
-
-    }
-
-    private void ocultarCuadrosLetras() {
-        for (int i = 0; i < conjuntoTextViews.length; i++) {
-            conjuntoTextViews[i].setVisibility(View.INVISIBLE);
         }
     }
 

@@ -82,10 +82,10 @@
         android:id="@+id/c0"
         android:layout_width="39dp"
         android:layout_height="53dp"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="30dp"
         android:layout_marginTop="240dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/boton_nombre"
         tools:ignore="MissingConstraints" />
@@ -95,7 +95,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/c0"
         app:layout_constraintStart_toEndOf="@+id/c0"
         tools:ignore="MissingConstraints" />
@@ -105,7 +105,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/c1"
         app:layout_constraintStart_toEndOf="@+id/c1"
         tools:ignore="MissingConstraints" />
@@ -115,7 +115,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/c2"
         app:layout_constraintStart_toEndOf="@+id/c2"
         tools:ignore="MissingConstraints" />
@@ -125,7 +125,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/c3"
         app:layout_constraintStart_toEndOf="@+id/c3"
         tools:ignore="MissingConstraints" />
@@ -135,7 +135,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/c4"
         app:layout_constraintStart_toEndOf="@+id/c4"
         tools:ignore="MissingConstraints" />
@@ -145,7 +145,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/c5"
         app:layout_constraintStart_toEndOf="@+id/c5"
         tools:ignore="MissingConstraints" />
@@ -155,7 +155,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/c6"
         app:layout_constraintStart_toEndOf="@+id/c6"
         tools:ignore="MissingConstraints" />
@@ -165,7 +165,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="@+id/c7"
         app:layout_constraintStart_toEndOf="@+id/c7"
         tools:ignore="MissingConstraints" />
@@ -174,9 +174,9 @@
         android:id="@+id/c9"
         android:layout_width="39dp"
         android:layout_height="53dp"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="30dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/c0" />
 
@@ -185,7 +185,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c9"
         app:layout_constraintTop_toBottomOf="@+id/c1"
         tools:ignore="MissingConstraints" />
@@ -195,7 +195,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c10"
         app:layout_constraintTop_toBottomOf="@+id/c2"
         tools:ignore="MissingConstraints" />
@@ -205,7 +205,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c11"
         app:layout_constraintTop_toBottomOf="@+id/c3"
         tools:ignore="MissingConstraints" />
@@ -215,7 +215,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c12"
         app:layout_constraintTop_toBottomOf="@+id/c4"
         tools:ignore="MissingConstraints" />
@@ -225,7 +225,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c13"
         app:layout_constraintTop_toBottomOf="@+id/c5"
         tools:ignore="MissingConstraints" />
@@ -235,7 +235,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c14"
         app:layout_constraintTop_toBottomOf="@+id/c6"
         tools:ignore="MissingConstraints" />
@@ -245,7 +245,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c15"
         app:layout_constraintTop_toBottomOf="@+id/c7"
         tools:ignore="MissingConstraints" />
@@ -255,7 +255,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c16"
         app:layout_constraintTop_toBottomOf="@+id/c8"
         tools:ignore="MissingConstraints" />
@@ -264,9 +264,9 @@
         android:id="@+id/c18"
         android:layout_width="39dp"
         android:layout_height="53dp"
-        android:layout_marginStart="22dp"
+        android:layout_marginStart="30dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/c9"
         tools:ignore="MissingConstraints" />
@@ -276,7 +276,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c18"
         app:layout_constraintTop_toBottomOf="@+id/c10"
         tools:ignore="MissingConstraints" />
@@ -286,7 +286,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c19"
         app:layout_constraintTop_toBottomOf="@+id/c11"
         tools:ignore="MissingConstraints" />
@@ -296,7 +296,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c20"
         app:layout_constraintTop_toBottomOf="@+id/c12"
         tools:ignore="MissingConstraints" />
@@ -306,7 +306,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c21"
         app:layout_constraintTop_toBottomOf="@+id/c13"
         tools:ignore="MissingConstraints" />
@@ -316,7 +316,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c22"
         app:layout_constraintTop_toBottomOf="@+id/c14"
         tools:ignore="MissingConstraints" />
@@ -326,7 +326,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c23"
         app:layout_constraintTop_toBottomOf="@+id/c15"
         tools:ignore="MissingConstraints" />
@@ -336,7 +336,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c24"
         app:layout_constraintTop_toBottomOf="@+id/c16"
         tools:ignore="MissingConstraints" />
@@ -346,7 +346,7 @@
         android:layout_width="39dp"
         android:layout_height="53dp"
         android:background="@drawable/panelespacio"
-        android:visibility="invisible"
+        android:visibility="visible"
         app:layout_constraintStart_toEndOf="@+id/c25"
         app:layout_constraintTop_toBottomOf="@+id/c17"
         tools:ignore="MissingConstraints" />
