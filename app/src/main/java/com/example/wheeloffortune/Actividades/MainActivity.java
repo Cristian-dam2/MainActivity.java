@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
 
+        // Inicializa los elementos con listeners y luego sus listeners
         cc = new C(false);
         introducirLetra = (EditText) findViewById(R.id.editTextColocarLetra);
         introducirPalabra = (EditText) findViewById(R.id.editTextColocarPalabra);
@@ -91,11 +92,11 @@ public class MainActivity extends AppCompatActivity {
         generarCuadros();
         mostrarCuadrosLetras();
         obtenerGradosSecciones();
+
         resolverPalabra = (TextView) findViewById(R.id.textResolverPalabra);
         pin = findViewById(R.id.pin);
         puntuacion = (TextView) findViewById(R.id.puntos);
         cartelNombre = findViewById(R.id.boton_nombre);
-
 
 
         informacion = (TextView) findViewById(R.id.InformacionparaAdivinar);
@@ -184,6 +185,7 @@ public class MainActivity extends AppCompatActivity {
         ruleta.startAnimation(rotateAnimacion);
     }
 
+
     private void obtenerGradosSecciones() {
         int rangoSeccion = 360 / SECTORES.length;
         for (int i = 0; i < SECTORES.length; i++) {
@@ -223,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Inicializa el array conjuntoTextViews con todos los cuadros del panel en activity_main.xml.<br>
+     * Inicializa el array de TextViews con todos los cuadros del panel en activity_main.xml.<br>
      * Para ello, llama al método generarNombreLetrasPNG(), que devolverá la que debería ser la lista
      * con el ID de cada cuadro del panel.
      */
@@ -249,7 +251,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return letrasEnumeradas;
     }
-
 
     private void mostrarCuadrosLetras() {
         for (int i = 0; i < conjuntoTextViews.length; i++) {
@@ -380,7 +381,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public  void finalizarActividad() {
+    public void finalizarActividad() {
         Esperar.segundos(1000);
         guardarDatosJugador();
         palabraAdivinar.limpiarValoreStaticos();
