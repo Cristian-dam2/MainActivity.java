@@ -17,7 +17,9 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.wheeloffortune.Auxiliares.Esperar;
 import com.example.wheeloffortune.Auxiliares.Jugador;
+import com.example.wheeloffortune.Auxiliares.JugadorAdaptador;
 import com.example.wheeloffortune.Auxiliares.JugadorModelo;
 import com.example.wheeloffortune.R;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -32,46 +34,38 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class ListaJugadoresActivity extends AppCompatActivity {
-    private ArrayList<Jugador> jugadores = new ArrayList<>();
     private Button boton_volver;
     private FirebaseFirestore db;
     private StorageReference myStorage;
     private StorageReference storageReference;
     private StorageReference photoReference;
     private HashMap<String,String> informacion = new HashMap<>();
-    private Bitmap bmp ;
-    private String nombre;
-    private int puntuacion;
-    private ArrayList<JugadorModelo> jugadorModelos = new ArrayList<>();
-    private Bitmap bitmap;
-    private ImageView i;
-    private TextView p;
-    private TextView n;
+    private Bitmap[] bitmap = new Bitmap[1];
+    private List<JugadorModelo> mJugadorList = new ArrayList<>();
+    private RecyclerView mRecyclerView;
+    private JugadorAdaptador mJugadorAdaptador;
+    final long ONE_MEGABYTE = 1024 * 1024;
 
 
     @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.modelo_lista_jugadores);
+        setContentView(R.layout.activity_lista_jugadores);
         db = FirebaseFirestore.getInstance();
-        //boton_volver = (Button) findViewById(R.id.boton_volver);
+        boton_volver = (Button) findViewById(R.id.boton_volver);
         myStorage = FirebaseStorage.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
-        i = findViewById(R.id.image_view);
-        p = findViewById(R.id.player_score);
-        n = findViewById(R.id.player_name);
+        mRecyclerView = findViewById(R.id.myRecycler);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-//        boton_volver.setOnClickListener(new View.OnClickListener() {
-//            public void onClick(View v) {
-//                finish();
-//            }
-//        });
         CollectionReference collectionReference = db.collection("Usuarios");
         collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
@@ -86,41 +80,65 @@ public class ListaJugadoresActivity extends AppCompatActivity {
                 } else {
                     Log.w("TAG", "Error al leer la colección.", task.getException());
                 }
-
-                for (String key : informacion.keySet()) {
-                    JugadorModelo a = new JugadorModelo(getBitmapFromFirebase(key),informacion.get(key));
-
-                    n.setText(a.getNombre());
-                    p.setText(a.getPuntuacion());
-                    jugadorModelos.add(a);
-
-                }
+                loadBitmaps(informacion);
             }
         });
 
     }
 
 
-    public Bitmap getBitmapFromFirebase(String userID) {
-        bitmap = null;
-        StorageReference imageRef = myStorage.child("usuarios/" + userID + "/imagen_perfil.jpg");
-        final long ONE_MEGABYTE = 1024 * 1024;
-        imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                Log.e("OK", "Imagen cargada con exito");
-                i.setImageBitmap(bitmap);
-                return;
+    private void loadBitmaps( Map<String, String> informacion) {
+        for (String key : informacion.keySet()) {
+            System.out.println(key);
+            String jugadorInfo = informacion.get(key);
+            StorageReference imageRef = myStorage.child("usuarios/" + key + "/imagen_perfil.jpg");
 
-            }
-        }).addOnFailureListener(new OnFailureListener() {
+            imageRef.getBytes(ONE_MEGABYTE).addOnSuccessListener(new OnSuccessListener<byte[]>() {
+                @Override
+                public void onSuccess(byte[] bytes) {
+                    Bitmap bitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                    Log.e("OK", "Imagen cargada con éxito");
+                    JugadorModelo a = new JugadorModelo(bitmap, jugadorInfo);
+                    mJugadorList.add(a);
+                    Collections.sort(mJugadorList, new Comparator<JugadorModelo>() {
+                        @Override
+                        public int compare(JugadorModelo o1, JugadorModelo o2) {
+                            return Integer.valueOf(o2.getPuntuacion()).compareTo(Integer.valueOf(o1.getPuntuacion()));
+                        }
+                    });
+                    if (mJugadorList.size() == informacion.size()) {
+                        mJugadorAdaptador = new JugadorAdaptador(getTop10(mJugadorList));
+                        mRecyclerView.setAdapter(mJugadorAdaptador);
+                    }
+                }
+            }).addOnFailureListener(new OnFailureListener() {
+                @Override
+                public void onFailure(@NonNull Exception exception) {
+                    Log.e("Error", "No se pudo obtener la imagen");
+                }
+            });
+        }
+    }
+
+
+    public List<JugadorModelo> getTop10(List<JugadorModelo> jugadores) {
+        List<JugadorModelo> top10 = new ArrayList<>();
+
+        // Ordenamos la lista de jugadores por puntuación de mayor a menor
+        Collections.sort(jugadores, new Comparator<JugadorModelo>() {
             @Override
-            public void onFailure(@NonNull Exception exception) {
-                Log.e("Error", "No se pudo obtener la imagen");
+            public int compare(JugadorModelo o1, JugadorModelo o2) {
+                return Integer.valueOf(o2.getPuntuacion()).compareTo(Integer.valueOf(o1.getPuntuacion()));
             }
         });
-        return bitmap;
+
+        // Tomamos los primeros 10 jugadores o menos si no hay suficientes
+        int max = Math.min(10, jugadores.size());
+        for (int i = 0; i < max; i++) {
+            top10.add(jugadores.get(i));
+        }
+
+        return top10;
     }
 
 }

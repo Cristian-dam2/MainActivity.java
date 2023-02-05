@@ -9,6 +9,7 @@ public class JugadorModelo {
 
     public JugadorModelo(Bitmap imagen, String usuario) {
         this.imagen = imagen;
+
         String info = "";
         for (int i = 0; i < usuario.length(); i++) {
             if(usuario.charAt(i) != '$'){
