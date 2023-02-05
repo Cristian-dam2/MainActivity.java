@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Build;
@@ -65,6 +66,13 @@ public class ListaJugadoresActivity extends AppCompatActivity {
         storageReference = FirebaseStorage.getInstance().getReference();
         mRecyclerView = findViewById(R.id.myRecycler);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        boton_volver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                VolverMainActivity();
+            }
+        });
 
         CollectionReference collectionReference = db.collection("Usuarios");
         collectionReference.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -141,4 +149,10 @@ public class ListaJugadoresActivity extends AppCompatActivity {
         return top10;
     }
 
+
+    public void VolverMainActivity() {
+//        Intent myintent = new Intent(this,LoginActivity.class);
+//        startActivity(myintent);
+        finish();
+    }
 }
