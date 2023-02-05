@@ -3,6 +3,7 @@ package com.example.wheeloffortune.Actividades;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +12,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.DecelerateInterpolator;
 import android.view.animation.RotateAnimation;
+import android.view.inputmethod.InputMethod;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -39,23 +41,26 @@ import java.util.HashMap;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String[] secciones = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10",};
-    private static final int[] gradosSecciones = new int[secciones.length];
+    private static final String[] SECTORES = {"1", "2", "3", "4", "5", "6", "7", "8", "9", "10"};
+    private static final int[] GRADOS_SECTORES = new int [SECTORES.length];
     private static final Random random = new Random();
     private static int valorConseguido = 0;
     private static int completarPalabra = 0;
-    private static Jugador jugadarGuardar;
     private static final int NUMERO_DE_PANELES = 27;
+
+    private static Jugador jugadarGuardar;
 
     private boolean girando = false;
     private int degree = 0;
 
+    private C cc;
+    private EditText introducirLetra;
+    private EditText introducirPalabra;
     private ImageView ruleta;
+
     private TextView puntuacion;
     private Button cartelNombre;
     private ImageView pin;
-    private EditText introducirLetra;
-    private EditText introducirPalabra;
     private TextView informacion;
     private TextView[] conjuntoTextViews = new TextView[NUMERO_DE_PANELES];
     private TextView resolverPalabra;
@@ -64,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
     private Audio audio = new Audio(this);
     private Fichero fichero = new Fichero(this);
     private Esperar Esperando = new Esperar();
-    private C cc = new C();
 
     private FirebaseAuth myAuth;
     private FirebaseFirestore myStorage;
@@ -75,9 +79,47 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        cc.setBool(false);
+        setContentView(R.layout.activity_main);
 
-        // Este bloque se ejecutará cada vez que se ejecute cc.setBool()
+
+        cc = new C(false);
+        introducirLetra = (EditText) findViewById(R.id.editTextColocarLetra);
+        introducirPalabra = (EditText) findViewById(R.id.editTextColocarPalabra);
+        ruleta = findViewById(R.id.ruleta);
+
+        inicializarListeners();
+
+        generarCuadros();
+        mostrarCuadrosLetras();
+        obtenerGradosSecciones();
+        resolverPalabra = (TextView) findViewById(R.id.textResolverPalabra);
+        pin = findViewById(R.id.pin);
+        puntuacion = (TextView) findViewById(R.id.puntos);
+        cartelNombre = findViewById(R.id.boton_nombre);
+
+
+
+        informacion = (TextView) findViewById(R.id.InformacionparaAdivinar);
+        palabraAdivinar = new Palabra(conjuntoTextViews);
+        informacion.setText(palabraAdivinar.getInformacion());
+
+        myAuth = FirebaseAuth.getInstance();
+        idUsuario = myAuth.getCurrentUser().getUid();
+        myStorage = FirebaseFirestore.getInstance();
+        obtenerNombre(idUsuario);
+    }
+
+    /**
+     * Inicializa los listeners de esta actividad:
+     * <ul>
+     *     <li>cc: Se ejecuta al llamar a cc.setBool()</li>
+     *     <li>introducirLetra: Se ejecuta al pulsar sobre el campo de introducir letras.</li>
+     *     <li>introducirPalabra: Se ejecuta al pulsar sobre el campo de introducir palabras.</li>
+     *     <li>ruleta: Se ejecuta al pulsar sobre la ruleta.</li>
+     * </ul>
+     * @see C
+     */
+    private void inicializarListeners() {
         cc.setOnBoolChangeListener(new C.BoolChangeListener() {
             @Override
             public void onBoolChange(boolean b) {
@@ -89,39 +131,18 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        setContentView(R.layout.activity_main);
-
-
-        generarCuadros();
-        mostrarCuadrosLetras();
-        obtenerGradosSecciones();
-        resolverPalabra = (TextView) findViewById(R.id.textResolverPalabra);
-        pin = findViewById(R.id.pin);
-        ruleta = findViewById(R.id.ruleta);
-        puntuacion = (TextView) findViewById(R.id.puntos);
-        cartelNombre = findViewById(R.id.boton_nombre);
-
-
-        introducirLetra = (EditText) findViewById(R.id.editTextColocarLetra);
         introducirLetra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 enviarLetra();
             }
         });
-
-
-        introducirPalabra = (EditText) findViewById(R.id.editTextColocarPalabra);
         introducirPalabra.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 resolverPalabra();
             }
         });
-
-        informacion = (TextView) findViewById(R.id.InformacionparaAdivinar);
-        palabraAdivinar = new Palabra(conjuntoTextViews);
-        informacion.setText(palabraAdivinar.getInformacion());
         ruleta.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -131,18 +152,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
-        myAuth = FirebaseAuth.getInstance();
-        idUsuario = myAuth.getCurrentUser().getUid();
-        myStorage = FirebaseFirestore.getInstance();
-        obtenerNombre(idUsuario);
     }
 
 
     private void girar() {
         ruleta.setEnabled(false);
-        degree = random.nextInt(secciones.length - 1);
-        RotateAnimation rotateAnimacion = new RotateAnimation(0, (360 * secciones.length) + gradosSecciones[degree], RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
+        degree = random.nextInt(SECTORES.length - 1);
+        RotateAnimation rotateAnimacion = new RotateAnimation(0, (360 * SECTORES.length) + GRADOS_SECTORES[degree], RotateAnimation.RELATIVE_TO_SELF, 0.5f, RotateAnimation.RELATIVE_TO_SELF, 0.5f);
         rotateAnimacion.setDuration(8870);  //8870
         //SI COLOCO TRUE EN EL METODO SETFILLAFTER NO PUEDO HACER INVISIBLE MI IMAGEN
         rotateAnimacion.setFillAfter(true);
@@ -155,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onAnimationEnd(Animation animation) {
-                valorConseguido = Integer.valueOf(secciones[secciones.length - (degree + 1)]);
+                valorConseguido = Integer.valueOf(SECTORES[SECTORES.length - (degree + 1)]);
                 Toast.makeText(MainActivity.this, "Puedes ganar " + valorConseguido + " puntos, si aciertas!!!", Toast.LENGTH_LONG).show();
                 girando = false;
                 Esperando.segundos(2500);
@@ -171,9 +187,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void obtenerGradosSecciones() {
-        int rangoSeccion = 360 / secciones.length;
-        for (int i = 0; i < secciones.length; i++) {
-            gradosSecciones[i] = (i + 1) * rangoSeccion;
+        int rangoSeccion = 360 / SECTORES.length;
+        for (int i = 0; i < SECTORES.length; i++) {
+            GRADOS_SECTORES[i] = (i + 1) * rangoSeccion;
         }
     }
 
@@ -268,11 +284,11 @@ public class MainActivity extends AppCompatActivity {
             quitarPuntos();
             Esperando.segundos(500);
             desactivarIntroductores();
-        }else{
+        } else {
             duplicarPuntos();
             Esperando.segundos(500);
            // palabraAdivinar.pintarPalabra();
-            ocultarTeclado();
+            ocultarTeclado(this);
             //A lo mejor hay que sacar el audio en la condicion de victoria
             // para que pinte antes de que suene la musica
             //audio.musicaVictoria(palabraAdivinar);
@@ -305,6 +321,7 @@ public class MainActivity extends AppCompatActivity {
             audio.Incorrecto();
             restar();
         }
+
         desactivarIntroductores();
     }
 
@@ -317,19 +334,23 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private void LimpiarEntradas(){
+    /**
+     * Vacía los dos campos de entradas (el de introducir letras individuales y el de resolver).
+     */
+    private void limpiarEntradas(){
         introducirPalabra.setText("");
         introducirLetra.setText("");
     }
-
     private void desactivarIntroductores() {
         resolverPalabra.setVisibility(View.INVISIBLE);
-        resolverPalabra.setEnabled(false);
-        ruleta.setEnabled(true);
         introducirLetra.setVisibility(View.INVISIBLE);
         introducirPalabra.setVisibility(View.INVISIBLE);
-        LimpiarEntradas();
-        ocultarTeclado();
+
+        resolverPalabra.setEnabled(false);
+        ruleta.setEnabled(true);
+
+        limpiarEntradas();
+        ocultarTeclado(this);
     }
 
     public void activarResolverPalabra(){
@@ -338,9 +359,14 @@ public class MainActivity extends AppCompatActivity {
        resolverPalabra.setEnabled(false);
     }
     //REVISAR SI ESTE METODO FUNCIONA
-    private void ocultarTeclado() {
-        View view = this.getCurrentFocus();
-        InputMethodManager imm = (InputMethodManager) this.getApplicationContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+    //No funciona xd
+    private void ocultarTeclado(Activity activity) {
+        InputMethodManager imm = (InputMethodManager)activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        View view = activity.getCurrentFocus();
+
+        if (view == null) {
+            view = new View(activity);
+        }
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
     }
 
@@ -357,10 +383,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public  void finalizarActividad() {
-        Esperando.segundos(1000);
+        Esperar.segundos(1000);
         guardarDatosJugador();
-        // jugadarGuardar = new Jugador(cartelNombre.getText().toString(), Integer.valueOf(puntuacion.getText().toString()));
-        //fichero.guardarJugador(jugadarGuardar);
         palabraAdivinar.limpiarValoreStaticos();
         finish();
     }
