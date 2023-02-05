@@ -124,7 +124,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onBoolChange(boolean b) {
                 if (b == true) {
-                    System.out.println("HOLAAAAAAAAAAAAAAAAAAAAAAAAa");
                     Esperando.segundos(500);
                     palabraAdivinar.pintarPalabra();
                     finalizarActividad();
