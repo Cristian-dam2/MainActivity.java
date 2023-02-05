@@ -8,7 +8,7 @@
     tools:context=".Actividades.MainActivity">
 
     <EditText
-        android:id="@+id/editTextColocarPalabra"
+        android:id="@+id/campo_colocar_palabra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -416,7 +416,7 @@
         app:layout_constraintTop_toBottomOf="@+id/boton_puntos" />
 
     <EditText
-        android:id="@+id/editTextColocarLetra"
+        android:id="@+id/campo_colocar_letra"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"

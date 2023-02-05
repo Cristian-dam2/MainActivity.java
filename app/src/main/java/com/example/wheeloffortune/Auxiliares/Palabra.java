@@ -177,10 +177,8 @@ public class Palabra extends AppCompatActivity {
                     cuadros[numero].setBackgroundResource(codigoImagen);
                     encuentros = letrasAsignadas.get(minusVocal.toUpperCase()).size();
                 }
-
             }
         }
-
     }
 
     public void pintarPalabra(){
