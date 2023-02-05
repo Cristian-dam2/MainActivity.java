@@ -68,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
     private Palabra palabraAdivinar;
     private Audio audio = new Audio(this);
     private Fichero fichero = new Fichero(this);
-    private Esperar Esperando = new Esperar();
 
     private FirebaseAuth myAuth;
     private FirebaseFirestore myStorage;
@@ -124,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onBoolChange(boolean b) {
                 if (b == true) {
-                    Esperando.segundos(500);
+                    Esperar.segundos(500);
                     palabraAdivinar.pintarPalabra();
                     finalizarActividad();
                 }
@@ -173,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
                 valorConseguido = Integer.valueOf(SECTORES[SECTORES.length - (degree + 1)]);
                 Toast.makeText(MainActivity.this, "Puedes ganar " + valorConseguido + " puntos, si aciertas!!!", Toast.LENGTH_LONG).show();
                 girando = false;
-                Esperando.segundos(2500);
+                Esperar.segundos(2500);
                 activarIntroductores();
 
             }
@@ -276,16 +275,16 @@ public class MainActivity extends AppCompatActivity {
                 break;
             }
         }
-            Esperando.segundos(500);
+        Esperar.segundos(500);
         if(flag == false){
             audio.Incorrecto();
-            Esperando.segundos(500);
+            Esperar.segundos(500);
             quitarPuntos();
-            Esperando.segundos(500);
+            Esperar.segundos(500);
             desactivarIntroductores();
         } else {
             duplicarPuntos();
-            Esperando.segundos(500);
+            Esperar.segundos(500);
            // palabraAdivinar.pintarPalabra();
             ocultarTeclado(this);
             //A lo mejor hay que sacar el audio en la condicion de victoria
@@ -305,12 +304,12 @@ public class MainActivity extends AppCompatActivity {
         String letra = introducirLetra.getText().toString().toLowerCase();
         if (palabraAdivinar.analizarLetra(letra)) {
             palabraAdivinar.pintarLetra(letra);
-            Esperando.segundos(500);
+            Esperar.segundos(500);
             audio.Correcto();
             sumarPuntos(valorConseguido);
             completarPalabra++;
             if (aciertos == completarPalabra) {
-                Esperando.segundos(1500);
+                Esperar.segundos(1500);
                 palabraAdivinar.pintarLetra(letra);
                 audio.Victoria(palabraAdivinar);
                 cc.setBool(true);
