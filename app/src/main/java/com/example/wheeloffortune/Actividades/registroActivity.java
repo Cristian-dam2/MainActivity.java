@@ -83,8 +83,6 @@ public class registroActivity extends AppCompatActivity {
         myAuth = FirebaseAuth.getInstance();
         myStorage = FirebaseStorage.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
-
-
         avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,42 +92,11 @@ public class registroActivity extends AppCompatActivity {
 
     }
 
-//    private void imageChooser() {
-//            // create an instance of the
-//            // intent of the type image
-//            Intent i = new Intent();
-//            i.setType("image/*");
-//            i.setAction(Intent.ACTION_GET_CONTENT);
-//
-//            // pass the constant to compare it
-//            // with the returned requestCode
-//            startActivityForResult(Intent.createChooser(i, "Select Picture"), SELECT_PICTURE);
-//        }
-//
-//        // this function is triggered when user
-//        // selects the image from the imageChooser
-//        public void onActivityResult(int requestCode, int resultCode, Intent data) {
-//            super.onActivityResult(requestCode, resultCode, data);
-//
-//            if (resultCode == RESULT_OK) {
-//
-//                // compare the resultCode with the
-//                // SELECT_PICTURE constant
-//                if (requestCode == SELECT_PICTURE) {
-//                    // Get the url of the image from data
-//                    Uri selectedImageUri = data.getData();
-//                    if (null != selectedImageUri) {
-//                        // update the preview image in the layout
-//                        avatar.setImageURI(selectedImageUri);
-//                    }
-//                }
-//            }
-//        }
 
     private void selectImage() {
         final CharSequence[] options = { "Tomar una foto", "Abrir la galeria","Cancelar" };
         AlertDialog.Builder builder = new AlertDialog.Builder(registroActivity.this);
-        builder.setTitle("Agregar foto!");
+        builder.setTitle("Agregar foto");
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int item) {
@@ -143,9 +110,6 @@ public class registroActivity extends AppCompatActivity {
                     Intent i = new Intent();
                     i.setType("image/*");
                     i.setAction(Intent.ACTION_GET_CONTENT);
-
-                    // pass the constant to compare it
-                    // with the returned requestCode
                     startActivityForResult(Intent.createChooser(i, "Select Picture"), 2);
                 }
                 else if (options[item].equals("Cancelar")) {
@@ -179,35 +143,8 @@ public class registroActivity extends AppCompatActivity {
     }
 
 
-//    public void registrar(){
-//        String email = intro_mail.getText().toString();
-//        String password = intro_pwd.getText().toString();
-//
-//
-//        myAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                //Si no ha habido problemas (la tarea de registrar el usuario ha sido exitosa: Feedback y redireccion a la MainActivity
-//                if (task.isSuccessful()) {
-//                    Toast.makeText(registroActivity.this, "Usuario registrado correctamente.", Toast.LENGTH_SHORT).show();
-//                    Intent intent = new Intent(getApplicationContext(), myLoginActivity.class);
-//                    startActivity(intent);
-//                } else {
-//
-//                    //Toast.makeText(Register.this,"Se ha producido une error en el proceso de registro.", Toast.LENGTH_SHORT ).show();
-//                    Toast.makeText(registroActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-//                    progressBar.setVisibility(View.INVISIBLE);
-//                }
-//            }
-//        });
-//
-//
-//    }
-
     public void mandarLogin(View view) {
-        Intent intent = new Intent(getApplicationContext(),LoginActivity.class);
-        startActivity(intent);
-
+        finish();
     }
 
     public void mandarRegistro2(View view) {

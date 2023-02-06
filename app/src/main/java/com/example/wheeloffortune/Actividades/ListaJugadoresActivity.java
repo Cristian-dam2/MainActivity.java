@@ -52,6 +52,7 @@ public class ListaJugadoresActivity extends AppCompatActivity {
     private List<JugadorModelo> mJugadorList = new ArrayList<>();
     private RecyclerView mRecyclerView;
     private JugadorAdaptador mJugadorAdaptador;
+    private TextView cartel;
     final long ONE_MEGABYTE = 1024 * 1024;
 
 
@@ -61,10 +62,14 @@ public class ListaJugadoresActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_jugadores);
         db = FirebaseFirestore.getInstance();
+        cartel = findViewById(R.id.textViewPrueba);
+        cartel.bringToFront();
         boton_volver = (Button) findViewById(R.id.boton_volver);
+        boton_volver.bringToFront();
         myStorage = FirebaseStorage.getInstance().getReference();
         storageReference = FirebaseStorage.getInstance().getReference();
         mRecyclerView = findViewById(R.id.myRecycler);
+
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
         boton_volver.setOnClickListener(new View.OnClickListener() {

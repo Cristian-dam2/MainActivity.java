@@ -54,9 +54,8 @@ public class LoginActivity extends AppCompatActivity {
 
     public void verListaJugadores(View view){
         Intent myIntent = new Intent(this,ListaJugadoresActivity.class);
-        email.setText("");
-        contraseña.setText("");
         startActivity(myIntent);
+        limpiarInformacion();
     }
 
 
@@ -72,12 +71,8 @@ public class LoginActivity extends AppCompatActivity {
             contraseña.setError("Debe introducir una contraseña");
             return;
         }
-
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-
-
         botonIniciarJuego.setEnabled(false);
-
         mAuth.signInWithEmailAndPassword(correo, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
@@ -85,6 +80,7 @@ public class LoginActivity extends AppCompatActivity {
                     botonIniciarJuego.setEnabled(true);
                     Toast.makeText(LoginActivity.this, "Credenciales correctas, bienvenido.", Toast.LENGTH_SHORT).show();
                     startActivity(intent);
+                    limpiarInformacion();
 
                 } else {
                     botonIniciarJuego.setEnabled(true);
@@ -97,6 +93,12 @@ public class LoginActivity extends AppCompatActivity {
 
         Intent myIntent = new Intent(this, registroActivity.class);
         startActivity(myIntent);
+    }
+
+
+    private void limpiarInformacion(){
+        email.setText("");
+        contraseña.setText("");
     }
 
 

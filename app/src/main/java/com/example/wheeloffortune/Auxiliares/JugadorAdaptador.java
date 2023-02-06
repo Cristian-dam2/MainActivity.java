@@ -31,8 +31,8 @@ public class JugadorAdaptador extends RecyclerView.Adapter<JugadorAdaptador.Juga
     public void onBindViewHolder(@NonNull JugadorViewHolder holder, int position) {
         JugadorModelo jugador = mJugadorList.get(position);
         holder.mImagen.setImageBitmap(jugador.getImagen());
-        holder.mNombre.setText(jugador.getNombre());
-        holder.mPuntuacion.setText(jugador.getPuntuacion());
+        holder.mNombre.setText( jugador.getNombre());
+        holder.mPuntuacion.setText("Puntuacion: " +jugador.getPuntuacion());
     }
 
     @Override

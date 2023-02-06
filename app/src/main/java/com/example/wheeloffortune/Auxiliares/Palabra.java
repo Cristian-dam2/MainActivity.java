@@ -40,13 +40,10 @@ public class Palabra extends AppCompatActivity {
     // CONSTRUCTOR (la entrada es el panel donde dibujará)
     public Palabra(TextView[] cuadros) {
         String[] adivinar = palabraseInformacion();
-
         this.palabra = adivinar[0];
         this.informacion = adivinar[1];
-
         this.musicapersonalizada = palabraHasCustomAudio(adivinar[0]);
         this.cuadros = cuadros;
-
         // INDICA LA POSICION DONDE SE VA A PINTAR EN GRIS LOS RECUADROS.
         this.posicion_inicial = (cuadros.length / 2) - (palabra.length() / 2);
         for (int i = this.posicion_inicial; i < this.posicion_inicial + palabra.length(); i++) {
@@ -77,7 +74,7 @@ public class Palabra extends AppCompatActivity {
 
         int a = (int)((Math.random() * (7 - 1)) + 1);
 
-        switch (0) {
+        switch (5) {
             case 0: //debug
                 seleccionado[0] = "AZ";
                 seleccionado[1] = "A y Z";
