@@ -21,7 +21,7 @@ package com.example.wheeloffortune.Auxiliares;
  * </pre>
  * @see BoolChangeListener
  */
-public class C {
+public class BoolTrigger {
     /**
      * Contiene el método que el listener ejecutará cuando el boolean de esta instancia cambie.
      */
@@ -36,7 +36,7 @@ public class C {
      * Crea una instancia de C
      * @param valorInicial El valor inicial del boolean de esta instancia
      */
-    public C(boolean valorInicial) {
+    public BoolTrigger(boolean valorInicial) {
         this.myBool = valorInicial;
     }
     public void setOnBoolChangeListener(BoolChangeListener listener) {

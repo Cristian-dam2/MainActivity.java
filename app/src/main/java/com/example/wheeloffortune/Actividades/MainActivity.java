@@ -21,7 +21,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.wheeloffortune.Auxiliares.Audio;
-import com.example.wheeloffortune.Auxiliares.C;
+import com.example.wheeloffortune.Auxiliares.BoolTrigger;
 import com.example.wheeloffortune.Auxiliares.Esperar;
 import com.example.wheeloffortune.Auxiliares.Fichero;
 import com.example.wheeloffortune.Auxiliares.Jugador;
@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
     private boolean girando = false;
     private int degree = 0;
 
-    private C cc;
+    private BoolTrigger cc;
     private EditText introducirLetra;
     private EditText introducirPalabra;
     private ImageView ruleta;
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        cc = new C(false);
+        cc = new BoolTrigger(false);
 
         inicializarElementosDeLaActividad();
         inicializarComponentesDeFirebase();
@@ -118,10 +118,10 @@ public class MainActivity extends AppCompatActivity {
      *     <li>introducirPalabra: Se ejecuta al pulsar sobre el campo de introducir palabras.</li>
      *     <li>ruleta: Se ejecuta al pulsar sobre la ruleta.</li>
      * </ul>
-     * @see C
+     * @see BoolTrigger
      */
     private void inicializarListeners() {
-        cc.setOnBoolChangeListener(new C.BoolChangeListener() {
+        cc.setOnBoolChangeListener(new BoolTrigger.BoolChangeListener() {
             @Override
             public void onBoolChange(boolean b) {
                 if (b == true) {
